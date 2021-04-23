@@ -19,7 +19,7 @@ namespace Easy_Stock.AccesoDatos
             try
             {
                 sbSql = new StringBuilder("SELECT u.idUsuario,u.nombre,u.apellido,u.email,u.clave,tu.idTipoUsuario, tu.tipoUsuario ");
-                sbSql.Append("FROM Usuarios u  JOIN Tipos_Usuarios tu ON u.idTipoUsuario = tu.idTipoUsuario");
+                sbSql.Append("FROM Usuarios u  JOIN Tipos_Usuarios tu ON u.idTipoUsuario = tu.idTipoUsuario ");
                 sbSql.Append("WHERE email = @email and clave =@clave ");
                 SqlParameter[] param = {
                     new SqlParameter("@email",email),
