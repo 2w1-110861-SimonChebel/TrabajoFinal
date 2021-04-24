@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MyMaster.master.cs" Inherits="Easy_Stock.MyMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Header.Master.cs" Inherits="Easy_Stock.MyMaster" %>
 
 <!DOCTYPE html>
 
@@ -24,7 +24,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <a class="navbar-brand" href="#">EasyStock</a>
+                        <a class="navbar-brand" href="home.aspx">EasyStock</a>
                         <%-- <a class="navbar-brand" href="#">
                         <img src="//Assets\ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                      EasyStock
