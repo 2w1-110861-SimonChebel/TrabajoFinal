@@ -10,7 +10,7 @@
 
 namespace Easy_Stock
 {
-    public partial class home
+    public partial class header
     {
     }
 }
