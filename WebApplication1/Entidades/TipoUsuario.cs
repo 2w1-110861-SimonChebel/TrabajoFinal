@@ -11,5 +11,8 @@ namespace Easy_Stock.Entidades
         public int idTipoUsuario { get; set; } = 0;
 
         public string tipoUsuario { get; set; } = string.Empty;
+
+        public TipoUsuario() { 
+        }
     }
 }

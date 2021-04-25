@@ -11,7 +11,7 @@ namespace Easy_Stock
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Producto
         }
     }
 }
