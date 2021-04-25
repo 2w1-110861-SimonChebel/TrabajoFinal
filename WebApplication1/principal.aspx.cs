@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Easy_Stock.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,9 +20,14 @@ namespace Easy_Stock
         {
             string email = txtEmail.Text;
             string clave = txtClave.Text;
-            if (AdUsuario.ObtenerUsuario(email, clave) != null)
+            Usuario oUsuario = AdUsuario.ObtenerUsuario(email, clave);
+            if (oUsuario != null)
             {
-                
+                Response.Redirect("/home.aspx?usuario=" + oUsuario.nombre + "." + oUsuario.apellido, false);
+            }
+            else
+            {
+                Response.Write("<script>window.location.href='principal.aspx?response=false';alert('El usuario y/o contraseña es incorrecto.'); </script>");
             }
 
         }
