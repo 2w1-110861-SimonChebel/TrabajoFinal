@@ -16,10 +16,14 @@
 <body>
     <form id="frmLogin" runat="server">
 
-        <div class="container login-container" style="display:block; justify-content:center;">
+        <div class="container login-container" style="display: block; justify-content: center;">
             <div class="row">
                 <div class="col-md-6 login-form-1">
                     <h3>Ingresar</h3>
+
+                    <div id="divAlertaDatosIncorrectos" class="alert alert-danger" style="display: none" runat="server">
+                        <h6>El usuario y/o contraseña son incorrectos</h6>
+                    </div>
 
                     <div class="form-group">
                         <asp:TextBox runat="server" type="text" ID="txtEmail" class="form-control" name="login" placeholder="E-mail"></asp:TextBox>
@@ -33,12 +37,14 @@
                     <div class="form-group">
                         <a href="#" class="btnForgetPwd">Olvide mi contraseña</a>
                     </div>
+                    <div class="form-group">
+                        <a href="#" class="btnForgetPwd">Registrarme</a>
+                    </div>
 
                 </div>
-    </form>
-    </div>
             </div>
         </div>
+    </form>
     <!--------------------------SCRIPTS----------------------------------------------------------------------->
     <script type="text/javascript">
 

@@ -280,6 +280,7 @@
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Deposito.cs" />
     <Compile Include="Entidades\Localidad.cs" />
+    <Compile Include="Entidades\Lote.cs" />
     <Compile Include="Entidades\Marca.cs" />
     <Compile Include="Entidades\Producto.cs" />
     <Compile Include="Entidades\Proveedor.cs" />

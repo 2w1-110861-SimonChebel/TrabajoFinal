@@ -27,7 +27,7 @@ namespace Easy_Stock
             }
             else
             {
-                Response.Write("<script>window.location.href='principal.aspx?response=false';alert('El usuario y/o contraseña es incorrecto.'); </script>");
+                divAlertaDatosIncorrectos.Style["display"] = "inherit";
             }
 
         }

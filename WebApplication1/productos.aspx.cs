@@ -11,12 +11,14 @@ namespace Easy_Stock
 {
     public partial class productos : System.Web.UI.Page
     {
+        protected List<Producto> lstProductos = new List<Producto>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                List<Producto> lstProductos = AdProducto.obtenerProductos();
+                lstProductos = AdProducto.obtenerProductos();
                 grvProductos.DataSource = lstProductos;
+                grvProductos.DataBind();
             }
         }
     }
