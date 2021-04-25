@@ -251,6 +251,7 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccesoDatos\AdProducto.cs" />
     <Compile Include="AccesoDatos\AdUsuario.cs" />
     <Compile Include="AccesoDatos\SqlHelper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

@@ -6,7 +6,7 @@
     <div class="row">
 
     </div>
-    <div class="row">
+  <%--  <div class="row">
         <div class="col-xl-12 col-md-12">
             <table class="table">
                 <thead class="thead-light">
@@ -43,5 +43,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div>--%>
 </asp:Content>

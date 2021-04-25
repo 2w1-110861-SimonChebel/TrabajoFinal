@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Easy_Stock.AccesoDatos;
+using Easy_Stock.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,11 @@ namespace Easy_Stock
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Producto
+            if (!IsPostBack)
+            {
+                List<Producto> lstProductos = AdProducto.obtenerProductos();
+                grvProductos.DataSource = lstProductos;
+            }
         }
     }
 }

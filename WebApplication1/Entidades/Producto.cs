@@ -9,10 +9,29 @@ namespace Easy_Stock.Entidades
     {
         public int idProducto { get; set; } = 0;
         public string descripcion { get; set; } = string.Empty;
+        public string nombre { get; set; } = string.Empty;
         public Marca marca { get; set; } = null;
-        public double precioVenta { get; set; } = 0;
-        public double precioCosto { get; set; } = 0;
-        public string descripcion { get; set; } = string.Empty;
-        public Categoria
+        public float precioVenta { get; set; } = 0;
+        public float precioCosto { get; set; } = 0;
+        public Categoria categoria { get; set; } = null;
+        public Proveedor proveedor { get; set; } = null;
+        public Deposito deposito { get; set; } = null;
+        public int stockMaximo { get; set; } = 0;
+        public int stockMinimo { get; set; } = 0;
+
+        public Producto() {
+            idProducto = 0;
+            descripcion = string.Empty;
+            nombre = string.Empty;
+            marca = new Marca();
+            precioCosto = 0;
+            precioVenta = 0;
+            categoria = new Categoria();
+            proveedor = new Proveedor();
+            deposito = new Deposito();
+            stockMaximo = 0;
+            stockMinimo = 0;
+        }
+
     }
 }
