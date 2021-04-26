@@ -3,42 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  <%--     <div class="row">
-        <div class="col-xl-12 col-md-12">
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Código</th>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Descripcion</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Precio de venta</th>
-                        <th scope="col">Precio costo</th>
-                        <th scope="col">Stock mínimo</th>
-                        <th scope="col">Stock máximo</th>
-                        <th scope="col">Categoria</th>
-                        <th scope="col">Proveedor</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row"></th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>--%>
     <div class="table-responsive">
         <div class="col-xl-12 col-md-12">
             <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px" CssClass="table table-condensed table-hover">

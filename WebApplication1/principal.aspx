@@ -18,7 +18,7 @@
 
         <div class="container login-container" style="display: block; justify-content: center;">
             <div class="row">
-                <div class="col-md-6 login-form-1">
+                <div class="col-md-6 col-xl-6 login-form-1">
                     <h3>Ingresar</h3>
 
                     <div id="divAlertaDatosIncorrectos" class="alert alert-danger" style="display: none" runat="server">
@@ -31,20 +31,30 @@
                     <div class="form-group">
                         <asp:TextBox runat="server" type="text" ID="txtClave" class="form-control" name="login" placeholder="Clave"></asp:TextBox>
                     </div>
-                    <div class="form-group">
+
+                    <div class="form-group centrarItemsDiv">
                         <asp:Button runat="server" ID="btnIngresar" type="submit" class="btn btn-primary" Text="Ingresar" OnClientClick="return validarCampos();" OnClick="BtnIngresar_Click"></asp:Button>
                     </div>
-                    <div class="form-group">
+
+                    <div class="form-group centrarItemsDiv">
                         <a href="#" class="btnForgetPwd">Olvide mi contraseña</a>
                     </div>
-                    <div class="form-group">
-                        <a href="#" class="btnForgetPwd">Registrarme</a>
+                    <div class="form-group centrarItemsDiv">
+                        <a href="#" class="btnForgetPwd">Nuevo usuario</a>
                     </div>
 
                 </div>
             </div>
         </div>
     </form>
+    <!------------------------CSS---------------------------------------------------------------------------->
+    <style>
+        .centrarItemsDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
     <!--------------------------SCRIPTS----------------------------------------------------------------------->
     <script type="text/javascript">
 
@@ -52,13 +62,11 @@
             var txtEmail = document.getElementById("txtEmail");
             var txtClave = document.getElementById("txtClave");
 
-            if (txtEmail === null || txtClave === null) alert("Nulos");
-            else {
-                if (txtEmail.value == "" || txtClave.value == "") {
-                    alert("Debe ingresar email y clave");
-                    return false;
-                }
+            if (txtEmail.value == "" || txtClave.value == "") {
+                alert("Debe ingresar email y clave");
+                return false;
             };
+
         }
     </script>
 
