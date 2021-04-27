@@ -118,9 +118,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="editar_producto.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
+    <Content Include="movimientos.aspx" />
     <Content Include="productos.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -277,6 +279,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="editar_producto.aspx.cs">
+      <DependentUpon>editar_producto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_producto.aspx.designer.cs">
+      <DependentUpon>editar_producto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Deposito.cs" />
     <Compile Include="Entidades\Localidad.cs" />
@@ -303,6 +312,13 @@
     </Compile>
     <Compile Include="Header.Master.designer.cs">
       <DependentUpon>Header.Master</DependentUpon>
+    </Compile>
+    <Compile Include="movimientos.aspx.cs">
+      <DependentUpon>movimientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="movimientos.aspx.designer.cs">
+      <DependentUpon>movimientos.aspx</DependentUpon>
     </Compile>
     <Compile Include="principal.aspx.cs">
       <DependentUpon>principal.aspx</DependentUpon>

@@ -6,7 +6,7 @@
 
     <div class="table-responsive">
         <div class="col-xl-12 col-md-12">
-            <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px" CssClass="table table-condensed table-hover">
+            <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px" CssClass="table table-condensed table-hover" OnSelectedIndexChanged="btnEditarProducto_Click">
                 <Columns>
                     <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
@@ -43,16 +43,14 @@
                     <asp:TemplateField HeaderText="Precio de venta" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divPrecioVenta" style="padding-top: 10px;">
-                                <b>$<%#Eval("precioVenta") %></b>
-                            </div>
+                                <b>$<%#Eval("precioVenta") %></b></div>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Precio costo" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divPrecioCosto" style="padding-top: 10px;">
-                                <b>$<%#Eval("precioCosto") %></b>
-                            </div>
+                                <b>$<%#Eval("precioCosto") %></b></div>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -91,8 +89,8 @@
                      <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
-                                <b><asp:Button runat="server" ID="btnEditar" type="button" class="btn btn-primary" Text="Editar"></asp:Button></b>
-                                <b><asp:Button runat="server" ID="btnEliminar" type="button" class="btn btn-danger" Text="Eliminar" ></asp:Button></b>
+                                <b><asp:Button runat="server" ID="btnEditarProducto" type="button" class="btn btn-info" Text="Editar" OnClick="btnEditarProducto_Click"></asp:Button></b>
+                                <b><asp:Button runat="server" ID="btnEliminarProducto" type="button" class="btn btn-danger" Text="Eliminar" ></asp:Button></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

@@ -21,5 +21,10 @@ namespace Easy_Stock
                 grvProductos.DataBind();
             }
         }
+
+        protected void btnEditarProducto_Click(object sender, EventArgs e) 
+        {
+            Response.Redirect("/editar_producto.aspx?idProducto=3", false);
+        }
     }
 }
