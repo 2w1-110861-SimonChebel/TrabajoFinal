@@ -18,6 +18,7 @@ namespace Easy_Stock.Entidades
         public Deposito deposito { get; set; } = null;
         public int stockMaximo { get; set; } = 0;
         public int stockMinimo { get; set; } = 0;
+        public int cantidadRestante { get; set; } = 0;
 
         public Producto() {
             idProducto = 0;
@@ -31,6 +32,7 @@ namespace Easy_Stock.Entidades
             deposito = new Deposito();
             stockMaximo = 0;
             stockMinimo = 0;
+            cantidadRestante = 0;
         }
 
     }
