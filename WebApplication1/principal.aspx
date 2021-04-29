@@ -24,7 +24,6 @@
                     <div id="divAlertaDatosIncorrectos" class="alert alert-danger" style="display: none" runat="server">
                         <h6>El usuario y/o contraseña son incorrectos</h6>
                     </div>
-
                     <div class="form-group">
                         <asp:TextBox runat="server" type="text" ID="txtEmail" class="form-control" name="login" placeholder="E-mail"></asp:TextBox>
                     </div>

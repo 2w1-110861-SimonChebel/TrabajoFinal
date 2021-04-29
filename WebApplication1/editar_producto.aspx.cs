@@ -11,9 +11,33 @@ namespace Easy_Stock
 {
     public partial class editar_producto : System.Web.UI.Page
     {
+        int idProducto;
+        string accion;
         protected void Page_Load(object sender, EventArgs e)
         {
-            cargarCombos();
+            this.accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
+            CargarCombos();
+            if (Request.QueryString["id"] != null && Request.QueryString["accion"].Equals("editar"))
+            {
+                this.idProducto = Convert.ToInt32(Request.QueryString["id"]);
+                Producto oProducto = AdProducto.obtenerProducto(idProducto);
+
+                txtNombreProducto.Text = oProducto.nombre;
+                txtCantidad.Text = oProducto.cantidadRestante.ToString();
+                cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
+                txtPrecioVenta.Text = oProducto.precioVenta.ToString();
+                txtPrecioCosto.Text = oProducto.precioCosto.ToString();
+                cboCategorias.SelectedValue = oProducto.categoria.idCategoria.ToString();
+                cboProveedores.SelectedValue = oProducto.proveedor.idProveedor.ToString();
+                cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
+                txtStockMinimo.Text = oProducto.stockMinimo.ToString();
+                txtStockMaximo.Text = oProducto.stockMaximo.ToString();
+                txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
+                divTitulo.InnerText = "Editar producto";
+                btnAgregarProducto.Text = "Actualizar producto";                   
+
+            }
+            
         }
 
         protected void btnAgregarProducto_Click(Object sender, EventArgs e)
@@ -39,18 +63,29 @@ namespace Easy_Stock
                     cantidadRestante = Convert.ToInt32(txtCantidad.Text)
                 };
 
-                AdProducto.agregarProducto(oProducto);
-                
+                if (!accion.Equals("editar"))
+                {
+                    AdProducto.agregarProducto(oProducto);
+                    divProductoCargado.Style["display"] = "inherit";
+                    LimpiarCampos();
+                }
+                else {
+                    AdProducto.actualizarProducto(oProducto);
+                    divProductoCargado.Style["display"] = "inherit";
+                    Response.Redirect("home.aspx");
+                }
+
             }
             catch (Exception ex)
             {
                 Response.Redirect("editar_producto.aspx?response=false");
+                divErrorCargaProducto.Style["display"] = "inherit";
                 throw ex;
             }
 
         }
 
-        private void cargarCombos()
+        private void CargarCombos()
         {
             List<Marca> lstMarcas = AdMarca.obtenerMarcas();
             List<Proveedor> lstProveedores = AdProveedor.obtenerProveedoresSimple();
@@ -101,6 +136,21 @@ namespace Easy_Stock
                 cboDepositos.Items.Add(li);
             }
 
+        }
+
+        public void LimpiarCampos()
+        {
+            txtNombreProducto.Text = string.Empty;
+            txtCantidad.Text = string.Empty;
+            cboMarcas.SelectedValue = "0";
+            txtPrecioCosto.Text = string.Empty;
+            txtPrecioVenta.Text = string.Empty;
+            cboCategorias.SelectedValue = "0";
+            cboProveedores.SelectedValue = "0";
+            cboDepositos.SelectedValue = "0";
+            txtStockMinimo.Text = string.Empty;
+            txtStockMaximo.Text = string.Empty;
+            txtDescripcion.Text = string.Empty;
         }
     }
 }

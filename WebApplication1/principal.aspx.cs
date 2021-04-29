@@ -23,7 +23,7 @@ namespace Easy_Stock
             Usuario oUsuario = AdUsuario.ObtenerUsuario(email, clave);
             if (oUsuario != null)
             {
-                Response.Redirect("/home.aspx?usuario=" + oUsuario.nombre + "." + oUsuario.apellido, false);
+                Response.Redirect("/home.aspx?usuario=" + oUsuario.nombre+ "." + oUsuario.apellido, false);
             }
             else
             {

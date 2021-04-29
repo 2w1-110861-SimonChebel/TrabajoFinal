@@ -115,7 +115,6 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
-                sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
                 sbSql.Append(" WHERE p.idProducto = @idProducto");
 
                 SqlParameter parametro = new SqlParameter("@idProducto", idProducto);
@@ -125,6 +124,7 @@ namespace Easy_Stock.AccesoDatos
                     Producto oProducto = null;
                     if (dr.HasRows)
                     {
+                        dr.Read();
                         oProducto = new Producto
                         {
                             idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),

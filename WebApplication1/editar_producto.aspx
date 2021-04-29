@@ -16,15 +16,60 @@
 <body>
     <form id="frmEditarProducto" runat="server">
 
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="home.aspx">EasyStock</a>
+                <%-- <a class="navbar-brand" href="#">
+                        <img src="//Assets\ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                     EasyStock
+                    </a>--%>
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="productos.aspx">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="movimientos.aspx">Movimientos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Estadisticas
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Productos defectuosos</a>
+                            <a class="dropdown-item" href="#">Productos prontos a vencer</a>
+                            <a class="dropdown-item" href="#">Productos en deposito</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Stock disponible</a>
+                            <a class="dropdown-item" href="#">Stock faltante</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <%-- <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">--%>
+                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+                </form>
+            </div>
+        </nav>
+
         <div class="col-md-6 col-xl-6 ">
-            <div class="col-md-6 col-xl-6" style="display: flex; justify-items: right">
+            <div id="divProductoCargado" class="alert alert-succes" style="display: none" runat="server">
+                <h6>Producto(s) cargado(s) correctamente</h6>
+            </div>
+            <div id="divErrorCargaProducto" class="alert alert-danger" style="display: none" runat="server">
+                <h6>Hubo en error en la carga. Verifique los datos y vuelva a intentarlo</h6>
+            </div>
+            <div id="divTitulo" class="col-md-6 col-xl-6" style="display: flex; justify-items: right" runat="server">
                 <h2>Nuevo producto</h2>
             </div>
             <div class="form-group">
                 <label for="nombre" class="control-label">Nombre</label>
                 <asp:TextBox type="text" class="form-control" ID="txtNombreProducto" name="txtNombreProducto" runat="server"> </asp:TextBox>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label for="nombre" class="control-label">Cantidad</label>
                 <asp:TextBox type="number" class="form-control" ID="txtCantidad" name="txtCantidad" runat="server"> </asp:TextBox>
             </div>
@@ -77,7 +122,7 @@
                 <label for="stockMaximo" class="control-label">Stock máximo</label>
                 <asp:TextBox type="number" class="form-control" ID="txtStockMaximo" name="txtStockMaximo" runat="server"></asp:TextBox>
             </div>
-                        
+
             <div class="form-group">
                 <label for="descripcion" class="control-label">Descripción (opcional)</label>
                 <asp:TextBox type="text" class="form-control" ID="txtDescripcion" name="txtprecioCosto" MaxLength="150" runat="server" TextMode="MultiLine"></asp:TextBox>
