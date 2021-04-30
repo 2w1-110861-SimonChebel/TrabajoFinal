@@ -11,7 +11,7 @@ namespace Easy_Stock
 {
 
 
-    public partial class productos
+    public partial class reponer_producto
     {
 
         /// <summary>
@@ -24,13 +24,22 @@ namespace Easy_Stock
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMensaje;
 
         /// <summary>
-        /// btnBuscar control.
+        /// hMensaje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox btnBuscar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hMensaje;
+
+        /// <summary>
+        /// txtBuscar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
 
         /// <summary>
         /// btnBuscarProducto control.
@@ -42,12 +51,12 @@ namespace Easy_Stock
         protected global::System.Web.UI.WebControls.Button btnBuscarProducto;
 
         /// <summary>
-        /// grvProductos control.
+        /// grvProducto control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grvProductos;
+        protected global::System.Web.UI.WebControls.GridView grvProducto;
     }
 }

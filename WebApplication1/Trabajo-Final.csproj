@@ -124,6 +124,7 @@
     <Content Include="home.aspx" />
     <Content Include="movimientos.aspx" />
     <Content Include="productos.aspx" />
+    <Content Include="reponer_producto.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -342,6 +343,13 @@
       <DependentUpon>productos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="reponer_producto.aspx.cs">
+      <DependentUpon>reponer_producto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reponer_producto.aspx.designer.cs">
+      <DependentUpon>reponer_producto.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Mobile.Master.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

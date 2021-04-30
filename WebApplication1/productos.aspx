@@ -10,7 +10,17 @@
             <div id="divMensaje" class="alert alert-danger" style="display: none" runat="server">
                 <h6>El usuario y/o contraseña son incorrectos</h6>
             </div>
-            <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px" CssClass="table table-condensed table-hover" OnSelectedIndexChanged="btnEditarProducto_Click" OnRowCommand="grvProductos_RowCommand">
+
+            <div class="row">
+                <div class="col-md-6 col-xl-6" style="padding: 20px">
+                    <asp:TextBox ID="btnBuscar" runat="server" ></asp:TextBox>
+                </div>
+                <div class="col-md-6 col-xl-6" style="padding: 20px">
+                    <asp:Button runat="server" ID="btnBuscarProducto" type="button" class="btn btn-dark" Text="Buscar"  />
+                </div>
+            </div>
+
+            <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnSelectedIndexChanged="btnEditarProducto_Click" OnRowCommand="grvProductos_RowCommand">
                 <Columns>
                     <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
@@ -115,5 +125,9 @@
             </asp:GridView>
         </div>
     </div>
+
+    <style>
+
+    </style>
 
 </asp:Content>

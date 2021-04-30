@@ -39,23 +39,19 @@ namespace Easy_Stock
             }
             else if(e.CommandName.Equals("eliminar"))
             {
-                try
-                {
-                    AdProducto.eliminarProductoPorId(idProducto);                   
+                if(AdProducto.eliminarProductoPorId(idProducto))
+                {                  
                     divMensaje.InnerText = "Producto eliminado correctamente";
                     divMensaje.Style["class"] = "alert alert-success";
                     Response.Redirect("productos.aspx");
                 }
-                catch (Exception ex)
+                else
                 {                  
                     divMensaje.InnerText = "Hubo un error al eliminar el producto";
                     divMensaje.Style["class"] = "alert alert-danger";
                     Response.Redirect("productos.aspx");
-                    throw ex;
                 }
-                
-               
-              
+           
             }
                            
         }

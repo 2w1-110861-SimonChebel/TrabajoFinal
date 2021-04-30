@@ -32,7 +32,14 @@
                     </a>--%>
                         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" href="productos.aspx">Productos</a>
+                                <a class="nav-link dropdown-toggle" href="#" id="dropDownProductos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="productos.aspx">Ver todos</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="editar_producto.aspx">Nuevo Producto</a>
+                                    <a class="dropdown-item" href="#">Reponer Producto</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="movimientos.aspx">Movimientos</a>
