@@ -13,6 +13,6 @@ namespace Easy_Stock
         public string direccion { get; set; }
         public Deposito deposito { get; set; }
         public Localidad localidad { get; set; }
-        public Provincia provinica { get; set; }
+        public Provincia provincia { get; set; }
     }
 }

@@ -14,19 +14,27 @@
 
             <div class="row">
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
-                    <asp:TextBox ID="btnBuscar" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtBuscarDeposito" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
-                    <asp:Button runat="server" ID="btnBuscarProducto" type="button" class="btn btn-dark" Text="Buscar" />
+                    <asp:Button runat="server" ID="btnBuscarDeposito" type="button" class="btn btn-dark" Text="Buscar" />
                 </div>
             </div>
 
-            <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnSelectedIndexChanged="btnEditarProducto_Click" OnRowCommand="grvProductos_RowCommand">
+            <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnSelectedIndexChanged="btnEditarDeposito_Click" OnRowCommand="grvDepositos_RowCommand">
                 <Columns>
                     <asp:TemplateField HeaderText="Deposito (sucursal)" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divDeposito" style="padding-top: 10px;">
                                 <b><%#Eval("nombre") %></b>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                        <asp:TemplateField HeaderText="Descripción" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <ItemTemplate>
+                            <div id="divDescripcionDeposito" style="padding-top: 10px;">
+                                <b><%#Eval("deposito.descripcion") %></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -58,7 +66,7 @@
                     <asp:TemplateField HeaderText="Completo" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divDepositoCompleto" style="padding-top: 10px;">
-                                <b>$<%#Eval("deposito.completo") %></b>
+                                <b><%#Eval("deposito.completo") %></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -76,9 +84,9 @@
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
                                 <b>
-                                    <asp:Button runat="server" ID="btnEditarProducto" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idProducto") %>' CommandName="editar" OnClick="btnEditarProducto_Click" /></b>
+                                    <asp:Button runat="server" ID="btnEditarDeposito" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idSucursal") %>' CommandName="editar" OnClick="btnEditarDeposito_Click" /></b>
                                 <b>
-                                    <asp:Button runat="server" ID="btnEliminarProducto" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idProducto") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste producto? Esta acción no se puede deshacer')) return false;" OnClick="btnEliminarProducto_Click"></asp:Button></b>
+                                    <asp:Button runat="server" ID="btnEliminarDeposito" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idSucursal") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste deposito? Esta acción no se puede deshacer')) return false;" OnClick="btnEliminarDeposito_Click"></asp:Button></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

@@ -24,30 +24,30 @@ namespace Easy_Stock
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMensaje;
 
         /// <summary>
-        /// btnBuscar control.
+        /// txtBuscarDeposito control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox btnBuscar;
+        protected global::System.Web.UI.WebControls.TextBox txtBuscarDeposito;
 
         /// <summary>
-        /// btnBuscarProducto control.
+        /// btnBuscarDeposito control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarProducto;
+        protected global::System.Web.UI.WebControls.Button btnBuscarDeposito;
 
         /// <summary>
-        /// grvProductos control.
+        /// grvDepositos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grvProductos;
+        protected global::System.Web.UI.WebControls.GridView grvDepositos;
     }
 }

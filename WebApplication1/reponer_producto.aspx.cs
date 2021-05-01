@@ -11,7 +11,7 @@ namespace Easy_Stock
 {
     public partial class reponer_producto : System.Web.UI.Page
     {
-        protected Producto oProducto = null;
+        protected List<ProductoReponer> lstProductos = null;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -19,10 +19,16 @@ namespace Easy_Stock
 
         protected void btnBuscarProducto_Click(object sender, EventArgs e)
         {
-            oProducto = AdProducto.obtenerProductoPorNombre(txtBuscar.Text);
-            if (oProducto == null)
+            hMensaje.InnerText = "";
+            lstProductos = AdProducto.obtenerProductosReponer(txtBuscar.Text);
+            if (lstProductos == null)
             {
-                hMensaje.InnerText = string.Format("{0} {1}", "No se encontró el producto", txtBuscar.Text);
+                hMensaje.InnerText = "No se encontraron resultados";
+            }
+            else 
+            {
+                grvProductos.DataSource = lstProductos;
+                grvProducto.DataBind();
             }
   
         }

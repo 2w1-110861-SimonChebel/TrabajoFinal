@@ -90,7 +90,7 @@ namespace Easy_Stock
             List<Marca> lstMarcas = AdMarca.obtenerMarcas();
             List<Proveedor> lstProveedores = AdProveedor.obtenerProveedoresSimple();
             List<Categoria> lstCategorias = AdCategoria.obtenerCategorias();
-            List<Deposito> lstDepositos = AdDeposito.obtenerDepositos();
+            List<Deposito> lstDepositos = AdDeposito.obtenerDepositosCombo();
 
             cboMarcas.DataSource = lstMarcas;
             for (int i = 0; i < lstMarcas.Count; i++)

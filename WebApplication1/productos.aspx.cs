@@ -16,15 +16,35 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
+                divMensaje.Visible = false;
                 lstProductos = AdProducto.obtenerProductos();
                 grvProductos.DataSource = lstProductos;
                 grvProductos.DataBind();
             }
         }
 
-        protected void btnEditarProducto_Click(object sender, EventArgs e) 
+        protected void btnEditarProducto_Click(object sender, EventArgs e)
         {
             
+        }
+
+        protected void btnBuscarProducto_Click(object sender, EventArgs e) 
+        {
+            string nombre = txtBuscarProducto.Text;
+            lstProductos = AdProducto.obtenerVariosProductosPorNombre(nombre);
+
+            if (lstProductos != null && lstProductos.Count > 0)
+            {
+                grvProductos.DataSource = lstProductos;
+                grvProductos.DataBind();
+                divMensaje.Visible = false;
+            }
+            else 
+            {
+                divMensaje.Visible = true;
+                grvProductos.DataSource = null;
+                grvProductos.DataBind();
+            }
         }
         protected void btnEliminarProducto_Click(object sender, EventArgs e)
         {

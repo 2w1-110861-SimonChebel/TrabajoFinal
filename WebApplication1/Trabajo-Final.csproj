@@ -316,6 +316,7 @@
     <Compile Include="Entidades\Lote.cs" />
     <Compile Include="Entidades\Marca.cs" />
     <Compile Include="Entidades\Producto.cs" />
+    <Compile Include="Entidades\ProductoReponer.cs" />
     <Compile Include="Entidades\Proveedor.cs" />
     <Compile Include="Entidades\Provincia.cs" />
     <Compile Include="Entidades\TipoUsuario.cs" />
@@ -373,7 +374,7 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="Sucursal.cs" />
+    <Compile Include="Entidades\Sucursal.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
