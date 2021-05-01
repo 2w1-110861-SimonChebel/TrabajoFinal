@@ -55,10 +55,8 @@
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
                     <%-- <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">--%>
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
-                </form>
             </div>
         </nav>
 
@@ -136,11 +134,11 @@
             </div>
 
             <div class="form-group" style="display: flex; justify-content: center">
-                <asp:Button Text="Agregar producto" type="submit" class="btn btn-primary" runat="server" OnClick="btnAgregarProducto_Click" />
+                <asp:Button ID="btnAgregarProducto" Text="Agregar producto" type="button" class="btn btn-primary" runat="server" OnClick="btnAgregarProducto_Click" />
             </div>
 
             <div class="form-group" style="display: flex; justify-content: center">
-                <asp:Button ID="btnAgregarProducto" Text="Limpiar campos" type="button" class="btn btn-secondary" runat="server" />
+                <asp:Button  Text="Limpiar campos" type="button" class="btn btn-secondary" runat="server" />
             </div>
 
         </div>

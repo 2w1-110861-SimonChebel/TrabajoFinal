@@ -34,7 +34,7 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@descripcion", oProducto.descripcion),
                     new SqlParameter("@idCategoria", oProducto.categoria.idCategoria),
                     new SqlParameter("@idProveedor", oProducto.proveedor.idProveedor),
-                    //new SqlParameter("@idDeposito", Convert.ToInt32(idDeposito)),
+                    new SqlParameter("@idDeposito", Convert.ToInt32(idDeposito)),
                     new SqlParameter("@stockMinimo", oProducto.stockMinimo),
                     new SqlParameter("@stockMaximo", oProducto.stockMaximo),
                     new SqlParameter("@cantidad", oProducto.cantidadRestante)
@@ -242,12 +242,13 @@ namespace Easy_Stock.AccesoDatos
             sbSql = null;
             try
             {
-                StringBuilder sbSql = new StringBuilder("INSERT INTO Productos");
-                sbSql.Append("(nombre, idMarca, precioVenta, precioCosto, descripcion, idCategoria, idProveedor, idDeposito,stockMinimo, stockMaximo, cantidadRestante)");
-                sbSql.Append("VALUES(@idMarca, @precioVenta, @precioCosto, @descripcion, @idCategoria, @idProveedor, @idDeposito, @stockMinimo,@stockMaximo, @cantidad)");
+                StringBuilder sbSql = new StringBuilder("UPDATE Productos");
+                sbSql.Append(" SET nombre=@nombre, idMarca=@idMarca, precioVenta=@precioVenta, precioCosto=@precioCosto, descripcion=@descripcion, idCategoria=@idCategoria, idProveedor=@idProveedor, idDeposito=@idDeposito,stockMinimo=@stockMinimo, stockMaximo=@stockMaximo, cantidadRestante=@cantidad");
+                sbSql.Append(" WHERE idProducto = @idProducto");
 
                 SqlParameter[] parametros = {
                     new SqlParameter("@idProducto", oProdcuto.idProducto),
+                    new SqlParameter("@nombre", oProdcuto.nombre),
                     new SqlParameter("@idMarca", oProdcuto.marca.idMarca),
                     new SqlParameter("@precioVenta", oProdcuto.precioVenta),
                     new SqlParameter("@precioCosto", oProdcuto.precioCosto),

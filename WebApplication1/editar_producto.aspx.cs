@@ -63,16 +63,16 @@ namespace Easy_Stock
                     cantidadRestante = Convert.ToInt32(txtCantidad.Text)
                 };
 
-                if (!accion.Equals("editar"))
+                if (accion.Equals("editar"))
                 {
+                    AdProducto.actualizarProducto(oProducto);
+                    //divProductoCargado.Style["display"] = "inherit";
+                    Response.Redirect("home.aspx");               
+                }
+                else {
                     AdProducto.agregarProducto(oProducto);
                     divProductoCargado.Style["display"] = "inherit";
                     LimpiarCampos();
-                }
-                else {
-                    AdProducto.actualizarProducto(oProducto);
-                    divProductoCargado.Style["display"] = "inherit";
-                    Response.Redirect("home.aspx");
                 }
 
             }

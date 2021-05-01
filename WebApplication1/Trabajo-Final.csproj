@@ -118,6 +118,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="depositos.aspx" />
+    <Content Include="editar_deposito.aspx" />
     <Content Include="editar_producto.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -287,6 +289,20 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="depositos.aspx.cs">
+      <DependentUpon>depositos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="depositos.aspx.designer.cs">
+      <DependentUpon>depositos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_deposito.aspx.cs">
+      <DependentUpon>editar_deposito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_deposito.aspx.designer.cs">
+      <DependentUpon>editar_deposito.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_producto.aspx.cs">
       <DependentUpon>editar_producto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -357,6 +373,7 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="Sucursal.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
