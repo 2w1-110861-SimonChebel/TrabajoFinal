@@ -31,7 +31,7 @@ namespace Easy_Stock
         protected void btnBuscarProducto_Click(object sender, EventArgs e) 
         {
             string nombre = txtBuscarProducto.Text;
-            lstProductos = AdProducto.obtenerVariosProductosPorNombre(nombre);
+            lstProductos = AdProducto.obtenerProductos(nombre);
 
             if (lstProductos != null && lstProductos.Count > 0)
             {

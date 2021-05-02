@@ -8,8 +8,8 @@
     <div class="table-responsive">
         <div class="col-xl-12 col-md-12">
 
-            <div id="divMensaje" class="alert alert-danger" style="display: none" runat="server">
-                <h6>El usuario y/o contraseña son incorrectos</h6>
+            <div id="divMensaje" class="alert alert-danger" runat="server">
+                <h6 id="hMensaje" runat="server">El usuario y/o contraseña son incorrectos</h6>
             </div>
 
             <div class="row">
@@ -18,12 +18,12 @@
                     <asp:TextBox ID="txtBuscarDeposito" CssClass="form-control" PlaceHolder="Buscar depositos" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
-                    <asp:Button runat="server" ID="btnBuscarDeposito" type="button" class="btn btn-dark" Text="Buscar" />
+                    <asp:Button runat="server" ID="btnBuscarDeposito" type="button" class="btn btn-dark" Text="Buscar" OnClick="btnBuscarDeposito_Click" />
                 </div>
             </div>
 
 
-            <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnSelectedIndexChanged="btnEditarDeposito_Click" OnRowCommand="grvDepositos_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
+            <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnRowCommand="grvDepositos_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
                 <Columns>
 
 
@@ -96,9 +96,9 @@
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
                                 <b>
-                                    <asp:Button runat="server" ID="btnEditarDeposito" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idSucursal")%>' CommandName="editar" OnClick="btnEditarDeposito_Click" /></b>
+                                    <asp:Button runat="server" ID="btnEditarDeposito" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idSucursal")%>' CommandName="editar" /></b>
                                 <b>
-                                    <asp:Button runat="server" ID="btnEliminarDeposito" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idSucursal") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste deposito? Esta acción no se puede deshacer')) return false;" OnClick="btnEliminarDeposito_Click"></asp:Button></b>
+                                    <asp:Button runat="server" ID="btnEliminarDeposito" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idSucursal") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste deposito? Esta acción no se puede deshacer')) return false;"></asp:Button></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

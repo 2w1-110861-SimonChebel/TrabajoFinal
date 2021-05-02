@@ -54,13 +54,24 @@ namespace Easy_Stock
 
             }
         }
-        protected void btnEditarDeposito_Click(object sender, EventArgs e)
-        {
-            
-        }
-        protected void btnEliminarDeposito_Click(object sender, EventArgs e)
-        {
 
+        protected void btnBuscarDeposito_Click(object sender, EventArgs e)
+        {
+            grvDepositos.DataSource = null;
+            grvDepositos.DataBind();
+            List<Sucursal> lstDepositos = AdDeposito.obtenerDepositos(txtBuscarDeposito.Text);
+            if (lstDepositos != null && lstDepositos.Count > 0)
+            {
+                grvDepositos.DataSource = lstDepositos;
+                grvDepositos.DataBind();
+                divMensaje.Visible = false;
+            }
+            else {
+                divMensaje.Visible = true;
+                divMensaje.Style["class"] = "alert alert-warning";
+                hMensaje.InnerText = "No se encontraron resultados";
+            }
         }
+
     }
 }

@@ -13,7 +13,8 @@ namespace Easy_Stock.AccesoDatos
     {
         static StringBuilder sbSql = null;
         private static readonly string cadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings["conexion"].ConnectionString.ToString();
-        public static List<Sucursal> obtenerDepositos()
+       
+        public static List<Sucursal> obtenerDepositos(string nombre="")
         {
             sbSql = null;
             try
@@ -22,6 +23,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" FROM Sucursales s JOIN Depositos d ON s.idDeposito = d.idDeposito");
                 sbSql.Append(" JOIN Localidades l ON l.idLocalidad=s.idLocalidad");
                 sbSql.Append(" JOIN Provincias p ON p.idProvincia=s.idProvincia");
+                if (!string.IsNullOrEmpty(nombre)) sbSql.Append(string.Format("{0}{1}{2}"," WHERE s.nombre LIKE '%",nombre,"%'"));
 
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
                 {
@@ -209,7 +211,7 @@ namespace Easy_Stock.AccesoDatos
             }
             return true;
         }
-
+     
         public static bool eliminarDeposito(int idDeposito, int idSucu)
         {
             sbSql = null;
