@@ -11,29 +11,33 @@ namespace Easy_Stock
 {
     public partial class editar_producto : System.Web.UI.Page
     {
-        int idProducto;
-        string accion;
+        protected int idProducto;
+        protected string accion;
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
+            accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
             CargarCombos();
             if (Request.QueryString["id"] != null && Request.QueryString["accion"].Equals("editar"))
             {
                 this.idProducto = Convert.ToInt32(Request.QueryString["id"]);
                 Producto oProducto = AdProducto.obtenerProducto(idProducto);
 
-                txtNombreProducto.Text = oProducto.nombre;
-                txtCantidad.Text = oProducto.cantidadRestante.ToString();
-                cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
-                txtPrecioVenta.Text = oProducto.precioVenta.ToString();
-                txtPrecioCosto.Text = oProducto.precioCosto.ToString();
-                cboCategorias.SelectedValue = oProducto.categoria.idCategoria.ToString();
-                cboProveedores.SelectedValue = oProducto.proveedor.idProveedor.ToString();
-                cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
-                txtStockMinimo.Text = oProducto.stockMinimo.ToString();
-                txtStockMaximo.Text = oProducto.stockMaximo.ToString();
-                txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
-                btnAgregarProducto.Text = "Actualizar producto";                   
+                if (oProducto != null)
+                {
+                    txtNombreProducto.Text = oProducto.nombre;
+                    txtCantidad.Text = oProducto.cantidadRestante.ToString();
+                    cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
+                    txtPrecioVenta.Text = oProducto.precioVenta.ToString();
+                    txtPrecioCosto.Text = oProducto.precioCosto.ToString();
+                    cboCategorias.SelectedValue = oProducto.categoria.idCategoria.ToString();
+                    cboProveedores.SelectedValue = oProducto.proveedor.idProveedor.ToString();
+                    cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
+                    txtStockMinimo.Text = oProducto.stockMinimo.ToString();
+                    txtStockMaximo.Text = oProducto.stockMaximo.ToString();
+                    txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
+                    btnAgregarProducto.Text = "Guardar cambios";
+                }
+                             
 
             }
             

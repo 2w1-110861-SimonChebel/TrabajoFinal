@@ -27,7 +27,7 @@ namespace Easy_Stock
             }
             else 
             {
-                grvProductos.DataSource = lstProductos;
+                grvProducto.DataSource = lstProductos;
                 grvProducto.DataBind();
             }
   

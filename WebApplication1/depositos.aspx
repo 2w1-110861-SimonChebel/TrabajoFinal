@@ -13,7 +13,7 @@
             </div>
 
             <div class="row">
-  
+
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
                     <asp:TextBox ID="txtBuscarDeposito" CssClass="form-control" PlaceHolder="Buscar depositos" runat="server"></asp:TextBox>
                 </div>
@@ -22,8 +22,19 @@
                 </div>
             </div>
 
+
             <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnSelectedIndexChanged="btnEditarDeposito_Click" OnRowCommand="grvDepositos_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
                 <Columns>
+
+
+                    <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" Visible="false" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <ItemTemplate>
+                            <div id="divCodigoProducto" style="padding-top: 10px;">
+                                <b><%#Eval("idSucursal")%></b>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Deposito (sucursal)" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divDeposito" style="padding-top: 10px;">
@@ -32,7 +43,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Descripción" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <asp:TemplateField HeaderText="Descripción" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divDescripcionDeposito" style="padding-top: 10px;">
                                 <b><%#Eval("deposito.descripcion") %></b>
@@ -67,15 +78,15 @@
                     <asp:TemplateField HeaderText="Completo" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divDepositoCompleto" style="padding-top: 10px;">
-                                <b><%#Eval("deposito.completo") %></b>
+                                <b><%#Convert.ToBoolean(Eval("deposito.completo")) ? "No" : "Si" %></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Precio costo" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <asp:TemplateField HeaderText="Mapa" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divAccionDeposito" style="padding-top: 10px;">
-                                <a href="<%string.Format("https://www.google.com/maps/search/?api=1&query={0}", oSucursal.direccion);%>">Ver en mapa</a>
+                                <a href="<%# string.Format("https://www.google.com/maps/search/?api=1&query={0}", Eval("direccion"))%>" target="_blank">Ver en mapa</a>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -85,7 +96,7 @@
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
                                 <b>
-                                    <asp:Button runat="server" ID="btnEditarDeposito" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idSucursal") %>' CommandName="editar" OnClick="btnEditarDeposito_Click" /></b>
+                                    <asp:Button runat="server" ID="btnEditarDeposito" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idSucursal")%>' CommandName="editar" OnClick="btnEditarDeposito_Click" /></b>
                                 <b>
                                     <asp:Button runat="server" ID="btnEliminarDeposito" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idSucursal") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste deposito? Esta acción no se puede deshacer')) return false;" OnClick="btnEliminarDeposito_Click"></asp:Button></b>
                             </div>

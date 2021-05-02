@@ -26,7 +26,32 @@ namespace Easy_Stock
         }
         protected void grvDepositos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            
+            int idSucursal = Convert.ToInt32(e.CommandArgument);
+            oSucursal = AdDeposito.obtenerDepositoPorId(idSucursal);
+
+            if (e.CommandName.Equals("editar"))
+            {
+                Response.Redirect("editar_deposito.aspx?id=" + idSucursal.ToString() + "&accion=" + e.CommandName);
+            }
+            else if (e.CommandName.Equals("eliminar"))
+            {
+                if (AdDeposito.eliminarDeposito(idSucursal))
+                {                  
+                    Response.Redirect("depositos.aspx");
+                    divMensaje.Visible = true;
+                    divMensaje.InnerText = "Deposito eliminador correctamente";
+                    divMensaje.Style["class"] = "alert alert-success";              
+                }
+                else
+                {
+                    Response.Redirect("depositos.aspx");
+                    divMensaje.Visible = true;
+                    divMensaje.InnerText = "Hubo un error al eliminar el deposito";
+                    divMensaje.Style["class"] = "alert alert-danger";
+                    
+                }
+
+            }
         }
         protected void btnEditarDeposito_Click(object sender, EventArgs e)
         {

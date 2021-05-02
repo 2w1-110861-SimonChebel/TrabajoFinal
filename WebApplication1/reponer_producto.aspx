@@ -16,7 +16,7 @@
         </div>
     </div>
 
-     <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px">
+   <%--  <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px">
                 <Columns>
                     <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
@@ -56,10 +56,10 @@
                     </asp:TemplateField>            
 
                 </Columns>
-            </asp:GridView>
+            </asp:GridView>--%>
 
 
-    <asp:GridView ID="grvProducto" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;">
+    <asp:GridView ID="grvProducto" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" AutoGenerateColumns="False">
         <Columns>
             <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                 <ItemTemplate>
@@ -88,7 +88,7 @@
             <asp:TemplateField HeaderText="Cantidad a reponer" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                 <ItemTemplate>
                     <div id="divCodigoProducto" style="padding-top: 10px;">
-                        <asp:TextBox ID="txtNuevaCantidad" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtNuevaCantidad" type="number" class="form-control" runat="server"></asp:TextBox>
                     </div>
                 </ItemTemplate>
             </asp:TemplateField>

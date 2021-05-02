@@ -15,22 +15,31 @@ namespace Easy_Stock
     {
 
         /// <summary>
-        /// divProductoCargado control.
+        /// hfIdDeposito control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProductoCargado;
+        protected global::System.Web.UI.WebControls.HiddenField hfIdDeposito;
 
         /// <summary>
-        /// divErrorCargaProducto control.
+        /// divMensaje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divErrorCargaProducto;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMensaje;
+
+        /// <summary>
+        /// hMensaje control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hMensaje;
 
         /// <summary>
         /// divTitulo control.

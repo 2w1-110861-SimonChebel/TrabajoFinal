@@ -2,14 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:HiddenField id="hfIdDeposito" runat="server"/>
          <div class="col-md-6 col-xl-6 ">
-            <div id="divProductoCargado" class="alert alert-succes" style="display: none" runat="server">
-                <h6>Producto(s) cargado(s) correctamente</h6>
+            <div id="divMensaje" class="alert alert-success" runat="server">
+                <h6 id="hMensaje" runat="server"></h6>
             </div>
 
-            <div id="divErrorCargaProducto" class="alert alert-danger" style="display: none" runat="server">
+        <%--    <div id="divErrorCargaProducto" class="alert alert-danger" style="display: none" runat="server">
                 <h6>Hubo en error en la carga. Verifique los datos y vuelva a intentarlo</h6>
-            </div>
+            </div>--%>
 
             <div id="divTitulo" class="col-md-6 col-xl-6" style="display: flex; justify-items: right" runat="server">
                 <h2>Nuevo Deposito</h2>
