@@ -33,7 +33,6 @@ namespace Easy_Stock
                 txtStockMinimo.Text = oProducto.stockMinimo.ToString();
                 txtStockMaximo.Text = oProducto.stockMaximo.ToString();
                 txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
-                divTitulo.InnerText = "Editar producto";
                 btnAgregarProducto.Text = "Actualizar producto";                   
 
             }

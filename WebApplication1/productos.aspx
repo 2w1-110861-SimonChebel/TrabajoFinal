@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            
+
             <div id="divMensaje" class="alert alert-warning" style="display: inherit; padding-top: 20px" runat="server">
                 <h6>No se econtraron resultados</h6>
             </div>

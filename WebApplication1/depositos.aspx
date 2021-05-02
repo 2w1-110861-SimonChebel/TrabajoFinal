@@ -13,15 +13,16 @@
             </div>
 
             <div class="row">
+  
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
-                    <asp:TextBox ID="txtBuscarDeposito" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtBuscarDeposito" CssClass="form-control" PlaceHolder="Buscar depositos" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
                     <asp:Button runat="server" ID="btnBuscarDeposito" type="button" class="btn btn-dark" Text="Buscar" />
                 </div>
             </div>
 
-            <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnSelectedIndexChanged="btnEditarDeposito_Click" OnRowCommand="grvDepositos_RowCommand">
+            <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnSelectedIndexChanged="btnEditarDeposito_Click" OnRowCommand="grvDepositos_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
                 <Columns>
                     <asp:TemplateField HeaderText="Deposito (sucursal)" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>

@@ -62,6 +62,36 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
+        public static bool agregarDeposito(Sucursal sucursal)
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("agregarDeposito");
+                //sbSql = new StringBuilder("INSERT INTO Depositos(completo, descripcion) values(@completo, @desc) ");
+                //sbSql.Append("DECLARE @ultimoDepo AS INT = @@IDENTITY ");
+                //sbSql.Append("INSERT INTO Sucursales(nombre, direccion,idDeposito,idLocalidad,idProvincia) ");
+                //sbSql.Append("VALUES(@nombreSucu,@direSucu,@ultiDepo,@idLocalidad,@idProvincia)");
+
+                SqlParameter[] parametros = {
+                    new SqlParameter("@completo", sucursal.deposito.completo),
+                    new SqlParameter("@desc", sucursal.deposito.descripcion),
+                    new SqlParameter("@nombreSucu", sucursal.nombre),
+                    new SqlParameter("@direSucu", sucursal.direccion),
+                    new SqlParameter("@idLocalidad",sucursal.localidad.idLocalidad),
+                    new SqlParameter("@idProvincia", sucursal.provincia.idProvincia),
+                };
+
+                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros);
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+            return true;
+        }
+
         public static List<Deposito> obtenerDepositosCombo()
         {
             sbSql = null;

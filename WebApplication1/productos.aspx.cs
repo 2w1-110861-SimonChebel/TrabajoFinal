@@ -60,7 +60,8 @@ namespace Easy_Stock
             else if(e.CommandName.Equals("eliminar"))
             {
                 if(AdProducto.eliminarProductoPorId(idProducto))
-                {                  
+                {
+                    divMensaje.Visible = true;
                     divMensaje.InnerText = "Producto eliminado correctamente";
                     divMensaje.Style["class"] = "alert alert-success";
                     Response.Redirect("productos.aspx");

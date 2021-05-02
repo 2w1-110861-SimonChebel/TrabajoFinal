@@ -261,6 +261,7 @@
   <ItemGroup>
     <Compile Include="AccesoDatos\AdCategoria.cs" />
     <Compile Include="AccesoDatos\AdDeposito.cs" />
+    <Compile Include="AccesoDatos\AdGeneral.cs" />
     <Compile Include="AccesoDatos\AdMarca.cs" />
     <Compile Include="AccesoDatos\AdProducto.cs" />
     <Compile Include="AccesoDatos\AdProveedor.cs" />
