@@ -17,6 +17,7 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
+                divMensaje.Visible = false;
                 oSucursal = new Sucursal();
                 lstDepositos = AdDeposito.obtenerDepositos();
                 grvDepositos.DataSource = lstDepositos;
@@ -35,20 +36,20 @@ namespace Easy_Stock
             }
             else if (e.CommandName.Equals("eliminar"))
             {
-                if (AdDeposito.eliminarDeposito(idSucursal))
-                {                  
-                    Response.Redirect("depositos.aspx");
+                if (AdDeposito.eliminarDeposito(oSucursal.deposito.idDeposito, oSucursal.idSucursal))
+                {                                    
                     divMensaje.Visible = true;
                     divMensaje.InnerText = "Deposito eliminador correctamente";
-                    divMensaje.Style["class"] = "alert alert-success";              
+                    divMensaje.Style["class"] = "alert alert-success";
+                    Response.Redirect("depositos.aspx");
                 }
                 else
                 {
-                    Response.Redirect("depositos.aspx");
                     divMensaje.Visible = true;
                     divMensaje.InnerText = "Hubo un error al eliminar el deposito";
                     divMensaje.Style["class"] = "alert alert-danger";
-                    
+                    Response.Redirect("depositos.aspx");
+
                 }
 
             }

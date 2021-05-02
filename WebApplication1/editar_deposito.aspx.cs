@@ -46,8 +46,8 @@ namespace Easy_Stock
         protected void btnAgregarDeposito_Click(object sender, EventArgs e)
         {
             Sucursal oSucursal;
-            int idSucu = this.idSucursal = Convert.ToInt32(Request.QueryString["id"]);
             this.accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString();
+            int idSucu = accion.Equals("editar") ? Convert.ToInt32(Request.QueryString["id"]) : 0;
 
             oSucursal = new Sucursal
             {
@@ -56,7 +56,7 @@ namespace Easy_Stock
                 direccion = txtDireccionDeposito.Text,
                 deposito = new Deposito
                 {
-                    idDeposito = Convert.ToInt32(hfIdDeposito.Value),
+                    idDeposito = (accion.Equals("editar"))? Convert.ToInt32(hfIdDeposito.Value):0,
                     descripcion = txtDescripcion.Text,
                     completo = cboCompleto.SelectedValue == "-1" ? false : cboCompleto.SelectedValue == "0" ?false:true
                 },

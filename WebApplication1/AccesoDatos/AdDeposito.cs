@@ -210,14 +210,15 @@ namespace Easy_Stock.AccesoDatos
             return true;
         }
 
-        public static bool eliminarDeposito(int idDeposito)
+        public static bool eliminarDeposito(int idDeposito, int idSucu)
         {
             sbSql = null;
             try
             {
                 string sql = "SP_EliminarDeposito";
                 SqlParameter[] parametros = {
-                    new SqlParameter("@idDeposito", idDeposito)
+                    new SqlParameter("@idDeposito", idDeposito),
+                    new SqlParameter("@idSucu",idSucu)
                 };
 
                 SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sql, parametros);
