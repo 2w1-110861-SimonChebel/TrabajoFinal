@@ -20,7 +20,7 @@ namespace Easy_Stock
             if (Request.QueryString["id"] != null && Request.QueryString["accion"].Equals("editar"))
             {
                 this.idProducto = Convert.ToInt32(Request.QueryString["id"]);
-                Producto oProducto = AdProducto.obtenerProducto(idProducto);
+                Producto oProducto = AdProducto.obtenerProductoPorId(idProducto);
 
                 if (oProducto != null)
                 {
@@ -63,7 +63,9 @@ namespace Easy_Stock
                     } : null,
                     stockMinimo = Convert.ToInt32(txtStockMinimo.Text),
                     stockMaximo = Convert.ToInt32(txtStockMaximo.Text),
-                    cantidadRestante = Convert.ToInt32(txtCantidad.Text)
+                    cantidadRestante = Convert.ToInt32(txtCantidad.Text),
+                    fechaVenc =Convert.ToDateTime(dtpFechaVenc.Text),
+                    fechaElab= Convert.ToDateTime(dtpFechaElab.Text)
                 };
 
                 if (accion.Equals("editar"))
@@ -74,7 +76,10 @@ namespace Easy_Stock
                 }
                 else {
                     AdProducto.agregarProducto(oProducto);
-                    divProductoCargado.Style["display"] = "inherit";
+                    divMensaje.Style["display"] = "inherit";
+                    divMensaje.Attributes["class"] = "alert alert-success";
+                    hMensaje.InnerText = "Producto cargado correctamente";
+
                     LimpiarCampos();
                 }
 
@@ -95,6 +100,7 @@ namespace Easy_Stock
             List<Categoria> lstCategorias = AdCategoria.obtenerCategorias();
             List<Deposito> lstDepositos = AdDeposito.obtenerDepositosCombo();
 
+            cboMarcas.DataSource = null;
             cboMarcas.DataSource = lstMarcas;
             for (int i = 0; i < lstMarcas.Count; i++)
             {
@@ -106,6 +112,7 @@ namespace Easy_Stock
                 cboMarcas.Items.Add(li);
             }
 
+            cboProveedores.DataSource = null;
             cboProveedores.DataSource = lstProveedores;
             for (int i = 0; i < lstProveedores.Count; i++)
             {
@@ -117,6 +124,7 @@ namespace Easy_Stock
                 cboProveedores.Items.Add(li);
             }
 
+            cboCategorias.DataSource = null;
             cboCategorias.DataSource = lstCategorias;
             for (int i = 0; i < lstCategorias.Count; i++)
             {
@@ -128,6 +136,7 @@ namespace Easy_Stock
                 cboCategorias.Items.Add(li);
             }
 
+            cboDepositos.DataSource = null;
             cboDepositos.DataSource = lstDepositos;
             for (int i = 0; i < lstDepositos.Count; i++)
             {

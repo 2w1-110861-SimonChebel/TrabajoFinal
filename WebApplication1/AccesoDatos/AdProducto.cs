@@ -54,7 +54,7 @@ namespace Easy_Stock.AccesoDatos
             sbSql = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab ");
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
@@ -91,7 +91,9 @@ namespace Easy_Stock.AccesoDatos
                                     idProveedor = dr.IsDBNull(11) ? default(int) : dr.GetInt32(11),
                                     nombre = dr.IsDBNull(12) ? default(string) : dr.GetString(12)
                                 },
-                                cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13)
+                                cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
+                                fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14),
+                                fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15)
 
                             });
                         }
@@ -107,12 +109,12 @@ namespace Easy_Stock.AccesoDatos
 
         }
 
-        public static Producto obtenerProducto(int idProducto)
+        public static Producto obtenerProductoPorId(int idProducto)
         {
             sbSql = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab");
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
@@ -150,7 +152,9 @@ namespace Easy_Stock.AccesoDatos
                                 idProveedor = dr.IsDBNull(11) ? default(int) : dr.GetInt32(11),
                                 nombre = dr.IsDBNull(12) ? default(string) : dr.GetString(12)
                             },
-                            cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13)
+                            cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
+                            fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14),
+                            fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15)
                         };
                     }
                     return oProducto;
@@ -199,64 +203,6 @@ namespace Easy_Stock.AccesoDatos
                 throw ex;
             }
         }
-
-
-        public static Producto obtenerProductoPorNombre(string nombre)
-        {
-
-            sbSql = null;
-            try
-            {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante");
-                sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
-                sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
-                sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
-                sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre like '%",nombre,"%'"));
-
-                SqlParameter parametro = new SqlParameter("@nombre", nombre);
-
-                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), parametro))
-                {
-                    Producto oProducto = null;
-                    if (dr.HasRows)
-                    {
-                        dr.Read();
-                        oProducto = new Producto
-                        {
-                            idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
-                            nombre = dr.IsDBNull(1) ? default(string) : dr.GetString(1),
-                            descripcion = dr.IsDBNull(2) ? default(string) : dr.GetString(2),
-                            marca = new Marca
-                            {
-                                idMarca = dr.IsDBNull(3) ? default(int) : dr.GetInt32(3),
-                                marca = dr.IsDBNull(4) ? default(string) : dr.GetString(4)
-                            },
-                            precioVenta = dr.IsDBNull(5) ? default(float) : dr.GetFloat(5),
-                            precioCosto = dr.IsDBNull(6) ? default(float) : dr.GetFloat(5),
-                            stockMinimo = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7),
-                            stockMaximo = dr.IsDBNull(8) ? default(int) : dr.GetInt32(8),
-                            categoria = new Categoria
-                            {
-                                idCategoria = dr.IsDBNull(9) ? default(int) : dr.GetInt32(9),
-                                nombre = dr.IsDBNull(10) ? default(string) : dr.GetString(10)
-                            },
-                            proveedor = new Proveedor
-                            {
-                                idProveedor = dr.IsDBNull(11) ? default(int) : dr.GetInt32(11),
-                                nombre = dr.IsDBNull(12) ? default(string) : dr.GetString(12)
-                            },
-                            cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13)
-                        };
-                    }
-                    return oProducto;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
 
         public static bool eliminarProductoPorId(int idProducto)
         {

@@ -113,6 +113,7 @@ namespace Easy_Stock
             List<Localidad> lstLocalidad = AdGeneral.obtenerLocalidades();
             List<Provincia> lstProvincias = AdGeneral.obtenerProvincias();
 
+            cboLocalidades.DataSource = null;
             cboLocalidades.DataSource = lstLocalidad;
             for (int i = 0; i < lstLocalidad.Count; i++)
             {
@@ -124,6 +125,7 @@ namespace Easy_Stock
                 cboLocalidades.Items.Add(li);
             }
 
+            cboProvincias.DataSource = null;
             cboProvincias.DataSource = lstProvincias;
             for (int i = 0; i < lstProvincias.Count; i++)
             {

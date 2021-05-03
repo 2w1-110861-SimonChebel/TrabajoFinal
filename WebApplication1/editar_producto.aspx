@@ -55,14 +55,14 @@
                         </div>
                     </li>
                 </ul>
-                    <%-- <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">--%>
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+                <%-- <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">--%>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
             </div>
         </nav>
 
         <div class="col-md-6 col-xl-6 ">
-            <div id="divProductoCargado" class="alert alert-succes" style="display: none" runat="server">
-                <h6>Producto(s) cargado(s) correctamente</h6>
+            <div id="divMensaje" style="display: none" runat="server">
+                <h6 id="hMensaje" runat="server"></h6>
             </div>
             <div id="divErrorCargaProducto" class="alert alert-danger" style="display: none" runat="server">
                 <h6>Hubo en error en la carga. Verifique los datos y vuelva a intentarlo</h6>
@@ -77,6 +77,18 @@
             <div class="form-group">
                 <label for="nombre" class="control-label">Cantidad</label>
                 <asp:TextBox type="number" class="form-control" ID="txtCantidad" name="txtCantidad" runat="server"> </asp:TextBox>
+            </div>
+
+
+            <div class="form-group">
+                <label for="fechaElab" class="control-label">Fecha Elaboración</label>
+                <asp:TextBox type="date" class="form-control" ID="dtpFechaElab" name="dtpFechaElab" runat="server"></asp:TextBox>
+            </div>
+
+
+            <div class="form-group">
+                <label for="fechaVenc" class="control-label">Fecha vencimiento</label>
+                <asp:TextBox type="date" class="form-control" ID="dtpFechaVenc" name="dtpFechaVenc" runat="server"></asp:TextBox>
             </div>
 
             <div class="form-group">
@@ -133,12 +145,13 @@
                 <asp:TextBox type="text" class="form-control" ID="txtDescripcion" name="txtprecioCosto" MaxLength="150" runat="server" TextMode="MultiLine"></asp:TextBox>
             </div>
 
+
             <div class="form-group" style="display: flex; justify-content: center">
                 <asp:Button ID="btnAgregarProducto" Text="Agregar producto" type="button" class="btn btn-primary" runat="server" OnClick="btnAgregarProducto_Click" />
             </div>
 
             <div class="form-group" style="display: flex; justify-content: center">
-                <asp:Button  Text="Limpiar campos" type="button" class="btn btn-secondary" runat="server" />
+                <asp:Button Text="Limpiar campos" type="button" class="btn btn-secondary" runat="server" />
             </div>
 
         </div>

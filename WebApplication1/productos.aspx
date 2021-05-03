@@ -47,6 +47,22 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
+                    <asp:TemplateField HeaderText="Fecha vencimiento" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <ItemTemplate>
+                            <div id="divFechaVenc" style="padding-top: 10px;">
+                                <b><%#Eval("fechaVenc") %></b>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                       <asp:TemplateField HeaderText="Fecha elaboración" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <ItemTemplate>
+                            <div id="divFechaVenc" style="padding-top: 10px;">
+                                <b><%#Eval("fechaElab") %></b>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Marca" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divMarca" style="padding-top: 10px;">
@@ -246,7 +262,7 @@
     </style>
 
     <script type="text/javascript">
-    
-    </script>
+
+</script>
 
 </asp:Content>
