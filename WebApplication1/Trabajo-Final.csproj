@@ -260,6 +260,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccesoDatos\AdCategoria.cs" />
+    <Compile Include="AccesoDatos\AdCliente.cs" />
     <Compile Include="AccesoDatos\AdDeposito.cs" />
     <Compile Include="AccesoDatos\AdGeneral.cs" />
     <Compile Include="AccesoDatos\AdMarca.cs" />
@@ -312,7 +313,9 @@
       <DependentUpon>editar_producto.aspx</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Categoria.cs" />
+    <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Deposito.cs" />
+    <Compile Include="Entidades\DeudaCliente.cs" />
     <Compile Include="Entidades\Localidad.cs" />
     <Compile Include="Entidades\Lote.cs" />
     <Compile Include="Entidades\Marca.cs" />
@@ -320,6 +323,9 @@
     <Compile Include="Entidades\ProductoReponer.cs" />
     <Compile Include="Entidades\Proveedor.cs" />
     <Compile Include="Entidades\Provincia.cs" />
+    <Compile Include="Entidades\Sexo.cs" />
+    <Compile Include="Entidades\TipoCliente.cs" />
+    <Compile Include="Entidades\TipoEmpresa.cs" />
     <Compile Include="Entidades\TipoUsuario.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Global.asax.cs">
