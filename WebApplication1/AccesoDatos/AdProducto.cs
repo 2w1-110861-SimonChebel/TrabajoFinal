@@ -226,7 +226,35 @@ namespace Easy_Stock.AccesoDatos
 
         public static void actualizarProducto(Producto oProdcuto)
         {
-           
+            sbSql = null;
+            try
+            {
+                StringBuilder sbSql = new StringBuilder("INSERT INTO Productos");
+                sbSql.Append("(nombre, idMarca, precioVenta, precioCosto, descripcion, idCategoria, idProveedor, idDeposito,stockMinimo, stockMaximo, cantidadRestante,fechaVenc,fechaElab)");
+                sbSql.Append("VALUES(@idMarca, @precioVenta, @precioCosto, @descripcion, @idCategoria, @idProveedor, @idDeposito, @stockMinimo,@stockMaximo, @cantidad,@fechaVenc,@fechaElab)");
+
+                SqlParameter[] parametros = {
+                    new SqlParameter("@idProducto", oProdcuto.idProducto),
+                    new SqlParameter("@idMarca", oProdcuto.marca.idMarca),
+                    new SqlParameter("@precioVenta", oProdcuto.precioVenta),
+                    new SqlParameter("@precioCosto", oProdcuto.precioCosto),
+                    new SqlParameter("@descripcion", oProdcuto.descripcion),
+                    new SqlParameter("@idCategoria", oProdcuto.categoria.idCategoria),
+                    new SqlParameter("@idProveedor", oProdcuto.proveedor.idProveedor),
+                    new SqlParameter("@idDeposito", oProdcuto.deposito != null ? oProdcuto.deposito.idDeposito : 0),
+                    new SqlParameter("@stockMinimo", oProdcuto.stockMinimo),
+                    new SqlParameter("@stockMaximo", oProdcuto.stockMaximo),
+                    new SqlParameter("@cantidad", oProdcuto.cantidadRestante),
+                    new SqlParameter("@fechaVenc", oProdcuto.fechaVenc),
+                    new SqlParameter("@fechaElab", oProdcuto.fechaElab)
+                };
+
+                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static void reponerProductos(List<Producto> lstProductos)
