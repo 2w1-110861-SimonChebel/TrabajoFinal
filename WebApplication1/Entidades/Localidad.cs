@@ -9,5 +9,11 @@ namespace Easy_Stock.Entidades
     {
         public int idLocalidad { get; set; } = 0;
         public string localidad { get; set; } = string.Empty;
+
+        public Localidad()
+        {
+            this.idLocalidad = 0;
+            this.localidad = string.Empty;
+        }
     }
 }

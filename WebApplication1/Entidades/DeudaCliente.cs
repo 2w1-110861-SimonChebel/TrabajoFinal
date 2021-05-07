@@ -9,5 +9,11 @@ namespace Easy_Stock.Entidades
     {
         public int idDeudaCliente { get; set; } = 0;
         public float monto { get; set; } = 0;
+
+        public DeudaCliente()
+        {
+            this.idDeudaCliente = 0;
+            this.monto = 0;
+        }
     }
 }

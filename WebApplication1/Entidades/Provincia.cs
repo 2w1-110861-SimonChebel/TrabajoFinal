@@ -9,5 +9,11 @@ namespace Easy_Stock.Entidades
     {
         public int idProvincia { get; set; } = 0;
         public string provincia { get; set; } = string.Empty;
+
+        public Provincia()
+        {
+            this.idProvincia = 0;
+            this.provincia = string.Empty;
+        }
     }
 }

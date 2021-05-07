@@ -39,6 +39,8 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="editar_producto.aspx">Nuevo Producto</a>
                                 <a class="dropdown-item" href="reponer_producto.aspx">Reponer Producto</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="productos.aspx?accion=inactivos">Ver inactivos</a>
                             </div>
                         </li>
 
