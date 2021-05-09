@@ -14,10 +14,18 @@ namespace Easy_Stock
         public Cliente oCliente ;
         public List<Cliente> lstClientes;
         protected void Page_Load(object sender, EventArgs e)
+        
         {
             if (!IsPostBack)
             {
-                divMensaje.Visible = false;
+                string response = Request.QueryString["eliminado"] != null ? Request.QueryString["eliminado"] : string.Empty;
+                if (!string.IsNullOrEmpty(response))
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "El cliente se borró correctamente";
+                }
+                else divMensaje.Visible = false;
                 lstClientes = AdCliente.obtenerClientes();
                 grvClientes.DataSource = lstClientes;
                 grvClientes.DataBind();
@@ -67,10 +75,27 @@ namespace Easy_Stock
         }
         protected void grvClientes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int idCliente = Convert.ToInt32(e.CommandArgument);
+            string command = e.CommandArgument.ToString();
+            string[] param = command.Split(',');
+            int idCliente = Convert.ToInt32(param[0]);
+            int tipoCliente = 0;
+            if(param.Length > 1 )Convert.ToInt32(param[1]);
             if (e.CommandName.Equals("editar"))
             {
-                Response.Redirect("editar_cliente.aspx?id=" + idCliente.ToString() + "&accion=" + e.CommandName);
+                Response.Redirect("editar_clientes.aspx?id=" + idCliente.ToString() + "&accion=" + e.CommandName+"&tipoCliente="+tipoCliente);
+            }
+            if (e.CommandName.Equals("eliminar"))
+            {
+                if (AdCliente.eliminarClientePorId(idCliente))
+                {
+                    Response.Redirect("clientes.aspx?eliminado=true", true);
+                }
+                else {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                    hMensaje.InnerText = "Hubo un problema al eliminar el cliente. Intente nuevamente";
+                    return;
+                }
             }
         }
         protected string devolverFechaSinHorario(DateTime fecha)

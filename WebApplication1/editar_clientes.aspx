@@ -18,8 +18,8 @@
     </div>
 
 
-    <%if (Request.QueryString["tipo"] != null && Request.QueryString["tipo"].Equals("persona"))
-        {%>
+    <%if (Request.QueryString["tipoCliente"] != null && Request.QueryString["tipoCliente"] =="1")
+      {%>
     <div id="divCamposPersona" class="form-group col-xl-6 col-md-6" runat="server">
         <div class="form-group">
             <label for="nombre" class="control-label">Nombre (*)</label>
@@ -51,7 +51,7 @@
 
     </div>
     <%}
-        else if (Request.QueryString["tipo"] != null && Request.QueryString["tipo"].Equals("empresa"))
+        else if (Request.QueryString["tipoCliente"] != null && Request.QueryString["tipoCliente"]=="2")
         {%>
     <div id="divCamposEmpresa" class="form-group col-xl-6 col-md-6" runat="server">
         <div class="form-group">

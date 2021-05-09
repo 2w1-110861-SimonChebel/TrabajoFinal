@@ -9,7 +9,7 @@ namespace Easy_Stock.Entidades
     {
         public static string alertPrimary { get;} = "alert alert-primary";
         public static string alertSecondary { get; } = "alert alert-secondary";
-        public static string alertSucces { get;} = "alert alert-succes";
+        public static string alertSucces { get;} = "alert alert-success";
         public static string alertDanger { get;} = "alert alert-danger";
         public static string alertWarning { get;} = "alert alert-warning";
         public static string alertDark { get; } = "alert alert-dark";

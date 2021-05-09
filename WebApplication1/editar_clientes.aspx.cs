@@ -13,26 +13,70 @@ namespace Easy_Stock
     public partial class editar_clientes : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
+        
         {
             if (!IsPostBack)
             {
-                divMensaje.Visible = false;
-                string tipo = (string.IsNullOrEmpty(Request.QueryString["tipo"]) ? string.Empty : Request.QueryString["tipo"].ToString());
-                int value = !string.IsNullOrEmpty(Request.QueryString["value"]) ? Convert.ToInt32(Request.QueryString["value"]) : 0;
-                if (string.IsNullOrEmpty(tipo))
+                reestablecerColoresCampos();
+                string tipoClienteNombre = Request.QueryString["tipo"];
+                int idCliente = Convert.ToInt32(Request.QueryString["id"]);
+                string accion = Request.QueryString["accion"];
+                int tipoCliente = !string.IsNullOrEmpty(Request.QueryString["tipoCliente"]) ? Convert.ToInt32(Request.QueryString["tipoCliente"]) : 0;
+                if (string.IsNullOrEmpty(tipoCliente.ToString()))
                 {
-                    cargarCombos(true,value);
+                    cargarCombos(true, tipoCliente);
                 }
-                else 
+                else
                 {
-                    cargarCombos(false, Convert.ToInt32(value));
-                    this.cboTipoCliente.SelectedValue = value.ToString();
+                    cargarCombos(false, tipoCliente);
+                    this.cboTipoCliente.SelectedValue = tipoCliente.ToString();
+                }
+                if (!string.IsNullOrEmpty(accion))
+                {
+                    switch (accion)
+                    {
+                        case "editar":
+                            Cliente oCliente = AdCliente.obtenerClientePorId(idCliente, tipoCliente);
+
+                            cboTipoCliente.SelectedValue = oCliente.tipoCliente.idTipoCliente.ToString();
+                            txtTelefono.Text = oCliente.telefono;
+                            txtEmail.Text = oCliente.email;
+                            txtTelefono.Text = oCliente.telefono;
+                            txtBarrio.Text = oCliente.barrio;
+                            txtDireccion.Text = oCliente.direccion;
+                            cboProvincias.SelectedValue = oCliente.provincia.idProvincia.ToString();
+                            cboLocalidades.SelectedValue = oCliente.localidad.idLocalidad.ToString();
+                            txtCodigoPostal.Text = string.IsNullOrEmpty(oCliente.codigoPostal) ? string.Empty : oCliente.codigoPostal;
+                            if (tipoCliente == 1)
+                            {
+                                txtNombre.Text = oCliente.nombre;
+                                txtApellido.Text = oCliente.apellido;
+                                cboSexos.SelectedValue = oCliente.sexo.idSexo.ToString();
+                                txtDocumento.Text = oCliente.dni;
+                                txtFechaNac.Text = oCliente.fechaNacimiento.ToString();
+                                divCamposPersona.Visible = true;
+                            }
+                            if (tipoCliente == 2)
+                            {
+                                txtCuit.Text = oCliente.cuit;
+                                txtRazonSocial.Text = oCliente.razonSocial;
+                                cboTipoEmpresa.SelectedValue = oCliente.tipoEmpresa.idTipoEmpresa.ToString();
+                                divCamposEmpresa.Visible = true;
+                            }
+                            btnAgregarCliente.Text = "Guardar cambios";
+                            break;
+                        case "eliminar":
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
 
         }
 
-        private void cargarCombos(bool esPrimeraVez=false, int tipoCliente=0)
+        private void cargarCombos(bool esPrimeraVez = false, int tipoCliente = 0)
         {
             List<TipoCliente> lstTipoCliente = AdGeneral.obtenerTiposClientes();
             List<Localidad> lstLocalidades = AdGeneral.obtenerLocalidades();
@@ -40,7 +84,7 @@ namespace Easy_Stock
 
             //Tipos clientes
             cboTipoCliente.DataSource = null;
-            cboTipoCliente.DataBind(); 
+            cboTipoCliente.DataBind();
             cboTipoCliente.DataSource = lstTipoCliente;
             for (int i = 0; i < lstTipoCliente.Count; i++)
             {
@@ -109,23 +153,25 @@ namespace Easy_Stock
                     }
                 }
             }
-           
+
         }
 
         protected void cboTipoCliente_SelectedIndexChanged(object sender, EventArgs e)
         {
             string value = this.cboTipoCliente.SelectedValue;
             string accion = this.cboTipoCliente.SelectedValue == "1" ? "persona" : this.cboTipoCliente.SelectedValue == "2" ? "empresa" : string.Empty;
-            Response.Redirect("editar_clientes.aspx?tipo="+accion+"&value="+value);
+            Response.Redirect("editar_clientes.aspx?tipo=" + accion + "&tipoCliente=" + value);
         }
 
         protected void btnAgregarCliente_Click(object sender, EventArgs e)
         {
             int tipoCliente = Convert.ToInt32(cboTipoCliente.SelectedValue);
+            string accion = Request.QueryString["accion"];
             if (validarCampos(tipoCliente))
             {
                 Cliente oCliente = new Cliente
                 {
+                    idCliente = Convert.ToInt32(Request.QueryString["id"]),
                     nombre = string.IsNullOrEmpty(txtNombre.Text) ? null : txtNombre.Text,
                     apellido = string.IsNullOrEmpty(txtApellido.Text) ? null : txtApellido.Text,
                     dni = string.IsNullOrEmpty(txtDocumento.Text) ? null : txtDocumento.Text,
@@ -134,46 +180,61 @@ namespace Easy_Stock
                     direccion = string.IsNullOrEmpty(txtDireccion.Text) ? null : txtDireccion.Text,
                     codigoPostal = txtCodigoPostal.Text,
                     barrio = string.IsNullOrEmpty(txtBarrio.Text) ? null : txtBarrio.Text,
-                    tipoCliente = new TipoCliente 
-                    { 
+                    tipoCliente = new TipoCliente
+                    {
                         idTipoCliente = Convert.ToInt32(cboTipoCliente.SelectedValue)
                     },
                     fechaNacimiento = string.IsNullOrEmpty(txtFechaNac.Text) ? default : Convert.ToDateTime(txtFechaNac.Text),
-                    sexo = new Sexo 
-                    { 
-                        idSexo = string.IsNullOrEmpty(cboSexos.SelectedValue)? 0 : Convert.ToInt32(cboSexos.SelectedValue)
+                    sexo = new Sexo
+                    {
+                        idSexo = string.IsNullOrEmpty(cboSexos.SelectedValue) ? 0 : Convert.ToInt32(cboSexos.SelectedValue)
                     },
-                    tipoEmpresa = new TipoEmpresa 
-                    { 
+                    tipoEmpresa = new TipoEmpresa
+                    {
                         idTipoEmpresa = string.IsNullOrEmpty(cboTipoEmpresa.SelectedValue) ? 0 : Convert.ToInt32(cboTipoEmpresa.SelectedValue)
                     },
-                    localidad = new Localidad 
-                    { 
+                    localidad = new Localidad
+                    {
                         idLocalidad = Convert.ToInt32(cboLocalidades.SelectedValue)
                     },
-                    provincia = new Provincia 
+                    provincia = new Provincia
                     {
                         idProvincia = Convert.ToInt32(cboProvincias.SelectedValue)
                     },
                     razonSocial = string.IsNullOrEmpty(txtRazonSocial.Text) ? null : txtRazonSocial.Text,
                     cuit = string.IsNullOrEmpty(txtCuit.Text) ? null : txtCuit.Text,
-                    habilitado = true                    
+                    habilitado = true
                 };
-                if (!AdCliente.verificarDniCuitExiste(tipoCliente == 1 ? oCliente.dni : oCliente.cuit))
+                if (!AdCliente.verificarDniCuitExiste((tipoCliente == 1) ? oCliente.dni : oCliente.cuit,oCliente.idCliente))
                 {
-                    if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                    if (accion.Equals("editar"))
                     {
-                        divMensaje.Visible = true;
-                        divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
-                        hMensaje.InnerText = "Cliente cargado correctamente";
-                        reestablecerColoresCampos();
+                        if (AdCliente.actualizarCliente(oCliente, tipoCliente))
+                        {
+                            divMensaje.Visible = true;
+                            divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                            hMensaje.InnerText = "El cliente se actualizó correctamente";
+                            limpiarCampos();
+                        }
                     }
-                    else
+                    else 
                     {
-                        divMensaje.Visible = true;
-                        divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
-                        hMensaje.InnerText = "Hubo en error al cargar los datos. Intente nuevamente";
+                        if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                        {
+                            divMensaje.Visible = true;
+                            divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                            hMensaje.InnerText = "Cliente cargado correctamente";
+                            reestablecerColoresCampos();
+                            limpiarCampos();
+                        }
+                        else
+                        {
+                            divMensaje.Visible = true;
+                            divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                            hMensaje.InnerText = "Hubo en error al cargar los datos. Intente nuevamente";
+                        }
                     }
+                   
                 }
                 else
                 {
@@ -184,7 +245,7 @@ namespace Easy_Stock
                     txtDocumento.BorderColor = Color.Red;
                     txtCuit.BorderColor = Color.Red;
                 }
-                
+
             }
             else
             {
@@ -193,12 +254,27 @@ namespace Easy_Stock
                 hMensaje.InnerText = "Por favor complete los campos obligatorios";
                 return;
             }
-                
+
         }
 
         private void limpiarCampos()
         {
-            
+            cboTipoCliente.SelectedValue = "0";
+            txtNombre.Text = string.Empty;
+            txtTelefono.Text = string.Empty;
+            txtApellido.Text= string.Empty;
+            cboSexos.SelectedValue = "0";
+            txtDocumento.Text = string.Empty;
+            txtFechaNac.Text= string.Empty;
+            txtEmail.Text = string.Empty;
+            txtDireccion.Text = string.Empty;
+            txtBarrio.Text = string.Empty;
+            cboLocalidades.SelectedValue = "0";
+            cboProvincias.SelectedValue = "0";
+            txtRazonSocial.Text = string.Empty;
+            txtCuit.Text = string.Empty;
+            cboTipoEmpresa.SelectedValue = "0";
+            //this.reestablecerValoresCampos(ref aCampos);
         }
 
         private void reestablecerColoresCampos()
@@ -259,10 +335,10 @@ namespace Easy_Stock
                 txtRazonSocial,
                 txtCuit,
                 cboTipoEmpresa
-                };             
+                };
             }
             return validarCampoVacio(aCampos);
-            
+
         }
 
         private bool validarCampoVacio(WebControl[] aControles)
@@ -294,5 +370,24 @@ namespace Easy_Stock
             }
             return bandera;
         }
+
+        //private void reestablecerValoresCampos(ref WebControl[] aControles)
+        //{
+        //    foreach (WebControl control in aControles)
+        //    {
+        //        if (control != null)
+        //        {
+        //            if (control.GetType().Name.Equals("TextBox"))
+        //            {
+        //                control.Attributes["Text"] = string.Empty;
+        //            }
+        //            if (control.GetType().Name.Equals("DropDownList"))
+        //            {
+        //                control.Attributes["SelectedValue"] = "0";
+        //            }
+        //        }
+        //    }
+        //}
+
     }
 }

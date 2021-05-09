@@ -144,9 +144,9 @@
                             <ItemTemplate>
                                 <div id="divAcciones" style="padding-top: 10px;">
                                     <b>
-                                        <asp:Button runat="server" ID="btnEditarCliente" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idCliente") %>' CommandName="editar" OnClick="BtnEditarCliente_Click" /></b>
+                                        <asp:Button runat="server" ID="btnEditarCliente" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#string.Format("{0}{1}{2}",Eval("idCliente"),",",Eval("tipoCliente.idTipoCliente")) %>' CommandName="editar" OnClick="BtnEditarCliente_Click" /></b>
                                     <b>
-                                        <asp:Button runat="server" ID="btnEliminarCliente" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idCliente") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste producto? Esta acción no se puede deshacer')) return false;" OnClick="BtnEliminarCliente_Click"></asp:Button></b>
+                                        <asp:Button runat="server" ID="btnEliminarCliente" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idCliente") %>' CommandName="eliminar" Text="Eliminar" OnClick="BtnEliminarCliente_Click"></asp:Button></b>
                                 </div>
                             </ItemTemplate>
                         </asp:TemplateField>
