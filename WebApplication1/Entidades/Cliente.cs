@@ -12,7 +12,7 @@ namespace Easy_Stock.Entidades
         public string nombre { get; set; } = string.Empty;
         public string apellido { get; set; } = string.Empty;
         public string dni { get; set; } = string.Empty;
-        public DateTime fechaNacimiento = default(DateTime);
+        public DateTime fechaNacimiento { get; set; } = default(DateTime);
         public TipoCliente tipoCliente { get; set; } = new TipoCliente();
         public string telefono { get; set; } = string.Empty;
         public string email { get; set; } = string.Empty;
@@ -26,7 +26,8 @@ namespace Easy_Stock.Entidades
         public string cuit { get; set; } = string.Empty;    
         public TipoEmpresa tipoEmpresa { get; set; } = new TipoEmpresa();
         public Sexo sexo { get; set; } = new Sexo();
-    
+
+        public bool habilitado { get; set; } = false;
 
         public Cliente()
         {

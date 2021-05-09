@@ -1,0 +1,298 @@
+﻿using Easy_Stock.AccesoDatos;
+using Easy_Stock.Entidades;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+namespace Easy_Stock
+{
+    public partial class editar_clientes : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                divMensaje.Visible = false;
+                string tipo = (string.IsNullOrEmpty(Request.QueryString["tipo"]) ? string.Empty : Request.QueryString["tipo"].ToString());
+                int value = !string.IsNullOrEmpty(Request.QueryString["value"]) ? Convert.ToInt32(Request.QueryString["value"]) : 0;
+                if (string.IsNullOrEmpty(tipo))
+                {
+                    cargarCombos(true,value);
+                }
+                else 
+                {
+                    cargarCombos(false, Convert.ToInt32(value));
+                    this.cboTipoCliente.SelectedValue = value.ToString();
+                }
+            }
+
+        }
+
+        private void cargarCombos(bool esPrimeraVez=false, int tipoCliente=0)
+        {
+            List<TipoCliente> lstTipoCliente = AdGeneral.obtenerTiposClientes();
+            List<Localidad> lstLocalidades = AdGeneral.obtenerLocalidades();
+            List<Provincia> lstProvincias = AdGeneral.obtenerProvincias();
+
+            //Tipos clientes
+            cboTipoCliente.DataSource = null;
+            cboTipoCliente.DataBind(); 
+            cboTipoCliente.DataSource = lstTipoCliente;
+            for (int i = 0; i < lstTipoCliente.Count; i++)
+            {
+                ListItem li = new ListItem
+                {
+                    Text = lstTipoCliente[i].tipoCliente,
+                    Value = lstTipoCliente[i].idTipoCliente.ToString()
+                };
+                cboTipoCliente.Items.Add(li);
+            }
+            //Localidades
+            cboLocalidades.DataSource = null;
+            cboLocalidades.DataBind();
+            for (int i = 0; i < lstLocalidades.Count; i++)
+            {
+                ListItem li = new ListItem
+                {
+                    Text = lstLocalidades[i].localidad,
+                    Value = lstLocalidades[i].idLocalidad.ToString()
+                };
+                cboLocalidades.Items.Add(li);
+            }
+            //Provincias
+            cboProvincias.DataSource = null;
+            cboProvincias.DataBind();
+            for (int i = 0; i < lstProvincias.Count; i++)
+            {
+                ListItem li = new ListItem
+                {
+                    Text = lstProvincias[i].provincia,
+                    Value = lstProvincias[i].idProvincia.ToString()
+                };
+                cboProvincias.Items.Add(li);
+            }
+
+            if (!esPrimeraVez)
+            {
+                if (tipoCliente == 1) //persona
+                {
+                    cboSexos.DataSource = null;
+                    cboSexos.DataBind();
+                    List<Sexo> lstSexos = AdGeneral.obtenerSexos();
+                    for (int i = 0; i < lstSexos.Count; i++)
+                    {
+                        ListItem li = new ListItem
+                        {
+                            Text = lstSexos[i].sexo,
+                            Value = lstSexos[i].idSexo.ToString()
+                        };
+                        cboSexos.Items.Add(li);
+                    }
+                }
+                if (tipoCliente == 2) //empresa
+                {
+                    cboTipoEmpresa.DataSource = null;
+                    cboTipoEmpresa.DataBind();
+                    List<TipoEmpresa> lstTipoEmpresa = AdGeneral.obtenerTiposEmpresa();
+                    for (int i = 0; i < lstTipoEmpresa.Count; i++)
+                    {
+                        ListItem li = new ListItem
+                        {
+                            Text = lstTipoEmpresa[i].tipoEmpresa,
+                            Value = lstTipoEmpresa[i].idTipoEmpresa.ToString()
+                        };
+                        cboTipoEmpresa.Items.Add(li);
+                    }
+                }
+            }
+           
+        }
+
+        protected void cboTipoCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string value = this.cboTipoCliente.SelectedValue;
+            string accion = this.cboTipoCliente.SelectedValue == "1" ? "persona" : this.cboTipoCliente.SelectedValue == "2" ? "empresa" : string.Empty;
+            Response.Redirect("editar_clientes.aspx?tipo="+accion+"&value="+value);
+        }
+
+        protected void btnAgregarCliente_Click(object sender, EventArgs e)
+        {
+            int tipoCliente = Convert.ToInt32(cboTipoCliente.SelectedValue);
+            if (validarCampos(tipoCliente))
+            {
+                Cliente oCliente = new Cliente
+                {
+                    nombre = string.IsNullOrEmpty(txtNombre.Text) ? null : txtNombre.Text,
+                    apellido = string.IsNullOrEmpty(txtApellido.Text) ? null : txtApellido.Text,
+                    dni = string.IsNullOrEmpty(txtDocumento.Text) ? null : txtDocumento.Text,
+                    telefono = string.IsNullOrEmpty(txtTelefono.Text) ? null : txtTelefono.Text,
+                    email = string.IsNullOrEmpty(txtEmail.Text) ? null : txtEmail.Text,
+                    direccion = string.IsNullOrEmpty(txtDireccion.Text) ? null : txtDireccion.Text,
+                    codigoPostal = txtCodigoPostal.Text,
+                    barrio = string.IsNullOrEmpty(txtBarrio.Text) ? null : txtBarrio.Text,
+                    tipoCliente = new TipoCliente 
+                    { 
+                        idTipoCliente = Convert.ToInt32(cboTipoCliente.SelectedValue)
+                    },
+                    fechaNacimiento = string.IsNullOrEmpty(txtFechaNac.Text) ? default : Convert.ToDateTime(txtFechaNac.Text),
+                    sexo = new Sexo 
+                    { 
+                        idSexo = string.IsNullOrEmpty(cboSexos.SelectedValue)? 0 : Convert.ToInt32(cboSexos.SelectedValue)
+                    },
+                    tipoEmpresa = new TipoEmpresa 
+                    { 
+                        idTipoEmpresa = string.IsNullOrEmpty(cboTipoEmpresa.SelectedValue) ? 0 : Convert.ToInt32(cboTipoEmpresa.SelectedValue)
+                    },
+                    localidad = new Localidad 
+                    { 
+                        idLocalidad = Convert.ToInt32(cboLocalidades.SelectedValue)
+                    },
+                    provincia = new Provincia 
+                    {
+                        idProvincia = Convert.ToInt32(cboProvincias.SelectedValue)
+                    },
+                    razonSocial = string.IsNullOrEmpty(txtRazonSocial.Text) ? null : txtRazonSocial.Text,
+                    cuit = string.IsNullOrEmpty(txtCuit.Text) ? null : txtCuit.Text,
+                    habilitado = true                    
+                };
+                if (!AdCliente.verificarDniCuitExiste(tipoCliente == 1 ? oCliente.dni : oCliente.cuit))
+                {
+                    if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                    {
+                        divMensaje.Visible = true;
+                        divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                        hMensaje.InnerText = "Cliente cargado correctamente";
+                        reestablecerColoresCampos();
+                    }
+                    else
+                    {
+                        divMensaje.Visible = true;
+                        divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                        hMensaje.InnerText = "Hubo en error al cargar los datos. Intente nuevamente";
+                    }
+                }
+                else
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertWarningDismissable;
+                    hMensaje.InnerText = "El documento o cuit ingresado ya pertenece a un cliente";
+                    reestablecerColoresCampos();
+                    txtDocumento.BorderColor = Color.Red;
+                    txtCuit.BorderColor = Color.Red;
+                }
+                
+            }
+            else
+            {
+                divMensaje.Visible = true;
+                divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                hMensaje.InnerText = "Por favor complete los campos obligatorios";
+                return;
+            }
+                
+        }
+
+        private void limpiarCampos()
+        {
+            
+        }
+
+        private void reestablecerColoresCampos()
+        {
+
+            WebControl[] aCampos = new WebControl[] {
+                txtNombre,
+                txtTelefono,
+                txtApellido,
+                cboSexos,
+                txtDocumento,
+                txtFechaNac,
+                txtEmail,
+                txtDireccion,
+                txtBarrio,
+                cboLocalidades,
+                cboProvincias,
+                txtRazonSocial,
+                txtCuit,
+                cboTipoEmpresa
+                };
+            foreach (var control in aCampos)
+            {
+                if (control != null)
+                {
+                    control.BorderColor = Color.LightGray;
+                }
+            }
+        }
+        private bool validarCampos(int tipoCliente)
+        {
+            WebControl[] aCampos = null;
+            if (tipoCliente == 1)//persona
+            {
+                aCampos = new WebControl[] {
+                txtNombre,
+                txtTelefono,
+                txtApellido,
+                cboSexos,
+                txtDocumento,
+                txtFechaNac,
+                txtEmail,
+                txtDireccion,
+                txtBarrio,
+                cboLocalidades,
+                cboProvincias,
+                };
+            }
+            if (tipoCliente == 2)
+            {
+                aCampos = new WebControl[] {
+                txtTelefono,
+                txtEmail,
+                txtDireccion,
+                txtBarrio,
+                cboLocalidades,
+                cboProvincias,
+                txtRazonSocial,
+                txtCuit,
+                cboTipoEmpresa
+                };             
+            }
+            return validarCampoVacio(aCampos);
+            
+        }
+
+        private bool validarCampoVacio(WebControl[] aControles)
+        {
+            var bandera = true;
+            foreach (var control in aControles)
+            {
+                if (control != null)
+                {
+                    if (control.GetType().Name.Equals("TextBox"))
+                    {
+                        var aux = (TextBox)control;
+                        if (string.IsNullOrEmpty(aux.Text))
+                        {
+                            control.BorderColor = Color.Red;
+                            bandera = false;
+                        }
+                    }
+                    if (control.GetType().Name.Equals("DropDownList"))
+                    {
+                        var aux = (DropDownList)control;
+                        if (aux.SelectedValue == "0")
+                        {
+                            control.BorderColor = Color.Red;
+                            bandera = false;
+                        }
+                    }
+                }
+            }
+            return bandera;
+        }
+    }
+}

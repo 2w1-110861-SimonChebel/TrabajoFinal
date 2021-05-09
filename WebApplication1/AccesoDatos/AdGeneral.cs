@@ -78,5 +78,132 @@ namespace Easy_Stock.AccesoDatos
                 throw ex;
             }
         }
+
+        public static List<Sexo> obtenerSexos()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Sexos");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    List<Sexo> lstSexos = null;
+                    if (dr.HasRows)
+                    {
+                        lstSexos = new List<Sexo>();
+                        while (dr.Read())
+                        {
+                            lstSexos.Add(new Sexo
+                            {
+                                idSexo = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                sexo = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                            });
+                        }
+                    }
+                    return lstSexos;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public static List<TipoEmpresa> obtenerTiposEmpresa()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Tipos_Empresas ORDER BY tipoEmpresa");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    List<TipoEmpresa> lstTipos = null;
+                    if (dr.HasRows)
+                    {
+                        lstTipos = new List<TipoEmpresa>();
+                        while (dr.Read())
+                        {
+                            lstTipos.Add(new TipoEmpresa
+                            {
+                                idTipoEmpresa = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                tipoEmpresa = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                            });
+                        }
+                    }
+                    return lstTipos;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+        public static List<Marca> obtenerMarcas()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Marcas ORDER BY marca");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    List<Marca> lstMarcas = null;
+                    if (dr.HasRows)
+                    {
+                        lstMarcas = new List<Marca>();
+                        while (dr.Read())
+                        {
+                            lstMarcas.Add(new Marca
+                            {
+                                idMarca = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                marca = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                            });
+                        }
+                    }
+                    return lstMarcas;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
+        public static List<TipoCliente> obtenerTiposClientes()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Tipos_Clientes ORDER BY idTipoCliente");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    List<TipoCliente> lstTipos = null;
+                    if (dr.HasRows)
+                    {
+                        lstTipos = new List<TipoCliente>();
+                        while (dr.Read())
+                        {
+                            lstTipos.Add(new TipoCliente
+                            {
+                                idTipoCliente = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                tipoCliente = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                            });
+                        }
+                    }
+                    return lstTipos;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
     }
 }

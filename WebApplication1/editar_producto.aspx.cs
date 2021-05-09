@@ -15,32 +15,38 @@ namespace Easy_Stock
         protected string accion;
         protected void Page_Load(object sender, EventArgs e)
         {
-            accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
-            CargarCombos();
-            if (Request.QueryString["id"] != null && Request.QueryString["accion"].Equals("editar"))
+            if (!IsPostBack && Request.QueryString["response"] != "false")
             {
-                this.idProducto = Convert.ToInt32(Request.QueryString["id"]);
-                Producto oProducto = AdProducto.obtenerProductoPorId(idProducto);
-
-                if (oProducto != null)
+                accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
+                CargarCombos();
+                if (Request.QueryString["id"] != null && Request.QueryString["accion"].Equals("editar"))
                 {
-                    txtNombreProducto.Text = oProducto.nombre;
-                    txtCantidad.Text = oProducto.cantidadRestante.ToString();
-                    cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
-                    txtPrecioVenta.Text = oProducto.precioVenta.ToString();
-                    txtPrecioCosto.Text = oProducto.precioCosto.ToString();
-                    cboCategorias.SelectedValue = oProducto.categoria.idCategoria.ToString();
-                    cboProveedores.SelectedValue = oProducto.proveedor.idProveedor.ToString();
-                    cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
-                    txtStockMinimo.Text = oProducto.stockMinimo.ToString();
-                    txtStockMaximo.Text = oProducto.stockMaximo.ToString();
-                    txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
-                    btnAgregarProducto.Text = "Guardar cambios";
-                }
-                             
+                    this.idProducto = Convert.ToInt32(Request.QueryString["id"]);
+                    Producto oProducto = AdProducto.obtenerProductoPorId(idProducto);
 
+                    if (oProducto != null)
+                    {
+                        txtNombreProducto.Text = oProducto.nombre;
+                        txtCantidad.Text = oProducto.cantidadRestante.ToString();
+                        cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
+                        txtPrecioVenta.Text = oProducto.precioVenta.ToString();
+                        txtPrecioCosto.Text = oProducto.precioCosto.ToString();
+                        cboCategorias.SelectedValue = oProducto.categoria.idCategoria.ToString();
+                        cboProveedores.SelectedValue = oProducto.proveedor.idProveedor.ToString();
+                        cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
+                        txtStockMinimo.Text = oProducto.stockMinimo.ToString();
+                        txtStockMaximo.Text = oProducto.stockMaximo.ToString();
+                        dtpFechaElab.Text = oProducto.fechaElab.ToShortDateString();
+                        dtpFechaVenc.Text = oProducto.fechaVenc.ToShortDateString();
+                        txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
+                        btnAgregarProducto.Text = "Guardar cambios";
+                    }
+
+
+                }
             }
-            
+
+
         }
 
         protected void btnAgregarProducto_Click(Object sender, EventArgs e)
@@ -48,8 +54,10 @@ namespace Easy_Stock
 
             try
             {
+                accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
                 Producto oProducto = new Producto
                 {
+                    idProducto = Convert.ToInt32(Request.QueryString["id"]),
                     nombre = txtNombreProducto.Text,
                     marca = new Marca { idMarca = Convert.ToInt32(cboMarcas.SelectedValue) },
                     precioVenta = float.Parse(txtPrecioVenta.Text),
@@ -64,20 +72,22 @@ namespace Easy_Stock
                     stockMinimo = Convert.ToInt32(txtStockMinimo.Text),
                     stockMaximo = Convert.ToInt32(txtStockMaximo.Text),
                     cantidadRestante = Convert.ToInt32(txtCantidad.Text),
-                    fechaVenc =Convert.ToDateTime(dtpFechaVenc.Text),
-                    fechaElab= Convert.ToDateTime(dtpFechaElab.Text)
+                    fechaVenc = Convert.ToDateTime(dtpFechaVenc.Text),
+                    fechaElab = Convert.ToDateTime(dtpFechaElab.Text)
                 };
 
                 if (accion.Equals("editar"))
                 {
                     AdProducto.actualizarProducto(oProducto);
-                    //divProductoCargado.Style["display"] = "inherit";
-                    Response.Redirect("home.aspx");               
+                    divMensaje.Style["display"] = "inherit";
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "Cambios guardados correctamente";
                 }
-                else {
+                else
+                {
                     AdProducto.agregarProducto(oProducto);
                     divMensaje.Style["display"] = "inherit";
-                    divMensaje.Attributes["class"] = "alert alert-success";
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                     hMensaje.InnerText = "Producto cargado correctamente";
 
                     LimpiarCampos();
@@ -86,12 +96,16 @@ namespace Easy_Stock
             }
             catch (Exception ex)
             {
-                Response.Redirect("editar_producto.aspx?response=false");
                 divErrorCargaProducto.Style["display"] = "inherit";
-                throw ex;
+                divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                hMensaje.InnerText = "Hubo un error al guardar los cambios. Verifique los campos";
+                return;
+                //Response.Redirect("editar_producto.aspx?response=false");
+                //throw ex;
             }
 
         }
+
 
         private void CargarCombos()
         {
@@ -163,6 +177,8 @@ namespace Easy_Stock
             txtStockMinimo.Text = string.Empty;
             txtStockMaximo.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
+            dtpFechaElab.Text = string.Empty;
+            dtpFechaVenc.Text = string.Empty;
         }
     }
 }

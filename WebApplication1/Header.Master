@@ -50,7 +50,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="clientes.aspx">Ver todos</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="editar_cliente.aspx">Nuevo Cliente</a>
+                                <a class="dropdown-item" href="editar_clientes.aspx">Nuevo Cliente</a>
                             </div>
                         </li>
 

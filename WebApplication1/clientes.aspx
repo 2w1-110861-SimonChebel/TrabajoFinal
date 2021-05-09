@@ -13,7 +13,7 @@
                     <asp:TextBox ID="txtBuscarCliente" CssClass="form-control" PlaceHolder="Buscar clientes" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
-                    <asp:Button runat="server" ID="btnBuscarCliente" CssClass="btn btn-dark" type="button" Text="Buscar" OnClick="BtnCliente_Click" />
+                    <asp:Button runat="server" ID="btnBuscarCliente" CssClass="btn btn-dark" type="button" Text="Buscar" OnClick="BtnBuscarCliente_Click" />
                 </div>
             </div>
 
@@ -68,10 +68,10 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                          <asp:TemplateField HeaderText="Fecha nacimiento" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <asp:TemplateField HeaderText="Fecha nacimiento" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                             <ItemTemplate>
                                 <div id="divSexo" style="padding-top: 10px;">
-                                    <b><%#(int)Eval("tipoCliente.idTipoCliente")==1 ? Eval("fechaNacimiento") : "-" %></b>
+                                    <b><%#(int)Eval("tipoCliente.idTipoCliente")==1 ? devolverFechaSinHorario((DateTime) Eval("fechaNacimiento")) : "-" %></b>
                                 </div>
                             </ItemTemplate>
                         </asp:TemplateField>
@@ -84,7 +84,7 @@
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                         <asp:TemplateField HeaderText="Dirección" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <asp:TemplateField HeaderText="Dirección" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                             <ItemTemplate>
                                 <div id="divDireccion" style="padding-top: 10px;">
                                     <b><%#Eval("direccion") %></b>
@@ -135,21 +135,21 @@
                         <asp:TemplateField HeaderText="Deuda" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                             <ItemTemplate>
                                 <div id="divDeuda" style="padding-top: 10px;">
-                                    <b><%#Eval("deuda.monto") %></b>
+                                    <b><%# string.Format("{0}{1}","$",Eval("deuda.monto"))%></b>
                                 </div>
                             </ItemTemplate>
                         </asp:TemplateField>
 
-                        <%-- <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                        <ItemTemplate>
-                            <div id="divAcciones" style="padding-top: 10px;">
-                                <b>
-                                    <asp:Button runat="server" ID="btnEditarCliente" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idCliente") %>' CommandName="editar" OnClick="btnEditarCliente_Click" /></b>
-                                <b>
-                                    <asp:Button runat="server" ID="btnEliminarCliente" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idCliente") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste producto? Esta acción no se puede deshacer')) return false;" OnClick="btnEliminarCliente_Click"></asp:Button></b>
-                            </div>
-                        </ItemTemplate>
-                    </asp:TemplateField>--%>
+                        <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                            <ItemTemplate>
+                                <div id="divAcciones" style="padding-top: 10px;">
+                                    <b>
+                                        <asp:Button runat="server" ID="btnEditarCliente" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idCliente") %>' CommandName="editar" OnClick="BtnEditarCliente_Click" /></b>
+                                    <b>
+                                        <asp:Button runat="server" ID="btnEliminarCliente" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idCliente") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste producto? Esta acción no se puede deshacer')) return false;" OnClick="BtnEliminarCliente_Click"></asp:Button></b>
+                                </div>
+                            </ItemTemplate>
+                        </asp:TemplateField>
                     </Columns>
                 </asp:GridView>
             </div>

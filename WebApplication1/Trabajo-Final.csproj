@@ -120,6 +120,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="depositos.aspx" />
+    <Content Include="editar_clientes.aspx" />
     <Content Include="editar_deposito.aspx" />
     <Content Include="editar_producto.aspx" />
     <Content Include="favicon.ico" />
@@ -306,6 +307,13 @@
     <Compile Include="depositos.aspx.designer.cs">
       <DependentUpon>depositos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="editar_clientes.aspx.cs">
+      <DependentUpon>editar_clientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_clientes.aspx.designer.cs">
+      <DependentUpon>editar_clientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_deposito.aspx.cs">
       <DependentUpon>editar_deposito.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -320,6 +328,7 @@
     <Compile Include="editar_producto.aspx.designer.cs">
       <DependentUpon>editar_producto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Bootstrap.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Deposito.cs" />
