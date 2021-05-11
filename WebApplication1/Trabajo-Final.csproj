@@ -123,6 +123,7 @@
     <Content Include="editar_clientes.aspx" />
     <Content Include="editar_deposito.aspx" />
     <Content Include="editar_producto.aspx" />
+    <Content Include="editar_usuario.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
@@ -255,6 +256,7 @@
     <Content Include="Scripts\WebForms\WebForms.js" />
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="usuarios.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -328,6 +330,13 @@
     <Compile Include="editar_producto.aspx.designer.cs">
       <DependentUpon>editar_producto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="editar_usuario.aspx.cs">
+      <DependentUpon>editar_usuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_usuario.aspx.designer.cs">
+      <DependentUpon>editar_usuario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Entidades\Bootstrap.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Cliente.cs" />
@@ -345,6 +354,7 @@
     <Compile Include="Entidades\TipoEmpresa.cs" />
     <Compile Include="Entidades\TipoUsuario.cs" />
     <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Entidades\Validar.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -399,6 +409,13 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Sucursal.cs" />
+    <Compile Include="usuarios.aspx.cs">
+      <DependentUpon>usuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="usuarios.aspx.designer.cs">
+      <DependentUpon>usuarios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

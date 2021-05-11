@@ -296,13 +296,7 @@ namespace Easy_Stock
                 txtCuit,
                 cboTipoEmpresa
                 };
-            foreach (var control in aCampos)
-            {
-                if (control != null)
-                {
-                    control.BorderColor = Color.LightGray;
-                }
-            }
+            Validar.ReestablecerColores(aCampos);
         }
         private bool validarCampos(int tipoCliente)
         {
@@ -337,39 +331,39 @@ namespace Easy_Stock
                 cboTipoEmpresa
                 };
             }
-            return validarCampoVacio(aCampos);
+            return Validar.ValidarCamposVacios(aCampos);
 
         }
 
-        private bool validarCampoVacio(WebControl[] aControles)
-        {
-            var bandera = true;
-            foreach (var control in aControles)
-            {
-                if (control != null)
-                {
-                    if (control.GetType().Name.Equals("TextBox"))
-                    {
-                        var aux = (TextBox)control;
-                        if (string.IsNullOrEmpty(aux.Text))
-                        {
-                            control.BorderColor = Color.Red;
-                            bandera = false;
-                        }
-                    }
-                    if (control.GetType().Name.Equals("DropDownList"))
-                    {
-                        var aux = (DropDownList)control;
-                        if (aux.SelectedValue == "0")
-                        {
-                            control.BorderColor = Color.Red;
-                            bandera = false;
-                        }
-                    }
-                }
-            }
-            return bandera;
-        }
+        //private bool validarCampoVacio(WebControl[] aControles)
+        //{
+        //    var bandera = true;
+        //    foreach (var control in aControles)
+        //    {
+        //        if (control != null)
+        //        {
+        //            if (control.GetType().Name.Equals("TextBox"))
+        //            {
+        //                var aux = (TextBox)control;
+        //                if (string.IsNullOrEmpty(aux.Text))
+        //                {
+        //                    control.BorderColor = Color.Red;
+        //                    bandera = false;
+        //                }
+        //            }
+        //            if (control.GetType().Name.Equals("DropDownList"))
+        //            {
+        //                var aux = (DropDownList)control;
+        //                if (aux.SelectedValue == "0")
+        //                {
+        //                    control.BorderColor = Color.Red;
+        //                    bandera = false;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return bandera;
+        //}
 
         //private void reestablecerValoresCampos(ref WebControl[] aControles)
         //{

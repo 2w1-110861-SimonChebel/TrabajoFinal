@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+
 using AdUsuario = Easy_Stock.AccesoDatos.AdUsuario;
 
 namespace Easy_Stock
@@ -20,7 +18,7 @@ namespace Easy_Stock
         {
             string email = txtEmail.Text;
             string clave = txtClave.Text;
-            Usuario oUsuario = AdUsuario.ObtenerUsuario(email, clave);
+            Usuario oUsuario = AdUsuario.ObtenerUsuarios(email, clave).FirstOrDefault();
             if (oUsuario != null)
             {
                 Response.Redirect("/home.aspx?usuario=" + oUsuario.nombre+ "." + oUsuario.apellido, false);
