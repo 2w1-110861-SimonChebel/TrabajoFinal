@@ -30,7 +30,31 @@ namespace Easy_Stock
 
         protected void btnBuscarUsuario_Click(object sender, EventArgs e)
         {
-
+            divMensaje.Visible = false;
+            string nombre = txtBuscarUsuario.Text;
+            if (string.IsNullOrEmpty(nombre)) return;
+            else
+            {
+                grvUsuarios.DataSource = null;
+                grvUsuarios.DataBind();
+                List<Usuario> lstUsuarios = AdUsuario.ObtenerUsuarios("","",0, nombre);
+                if (lstUsuarios != null && lstUsuarios.Count > 0)
+                {
+                    grvUsuarios.DataSource = lstUsuarios;
+                    grvUsuarios.DataBind();
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertInfoDismissable;
+                    hMensaje.InnerText = string.Format("{0} {1}", "Resultados encontrados con:", nombre);
+                }
+                else 
+                {
+                    grvUsuarios.DataSource = lstUsuarios;
+                    grvUsuarios.DataBind();
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertWarningDismissable;
+                    hMensaje.InnerText = "No se econtraron resultados";
+                }
+            }
         }
 
         protected void grvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -40,6 +64,22 @@ namespace Easy_Stock
             if (comando.Equals("editar"))
             {
                 Response.Redirect("editar_usuario?id="+id+"&accion="+comando);
+            }
+            if (comando.Equals("eliminar"))
+            {
+                if (AdUsuario.eliminarUsuario(Convert.ToInt32(id)))
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "Usuario borrado correctamente";
+                }
+                else 
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertDanger;
+                    hMensaje.InnerText = "Hubo un problema al eliminar el usuario. Intente nuevamente";
+                    return;
+                }
             }
         }
     }

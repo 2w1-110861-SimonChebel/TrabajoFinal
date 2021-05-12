@@ -12,6 +12,7 @@ namespace Easy_Stock.Entidades
         public string email { get; set; } = string.Empty;
         public string telefono { get; set; } = string.Empty;
         public string codigoPostal { get; set; } = string.Empty;
+        public string direccion { get; set; } = string.Empty;
         public string barrio { get; set; } = string.Empty;
         public Localidad localidad { get; set; } = null;
         public Provincia provincia { get; set; } = null;

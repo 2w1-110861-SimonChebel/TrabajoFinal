@@ -25,7 +25,6 @@
             <asp:GridView ID="grvUsuarios" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnRowCommand="grvUsuarios_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
                 <Columns>
 
-
                     <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" Visible="false" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divNombre" style="padding-top: 10px;">

@@ -14,7 +14,7 @@ namespace Easy_Stock.AccesoDatos
         static StringBuilder sbSql = null;
         private static readonly string cadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings["conexion"].ConnectionString.ToString();
 
-        public static List<Usuario> ObtenerUsuarios(string email = "", string clave = "", int idUsuario = 0)
+        public static List<Usuario> ObtenerUsuarios(string email = "", string clave = "", int idUsuario = 0, string nombre = "")
         {
             sbSql = null;
             try
@@ -23,31 +23,41 @@ namespace Easy_Stock.AccesoDatos
                 SqlDataReader dr = null;
                 sbSql = new StringBuilder("SELECT u.idUsuario,u.nombre,u.apellido,u.email,u.clave,tu.idTipoUsuario, tu.tipoUsuario ");
                 sbSql.Append("FROM Usuarios u  JOIN Tipos_Usuarios tu ON u.idTipoUsuario = tu.idTipoUsuario ");
-                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(clave) && idUsuario > 0)
+                if (!string.IsNullOrEmpty(nombre))
                 {
-                    sbSql.Append("WHERE email = @email and clave =@clave ");
+                    sbSql.Append(string.Format("{0}{1}{2}{3}{4}", " WHERE nombre LIKE '%", nombre, "%' OR apellido LIKE '%",nombre,"%'"));
                     SqlParameter[] param = {
-                    new SqlParameter("@email",email),
-                    new SqlParameter("@clave", clave)
-
-                    };
+                        new SqlParameter("@nombre",nombre)
+                        };
                     dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), param);
                 }
                 else
                 {
-                    if (idUsuario > 0)
+                    if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(clave) && idUsuario == 0)
                     {
-                        sbSql.Append(" WHERE idUsuario = @idUsuario ");
+                        sbSql.Append("WHERE email = @email and clave =@clave ");
                         SqlParameter[] param = {
-                        new SqlParameter("@idUsuario",idUsuario)
+                        new SqlParameter("@email",email),
+                        new SqlParameter("@clave", clave)
 
                         };
                         dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), param);
                     }
-                    else { dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()); }
+                    else
+                    {
+                        if (idUsuario > 0)
+                        {
+                            sbSql.Append(" WHERE idUsuario = @idUsuario ");
+                            SqlParameter[] param = {
+                            new SqlParameter("@idUsuario",idUsuario)
+                        };
+                            dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), param);
+                        }
+                        else { dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()); }
+                    }
                 }
 
-                
+
                 using (dr)
                 {
                     if (dr.HasRows)
@@ -161,6 +171,26 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@clave",oUsuario.clave),
                 };
 
+                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+            return true;
+        }
+
+        public static bool eliminarUsuario(int idUsuario)
+        {
+            sbSql = null;
+
+            try
+            {
+                sbSql = new StringBuilder("DELETE FROM Usuarios WHERE idUsuario = @id");
+                SqlParameter[] parametros = {
+                    new SqlParameter("@id",idUsuario)
+                };
                 SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
             }
             catch (Exception ex)

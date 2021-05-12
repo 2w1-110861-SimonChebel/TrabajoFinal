@@ -22,13 +22,13 @@
                     <h3>Ingresar</h3>
 
                     <div id="divAlertaDatosIncorrectos" class="alert alert-danger" style="display: none" runat="server">
-                        <h6>El usuario y/o contraseña son incorrectos</h6>
+                        <h6 id="hMensaje" runat="server"></h6>
                     </div>
                     <div class="form-group">
                         <asp:TextBox runat="server" type="text" ID="txtEmail" class="form-control" name="login" placeholder="E-mail"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <asp:TextBox runat="server" type="text" ID="txtClave" class="form-control" name="login" placeholder="Clave"></asp:TextBox>
+                        <asp:TextBox runat="server" type="password" ID="txtClave" class="form-control" name="login" placeholder="Clave"></asp:TextBox>
                     </div>
 
                     <div class="form-group centrarItemsDiv">

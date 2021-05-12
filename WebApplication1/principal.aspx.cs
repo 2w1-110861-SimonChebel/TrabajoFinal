@@ -11,7 +11,16 @@ namespace Easy_Stock
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                divAlertaDatosIncorrectos.Visible = false;
+                if (Request.QueryString["session"] != null && Request.QueryString["session"].Equals("out"))
+                {
+                    divAlertaDatosIncorrectos.Visible = true;
+                    divAlertaDatosIncorrectos.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "La sesión se cerró correctamente";
+                }
+            }
         }
 
         protected void BtnIngresar_Click(Object sender, EventArgs e)
@@ -21,11 +30,13 @@ namespace Easy_Stock
             Usuario oUsuario = AdUsuario.ObtenerUsuarios(email, clave).FirstOrDefault();
             if (oUsuario != null)
             {
+                Session["usuario"] = (Usuario)oUsuario;
                 Response.Redirect("/home.aspx?usuario=" + oUsuario.nombre+ "." + oUsuario.apellido, false);
             }
             else
             {
-                divAlertaDatosIncorrectos.Style["display"] = "inherit";
+                divAlertaDatosIncorrectos.Visible = true;
+                hMensaje.InnerText = "El usuario y/o contraseña son incorrectos";
             }
 
         }
