@@ -70,6 +70,12 @@
             <div id="divTitulo" class="col-md-6 col-xl-6" style="display: flex; justify-items: right" runat="server">
                 <h2>Nuevo producto</h2>
             </div>
+
+             <div class="form-group">
+                <label for="txtCodigo" class="control-label">Código</label>
+                <asp:TextBox type="text" class="form-control" ID="txtCodigo" name="txtCodigo" runat="server"> </asp:TextBox>
+            </div>
+
             <div class="form-group">
                 <label for="nombre" class="control-label">Nombre</label>
                 <asp:TextBox type="text" class="form-control" ID="txtNombreProducto" name="txtNombreProducto" runat="server"> </asp:TextBox>

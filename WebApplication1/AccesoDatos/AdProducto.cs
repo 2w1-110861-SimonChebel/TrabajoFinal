@@ -22,8 +22,8 @@ namespace Easy_Stock.AccesoDatos
             try
             {
                 //sbSql = new StringBuilder("INSERT INTO Productos(idMarca,nombre,precioVenta,precioCosto,descripcion,idCategoria,idProveedor,idDeposito,stockMinimo,stockMaximo,cantidadRestante)");
-                sbSql = new StringBuilder("INSERT INTO Productos(idMarca,nombre,precioVenta,precioCosto,descripcion,idCategoria,idProveedor,stockMinimo,stockMaximo,cantidadRestante,fechaVenc,fechaElab,habilitado"+(tieneDeposito?",idDeposito":string.Empty) +")");
-                sbSql.Append(" VALUES(@idMarca,@nombre,@precioVenta,@precioCosto,@descripcion,@idCategoria,@idProveedor,@stockMinimo,@stockMaximo,@cantidad,@fechaVenc,@fechaElab,@habilitado" + (tieneDeposito? ",@idDeposito":string.Empty) +")");
+                sbSql = new StringBuilder("INSERT INTO Productos(codigo,idMarca,nombre,precioVenta,precioCosto,descripcion,idCategoria,idProveedor,stockMinimo,stockMaximo,cantidadRestante,fechaVenc,fechaElab,habilitado"+(tieneDeposito?",idDeposito":string.Empty) +")");
+                sbSql.Append(" VALUES(@codigo,@idMarca,@nombre,@precioVenta,@precioCosto,@descripcion,@idCategoria,@idProveedor,@stockMinimo,@stockMaximo,@cantidad,@fechaVenc,@fechaElab,@habilitado" + (tieneDeposito? ",@idDeposito":string.Empty) +")");
 
                 if (tieneDeposito)
                 {
@@ -42,6 +42,7 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@cantidad", oProducto.cantidadRestante),
                     new SqlParameter("@fechaVenc", oProducto.fechaVenc),
                     new SqlParameter("@fechaElab", oProducto.fechaElab),
+                    new SqlParameter("@codigo", oProducto.codigo),
                     new SqlParameter("@habilitado",1)
                     };   
                     SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
@@ -61,6 +62,7 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@cantidad", oProducto.cantidadRestante),
                     new SqlParameter("@fechaVenc", oProducto.fechaVenc),
                     new SqlParameter("@fechaElab", oProducto.fechaElab),
+                    new SqlParameter("@codigo", oProducto.codigo),
                     new SqlParameter("@habilitado",1)
                     };
                     SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
@@ -86,7 +88,7 @@ namespace Easy_Stock.AccesoDatos
             {
                 tieneDeposito = oProdcuto.deposito.idDeposito > 0;
                 StringBuilder sbSql = new StringBuilder("UPDATE Productos");
-                sbSql.Append(" SET nombre=@nombre, idMarca=@idMarca, precioVenta=@precioVenta, precioCosto=@precioCosto, descripcion=@descripcion, idCategoria= @idCategoria, idProveedor=@idProveedor,stockMinimo=@stockMinimo,stockMaximo=@stockMaximo,fechaVenc=@fechaVenc,fechaElab=@fechaElab");
+                sbSql.Append(" SET codigo=@codigo,nombre=@nombre, idMarca=@idMarca, precioVenta=@precioVenta, precioCosto=@precioCosto, descripcion=@descripcion, idCategoria= @idCategoria, idProveedor=@idProveedor,stockMinimo=@stockMinimo,stockMaximo=@stockMaximo,fechaVenc=@fechaVenc,fechaElab=@fechaElab");
                 if (tieneDeposito) { sbSql.Append(",idDeposito=@idDeposit"); };
                 sbSql.Append(" WHERE idProducto=@idProducto");
 
@@ -94,6 +96,7 @@ namespace Easy_Stock.AccesoDatos
                 {
                     SqlParameter[] parametros = {
                     new SqlParameter("@idProducto", oProdcuto.idProducto),
+                    new SqlParameter("@codigo", oProdcuto.codigo),
                     new SqlParameter("@nombre", oProdcuto.nombre),
                     new SqlParameter("@idMarca", oProdcuto.marca.idMarca),
                     new SqlParameter("@precioVenta", oProdcuto.precioVenta),
@@ -114,6 +117,7 @@ namespace Easy_Stock.AccesoDatos
                 {
                     SqlParameter[] parametros = {
                     new SqlParameter("@idProducto", oProdcuto.idProducto),
+                    new SqlParameter("@codigo", oProdcuto.codigo),
                     new SqlParameter("@nombre", oProdcuto.nombre),
                     new SqlParameter("@idMarca", oProdcuto.marca.idMarca),
                     new SqlParameter("@precioVenta", oProdcuto.precioVenta),
@@ -144,7 +148,7 @@ namespace Easy_Stock.AccesoDatos
             sbSql = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab ");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab,p.codigo ");
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
@@ -183,7 +187,8 @@ namespace Easy_Stock.AccesoDatos
                                 },
                                 cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
                                 fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14),
-                                fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15)
+                                fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15),
+                                codigo = dr.IsDBNull(16) ? default(string) : dr.GetString(16)
 
                             });
                         }
@@ -204,7 +209,7 @@ namespace Easy_Stock.AccesoDatos
             sbSql = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab,p.codigo");
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
@@ -244,7 +249,8 @@ namespace Easy_Stock.AccesoDatos
                             },
                             cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
                             fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14),
-                            fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15)
+                            fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15),
+                            codigo = dr.IsDBNull(16) ? default(string) : dr.GetString(16)
                         };
                     }
                     return oProducto;
@@ -263,7 +269,7 @@ namespace Easy_Stock.AccesoDatos
             List<ProductoReponer> lstProductos = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre, p.cantidadRestante");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre, p.cantidadRestante,p.codigo");
                 sbSql.Append(" FROM Productos p");
                 sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre like '%", nombre, "%' AND habilitado=1"));
 
@@ -280,7 +286,9 @@ namespace Easy_Stock.AccesoDatos
                             {
                                 idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
                                 nombre = dr.IsDBNull(1) ? default(string) : dr.GetString(1),
-                                cantidadRestante = dr.IsDBNull(2) ? default(int) : dr.GetInt32(2)
+                                cantidadRestante = dr.IsDBNull(2) ? default(int) : dr.GetInt32(2),
+                                codigo = dr.IsDBNull(3) ? default(string) : dr.GetString(3),
+
                             });
                         }
 

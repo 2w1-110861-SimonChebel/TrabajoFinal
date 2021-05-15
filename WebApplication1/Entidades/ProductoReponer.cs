@@ -10,5 +10,6 @@ namespace Easy_Stock.Entidades
         public int idProducto { get; set; }
         public string nombre { get; set; }
         public int cantidadRestante { get; set; } = 0;
+        public string codigo { get; set; } = string.Empty;
     }
 }

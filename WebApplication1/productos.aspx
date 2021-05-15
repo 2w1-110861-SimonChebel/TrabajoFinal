@@ -26,7 +26,7 @@
                     <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divIdProducto" style="padding-top: 10px;">
-                                <b><%#Eval("idProducto") %></b>
+                                <b><%#Eval("codigo") %></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
