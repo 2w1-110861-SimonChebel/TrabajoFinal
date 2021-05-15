@@ -17,7 +17,6 @@
         </asp:DropDownList>
     </div>
 
-
     <%if (Request.QueryString["tipoCliente"] != null && Request.QueryString["tipoCliente"] =="1")
       {%>
     <div id="divCamposPersona" class="form-group col-xl-6 col-md-6" runat="server">

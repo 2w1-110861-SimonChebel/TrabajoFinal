@@ -27,7 +27,7 @@ namespace Easy_Stock
         {
             string email = txtEmail.Text;
             string clave = txtClave.Text;
-            Usuario oUsuario = AdUsuario.ObtenerUsuarios(email, clave).FirstOrDefault();
+            Usuario oUsuario = AdUsuario.ObtenerUsuarios(email, clave,0,string.Empty).FirstOrDefault();
             if (oUsuario != null)
             {
                 Session["usuario"] = (Usuario)oUsuario;

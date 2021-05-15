@@ -123,12 +123,14 @@
     <Content Include="editar_clientes.aspx" />
     <Content Include="editar_deposito.aspx" />
     <Content Include="editar_producto.aspx" />
+    <Content Include="editar_proveedor.aspx" />
     <Content Include="editar_usuario.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
     <Content Include="movimientos.aspx" />
     <Content Include="productos.aspx" />
+    <Content Include="proveedores.aspx" />
     <Content Include="reponer_producto.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -330,6 +332,13 @@
     <Compile Include="editar_producto.aspx.designer.cs">
       <DependentUpon>editar_producto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="editar_proveedor.aspx.cs">
+      <DependentUpon>editar_proveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_proveedor.aspx.designer.cs">
+      <DependentUpon>editar_proveedor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_usuario.aspx.cs">
       <DependentUpon>editar_usuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -394,6 +403,13 @@
       <DependentUpon>productos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="proveedores.aspx.cs">
+      <DependentUpon>proveedores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="proveedores.aspx.designer.cs">
+      <DependentUpon>proveedores.aspx</DependentUpon>
+    </Compile>
     <Compile Include="reponer_producto.aspx.cs">
       <DependentUpon>reponer_producto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

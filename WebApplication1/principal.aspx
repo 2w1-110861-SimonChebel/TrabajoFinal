@@ -16,8 +16,8 @@
 <body>
     <form id="frmLogin" runat="server">
 
-        <div class="container login-container" style="display: block; justify-content: center;">
-            <div class="row">
+        <div class="container login-container" style="display: block">
+            <div class="row" style=" justify-content: center">
                 <div class="col-md-6 col-xl-6 login-form-1">
                     <h3>Ingresar</h3>
 
@@ -38,9 +38,9 @@
                     <div class="form-group centrarItemsDiv">
                         <a href="#" class="btnForgetPwd">Olvide mi contraseña</a>
                     </div>
-                    <div class="form-group centrarItemsDiv">
+               <%--     <div class="form-group centrarItemsDiv">
                         <a href="#" class="btnForgetPwd">Nuevo usuario</a>
-                    </div>
+                    </div>--%>
 
                 </div>
             </div>

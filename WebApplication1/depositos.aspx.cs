@@ -17,6 +17,8 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
+                Usuario oUsuario = (Usuario)Session["usuario"];
+                if (oUsuario.tipoUsuario.idTipoUsuario != 1) grvDepositos.Columns[8].Visible = false;
                 divMensaje.Visible = false;
                 oSucursal = new Sucursal();
                 lstDepositos = AdDeposito.obtenerDepositos();

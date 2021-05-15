@@ -46,7 +46,60 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
-        public static List<Proveedor> obtenerProveedores(string nombre="")
+        public static bool actualizarProveedor(Proveedor oProveedor)
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("UPDATE Proveedores SET");
+                sbSql.Append(" nombre=@nombre, email=@email, telefono=@telefono, direccion=@direccion, ");
+                sbSql.Append("idLocalidad=@idLocalidad, idProvincia=@idProvincia, codigoPostal=@codPostal, ");
+                sbSql.Append("barrio=@barrio ");
+                sbSql.Append(" WHERE idProveedor=@id");
+
+                SqlParameter[] param = {
+                        new SqlParameter("@id",oProveedor.idProveedor),
+                        new SqlParameter("@nombre",oProveedor.nombre),
+                        new SqlParameter("@email",oProveedor.email),
+                        new SqlParameter("@telefono",oProveedor.telefono),
+                        new SqlParameter("@direccion",oProveedor.direccion),
+                        new SqlParameter("@idLocalidad",oProveedor.localidad.idLocalidad),
+                        new SqlParameter("@idProvincia",oProveedor.provincia.idProvincia),
+                        new SqlParameter("@codPostal",oProveedor.codigoPostal),
+                        new SqlParameter("@barrio",oProveedor.barrio)
+
+                };
+                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), param);
+            }
+            catch (Exception ex) 
+            {
+                return false;
+                throw ex;
+            }
+            return true;
+        }
+
+        public static bool eliminarProveedor(int id)
+        {
+            sbSql = null;
+            try
+            {
+                sbSql.Append("UPDATE SET Habilitado=@habilitado WHERE idProveedor=@id");
+                SqlParameter[] param = {
+                        new SqlParameter("@id",id),
+                        new SqlParameter("@habilitado",false),
+                    };
+                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), param);
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+            return true;
+        }
+
+        public static List<Proveedor> obtenerProveedores(string nombre="",int id=0)
         {
             sbSql = null;
             try
@@ -54,18 +107,25 @@ namespace Easy_Stock.AccesoDatos
                 SqlDataReader dr = null;
                 sbSql = new StringBuilder("SELECT pr.idProveedor,pr.nombre,pr.email,pr.telefono,pr.direccion,l.idLocalidad, l.localidad, p.idProvincia,p.provincia, pr.codigoPostal,pr.barrio ");
                 sbSql.Append(" FROM Proveedores pr JOIN Localidades l ON pr.idLocalidad = l.idLocalidad JOIN Provincias P ON pr.idProvincia = P.idProvincia");
+                sbSql.Append(" WHERE pr.habilitado=1 ");
                 if (!string.IsNullOrEmpty(nombre))
                 {
-                    sbSql.Append(string.Format("{0}{1}{2}", " WHERE pr.nombre like '%", nombre, "%'"));
+                    sbSql.Append(string.Format("{0}{1}{2}", " AND pr.nombre like '%", nombre, "%'"));
                     SqlParameter[] param = {
                         new SqlParameter("@nombre",nombre)
                     };
                     dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), param);
                 }
-                else
+                else if(id>0)
                 {
-                    dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString();
+                    sbSql.Append(" AND idProveedor=@id");
+                    SqlParameter[] param = {
+                        new SqlParameter("@id",id)
+                    };
+                    dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(),param);
                 }
+                else dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString());
+
                 using (dr)
                 {
                     List<Proveedor> lstProveedores = null;
