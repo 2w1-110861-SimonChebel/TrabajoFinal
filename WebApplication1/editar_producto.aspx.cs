@@ -75,7 +75,8 @@ namespace Easy_Stock
                     stockMaximo = Convert.ToInt32(txtStockMaximo.Text),
                     cantidadRestante = Convert.ToInt32(txtCantidad.Text),
                     fechaVenc = Convert.ToDateTime(dtpFechaVenc.Text),
-                    fechaElab = Convert.ToDateTime(dtpFechaElab.Text)
+                    fechaElab = Convert.ToDateTime(dtpFechaElab.Text),
+                    fechaIngreso = accion.Equals("editar") ? Convert.ToDateTime(dtpFechaIngreso.Text): DateTime.Now
                 };
                 if (validarCaposVacios())
                 {

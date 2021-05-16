@@ -22,6 +22,7 @@ namespace Easy_Stock.Entidades
         public int cantidadRestante { get; set; } = 0;
         public DateTime fechaVenc { get; set; } = DateTime.Today;
         public DateTime fechaElab { get; set; } = DateTime.Today;
+        public DateTime fechaIngreso { get; set; } = DateTime.Today;
 
         public Producto() {
             idProducto = 0;
@@ -37,6 +38,9 @@ namespace Easy_Stock.Entidades
             stockMaximo = 0;
             stockMinimo = 0;
             cantidadRestante = 0;
+            fechaVenc = DateTime.Today;
+            fechaElab = DateTime.Today;
+            fechaIngreso = DateTime.Today;
         }
 
     }

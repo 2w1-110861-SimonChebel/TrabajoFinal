@@ -47,6 +47,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
+                    <asp:TemplateField HeaderText="Fecha de ingreso" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <ItemTemplate>
+                            <div id="divFechaIngreso" style="padding-top: 10px;">
+                                <b><%#Eval("fechaIngreso") %></b>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Fecha vencimiento" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divFechaVenc" style="padding-top: 10px;">
@@ -55,7 +63,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                       <asp:TemplateField HeaderText="Fecha elaboración" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <asp:TemplateField HeaderText="Fecha elaboración" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divFechaVenc" style="padding-top: 10px;">
                                 <b><%#Eval("fechaElab") %></b>

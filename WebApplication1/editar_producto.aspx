@@ -22,10 +22,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                 <a class="navbar-brand" href="home.aspx">EasyStock</a>
-                <%-- <a class="navbar-brand" href="#">
-                        <img src="//Assets\ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                     EasyStock
-                    </a>--%>
+
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
                         <a class="nav-link dropdown-toggle" href="#" id="dropDownProductos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
@@ -72,7 +69,7 @@
             </div>
             <div class="form-group">
                 <label for="txtCodigo" class="control-label">Codigo</label>
-                <asp:TextBox type="text" class="form-control" ID="txtCodigo" name="txtCodigo" runat="server"> </asp:TextBox>
+                <asp:TextBox type="text" class="form-control" ID="txtCodigo" name="txtCodigo" runat="server" MaxLength="50"> </asp:TextBox>
             </div>
 
             <div class="form-group">
@@ -84,6 +81,13 @@
                 <asp:TextBox type="number" class="form-control" ID="txtCantidad" name="txtCantidad" runat="server"> </asp:TextBox>
             </div>
 
+            <%if (!string.IsNullOrEmpty(Request.QueryString["accion"]))
+              { %>
+            <div class="form-group">
+                <label for="dtpFechaIngreso" class="control-label">Fecha de ingreso</label>
+                <asp:TextBox type="date" class="form-control" ID="dtpFechaIngreso" name="dtpFechaIngreso" runat="server"></asp:TextBox>
+            </div>
+            <%} %>
 
             <div class="form-group">
                 <label for="fechaElab" class="control-label">Fecha Elaboración</label>
