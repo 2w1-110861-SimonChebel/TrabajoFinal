@@ -8,6 +8,7 @@ namespace Easy_Stock.Entidades
     public class Producto
     {
         public int idProducto { get; set; } = 0;
+        public string codigo { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;
         public string nombre { get; set; } = string.Empty;
         public Marca marca { get; set; } = null;
@@ -24,6 +25,7 @@ namespace Easy_Stock.Entidades
 
         public Producto() {
             idProducto = 0;
+            codigo = string.Empty;
             descripcion = string.Empty;
             nombre = string.Empty;
             marca = new Marca();

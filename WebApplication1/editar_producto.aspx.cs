@@ -26,6 +26,7 @@ namespace Easy_Stock
 
                     if (oProducto != null)
                     {
+                        txtCodigo.Text = oProducto.codigo;
                         txtNombreProducto.Text = oProducto.nombre;
                         txtCantidad.Text = oProducto.cantidadRestante.ToString();
                         cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
@@ -58,6 +59,7 @@ namespace Easy_Stock
                 Producto oProducto = new Producto
                 {
                     idProducto = Convert.ToInt32(Request.QueryString["id"]),
+                    codigo = txtCodigo.Text,
                     nombre = txtNombreProducto.Text,
                     marca = new Marca { idMarca = Convert.ToInt32(cboMarcas.SelectedValue) },
                     precioVenta = float.Parse(txtPrecioVenta.Text),
@@ -106,6 +108,10 @@ namespace Easy_Stock
 
         }
 
+        private bool validarCaposVacios()
+        {
+            
+        }
 
         private void CargarCombos()
         {
@@ -166,6 +172,7 @@ namespace Easy_Stock
 
         public void LimpiarCampos()
         {
+            txtCodigo.Text = string.Empty;
             txtNombreProducto.Text = string.Empty;
             txtCantidad.Text = string.Empty;
             cboMarcas.SelectedValue = "0";
