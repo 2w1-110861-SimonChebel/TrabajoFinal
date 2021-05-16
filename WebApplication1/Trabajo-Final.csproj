@@ -259,6 +259,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="usuarios.aspx" />
+    <Content Include="venta_cliente.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -347,11 +348,13 @@
       <DependentUpon>editar_usuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Bootstrap.cs" />
+    <Compile Include="Entidades\Carrito.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\Deposito.cs" />
     <Compile Include="Entidades\DetalleFactura.cs" />
     <Compile Include="Entidades\DeudaCliente.cs" />
+    <Compile Include="Entidades\Empresa.cs" />
     <Compile Include="Entidades\Factura.cs" />
     <Compile Include="Entidades\Localidad.cs" />
     <Compile Include="Entidades\Lote.cs" />
@@ -434,6 +437,13 @@
     </Compile>
     <Compile Include="usuarios.aspx.designer.cs">
       <DependentUpon>usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="venta_cliente.aspx.cs">
+      <DependentUpon>venta_cliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="venta_cliente.aspx.designer.cs">
+      <DependentUpon>venta_cliente.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
