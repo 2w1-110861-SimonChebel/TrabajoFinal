@@ -1,5 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Header.Master.cs" Inherits="Easy_Stock.MyMaster" %>
-
+<%@ Import Namespace= "Easy_Stock.Entidades" %>
 <!DOCTYPE html>
 
 <html>
@@ -52,7 +52,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="editar_clientes.aspx">Nuevo Cliente</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="editar_clientes.aspx">Nueva venta</a>
+                                <a class="dropdown-item" href="productos.aspx?accion=carrito">Nueva venta</a>
                                 <a class="dropdown-item" href="editar_clientes.aspx">Devolución de productos</a>
                                 <a class="dropdown-item" href="editar_clientes.aspx">Cambio de productos</a>
 

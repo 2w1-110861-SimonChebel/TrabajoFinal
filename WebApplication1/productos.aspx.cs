@@ -2,6 +2,7 @@
 using Easy_Stock.Entidades;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,14 +13,28 @@ namespace Easy_Stock
     public partial class productos : System.Web.UI.Page
     {
         protected List<Producto> lstProductos = new List<Producto>();
+        Carrito oCarrito = null;
         protected void Page_Load(object sender, EventArgs e)
         {
+            string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
             if (!IsPostBack)
             {
                 divMensaje.Visible = false;
                 lstProductos = AdProducto.obtenerProductos();
                 grvProductos.DataSource = lstProductos;
                 grvProductos.DataBind();
+                if (!string.IsNullOrEmpty(accion) && accion.Equals("carrito"))
+                {
+                    grvProductos.Columns[14].Visible = false;
+                    grvProductos.Columns[15].Visible = true;
+                }
+                else
+                {
+                    grvProductos.Columns[14].Visible = true;
+                    grvProductos.Columns[15].Visible = false;
+                }
+
+
             }
         }
 
@@ -52,12 +67,14 @@ namespace Easy_Stock
         }
         protected void grvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int idProducto = Convert.ToInt32(e.CommandArgument);
+            string[] argumentos = e.CommandArgument.ToString().Split(',');
+            int idProducto = Convert.ToInt32(argumentos[0]);
+            int fila = Convert.ToInt32(argumentos[1]);
             if (e.CommandName.Equals("editar"))
             {              
                 Response.Redirect("editar_producto.aspx?id=" + idProducto.ToString() +"&accion="+e.CommandName);
             }
-            else if(e.CommandName.Equals("eliminar"))
+            if(e.CommandName.Equals("eliminar"))
             {
                 if(AdProducto.eliminarProductoPorId(idProducto))
                 {
@@ -74,7 +91,45 @@ namespace Easy_Stock
                 }
            
             }
+            if (e.CommandName.Equals("agregarCarrito"))
+            {
+
+                TextBox txtCant = (grvProductos.Rows[fila].Cells[15].FindControl("txtCantidadProducto") as TextBox);
+                int cantidad = (txtCant != null && !string.IsNullOrEmpty(txtCant.Text))? Convert.ToInt32(txtCant.Text):0;
+                if (cantidad < 1) return;
+                else
+                {
+                    if (Session["carrito"] == null) oCarrito = new Carrito();
+                    else { oCarrito = (Carrito)Session["carrito"]; }
+                    Producto oProducto = lstProductos!=null && lstProductos.Count>0 ? buscarProductoLocal(idProducto): AdProducto.obtenerProductoPorId(idProducto);
+                    oProducto.cantidad = cantidad;
+                    oCarrito.agregarProducto(oProducto);
+                    Session["carrito"] = oCarrito;
+                    hTotal.InnerText = string.Format("{0} {1}","Total: $", oCarrito.calcularTotalProductos().ToString());
+                    (grvProductos.Rows[fila].Cells[15].FindControl("txtCantidadProducto") as TextBox).BackColor = Color.Beige;
+                }
+                
+
+            }
                            
+        }
+        private Producto buscarProductoLocal(int idProducto)
+        {
+            foreach (var item in this.lstProductos)
+            {
+                if (item.idProducto == idProducto) return item;
+            }
+            return null;
+        }
+
+        protected void btnAgregarProductoCarrito_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        protected void btnQuitarProductoCarrito_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
