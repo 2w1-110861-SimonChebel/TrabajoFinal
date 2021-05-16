@@ -80,7 +80,7 @@ namespace Easy_Stock.AccesoDatos
         }
 
 
-        public static void actualizarProducto(Producto oProducto)
+        public static bool actualizarProducto(Producto oProducto)
         {
             sbSql = null;
             bool tieneDeposito;
@@ -112,6 +112,7 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@fechaElab", oProducto.fechaElab)
                     };
                     SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
+                    return true;
                 }
                 else
                 {
@@ -134,10 +135,12 @@ namespace Easy_Stock.AccesoDatos
                     };
 
                     SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
+                    return true;
                 }
             }
             catch (Exception ex)
             {
+                return false;
                 throw ex;
             }
         }

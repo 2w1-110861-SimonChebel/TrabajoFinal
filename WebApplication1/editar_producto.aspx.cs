@@ -37,8 +37,8 @@ namespace Easy_Stock
                         cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
                         txtStockMinimo.Text = oProducto.stockMinimo.ToString();
                         txtStockMaximo.Text = oProducto.stockMaximo.ToString();
-                        dtpFechaElab.Text = oProducto.fechaElab.ToShortDateString();
-                        dtpFechaVenc.Text = oProducto.fechaVenc.ToShortDateString();
+                        dtpFechaElab.Text = oProducto.fechaElab.ToString();
+                        dtpFechaVenc.Text = oProducto.fechaVenc.ToString();
                         txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
                         btnAgregarProducto.Text = "Guardar cambios";
                     }
@@ -59,7 +59,7 @@ namespace Easy_Stock
                 Producto oProducto = new Producto
                 {
                     idProducto = Convert.ToInt32(Request.QueryString["id"]),
-                    codigo = txtCodigo.Text,
+                    codigo = txtCodigo.Text.ToUpper(),
                     nombre = txtNombreProducto.Text,
                     marca = new Marca { idMarca = Convert.ToInt32(cboMarcas.SelectedValue) },
                     precioVenta = float.Parse(txtPrecioVenta.Text),
@@ -77,23 +77,52 @@ namespace Easy_Stock
                     fechaVenc = Convert.ToDateTime(dtpFechaVenc.Text),
                     fechaElab = Convert.ToDateTime(dtpFechaElab.Text)
                 };
-
-                if (accion.Equals("editar"))
+                if (validarCaposVacios())
                 {
-                    AdProducto.actualizarProducto(oProducto);
-                    divMensaje.Style["display"] = "inherit";
-                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
-                    hMensaje.InnerText = "Cambios guardados correctamente";
-                }
-                else
-                {
-                    AdProducto.agregarProducto(oProducto);
-                    divMensaje.Style["display"] = "inherit";
-                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
-                    hMensaje.InnerText = "Producto cargado correctamente";
+                    if (accion.Equals("editar"))
+                    {
+                        if (AdProducto.actualizarProducto(oProducto))
+                        {
+                            divMensaje.Visible= true;
+                            divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                            hMensaje.InnerText = "Cambios guardados correctamente";
+                            reestablecerColores();
+                            LimpiarCampos();
+                        }
+                        else {
+                            divMensaje.Visible= true;
+                            divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                            hMensaje.InnerText = "Hubo un error al actualizar el producto. Intente nuevamente.";
+                        }
+                        
+                    }
+                    else
+                    {
+                        if (AdProducto.agregarProducto(oProducto))
+                        {
+                            divMensaje.Visible = true;
+                            divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                            hMensaje.InnerText = "Producto cargado correctamente";
+                            reestablecerColores();
+                            LimpiarCampos();
+                        }
+                        else {
+                            divMensaje.Visible = true;
+                            divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                            hMensaje.InnerText = "Producto cargado correctamente";
+                        }
+                       
 
-                    LimpiarCampos();
+                        
+                    }
                 }
+                else {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                    hMensaje.InnerText = "Complete todos los campos";
+                    return;
+                }
+               
 
             }
             catch (Exception ex)
@@ -110,7 +139,39 @@ namespace Easy_Stock
 
         private bool validarCaposVacios()
         {
-            
+            WebControl[] aCampos = new WebControl[] {
+                txtCodigo,
+                txtCantidad,
+                txtNombreProducto,
+                txtPrecioCosto,
+                txtPrecioVenta,
+                txtStockMaximo,
+                txtStockMinimo,
+                cboCategorias,
+                cboMarcas,
+                cboProveedores
+            };
+
+            return Validar.ValidarCamposVacios(aCampos);
+        }
+
+        private void reestablecerColores()
+        {
+            WebControl[] aCampos = new WebControl[] {
+                txtCodigo,
+                txtCantidad,
+                txtNombreProducto,
+                txtPrecioCosto,
+                txtPrecioVenta,
+                txtStockMaximo,
+                txtStockMinimo,
+                cboCategorias,
+                cboMarcas,
+                cboProveedores
+
+            };
+
+            Validar.ReestablecerColores(aCampos);
         }
 
         private void CargarCombos()
