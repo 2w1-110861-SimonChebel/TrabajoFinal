@@ -8,9 +8,11 @@ namespace Easy_Stock.Entidades
     public class Carrito
     {
         public List<Producto> lstProductos { get; set; } = null;
+        public Cliente cliente { get; set; } = null;
         public Carrito()
         {
             this.lstProductos = new List<Producto>();
+            this.cliente = new Cliente();
         }
 
         public float calcularTotal()

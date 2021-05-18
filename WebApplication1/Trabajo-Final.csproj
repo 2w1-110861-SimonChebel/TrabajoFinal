@@ -110,6 +110,7 @@
     <Content Include="About.aspx" />
     <Content Include="Assets\ES_Logo.png" />
     <Content Include="clientes.aspx" />
+    <Content Include="cliente_carrito.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -129,6 +130,7 @@
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
     <Content Include="movimientos.aspx" />
+    <Content Include="pago_carrito.aspx" />
     <Content Include="productos.aspx" />
     <Content Include="proveedores.aspx" />
     <Content Include="reponer_producto.aspx" />
@@ -291,6 +293,13 @@
     <Compile Include="clientes.aspx.designer.cs">
       <DependentUpon>clientes.aspx</DependentUpon>
     </Compile>
+    <Compile Include="cliente_carrito.aspx.cs">
+      <DependentUpon>cliente_carrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cliente_carrito.aspx.designer.cs">
+      <DependentUpon>cliente_carrito.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -393,6 +402,13 @@
     </Compile>
     <Compile Include="movimientos.aspx.designer.cs">
       <DependentUpon>movimientos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pago_carrito.aspx.cs">
+      <DependentUpon>pago_carrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pago_carrito.aspx.designer.cs">
+      <DependentUpon>pago_carrito.aspx</DependentUpon>
     </Compile>
     <Compile Include="principal.aspx.cs">
       <DependentUpon>principal.aspx</DependentUpon>

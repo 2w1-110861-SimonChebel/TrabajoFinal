@@ -24,6 +24,7 @@ namespace Easy_Stock.Entidades
         public DateTime fechaElab { get; set; } = DateTime.Today;
         public DateTime fechaIngreso { get; set; } = DateTime.Today;
         public int cantidad { get; set; } = 0;//solo se usa para el carrito
+        public float subTotal { get; set; } = 0;//solo se usa para el carrito
 
         public Producto() {
             idProducto = 0;

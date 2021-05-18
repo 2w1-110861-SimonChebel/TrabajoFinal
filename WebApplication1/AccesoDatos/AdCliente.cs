@@ -226,7 +226,7 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
-        public static List<Cliente> obtenerClientes(string nombre = "", int idTipoCliente = 0)
+        public static List<Cliente> obtenerClientes(string nombre = "", int idTipoCliente = 0, string docu="")
         {
             sbSql = null;
             try
@@ -242,11 +242,18 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" LEFT JOIN Tipos_Empresas te on te.idTipoEmpresa = c.idTipoEmpresa");
                 sbSql.Append(" WHERE c.habilitado=1 ");
                 //if (idTipoCliente > 0) sbSql.Append(string.Format("{0}{1}{2}", " WHERE c.razonSocial LIKE '%", nombre, "%'"));
-                if (!string.IsNullOrEmpty(nombre))
+                if (!string.IsNullOrEmpty(docu) && (nombre == "" && idTipoCliente == 0)) //es busqueda para carrito
                 {
-                    sbSql.Append(string.Format("{0}{1}{2}{3}{4}", " AND (c.nombre LIKE '%", nombre, "%' OR c.apellido LIKE '%", nombre, "%') "));
-                    sbSql.Append(string.Format("{0}{1}{2}", " or (c.razonSocial LIKE '%", nombre, "%')"));
-                };
+                    sbSql.Append(string.Format("{0}{1}{2}{3}{4}", " AND (c.dni = '", docu, "' OR c.cuit = '", docu, "')"));
+                }
+                else {
+                    if (!string.IsNullOrEmpty(nombre))
+                    {
+                        sbSql.Append(string.Format("{0}{1}{2}{3}{4}", " AND (c.nombre LIKE '%", nombre, "%' OR c.apellido LIKE '%", nombre, "%') "));
+                        sbSql.Append(string.Format("{0}{1}{2}", " or (c.razonSocial LIKE '%", nombre, "%')"));
+                    };
+                }
+            
 
 
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))

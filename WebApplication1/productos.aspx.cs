@@ -101,12 +101,17 @@ namespace Easy_Stock
                 {
                     if (Session["carrito"] == null) oCarrito = new Carrito();
                     else { oCarrito = (Carrito)Session["carrito"]; }
+                    grvCarrito.DataSource = null;
+                    grvCarrito.DataBind();
+                    divTotal.Visible = true;
                     Producto oProducto = lstProductos!=null && lstProductos.Count>0 ? buscarProductoLocal(idProducto): AdProducto.obtenerProductoPorId(idProducto);
                     oProducto.cantidad = cantidad;
                     oCarrito.agregarProducto(oProducto);
                     Session["carrito"] = oCarrito;
                     hTotal.InnerText = string.Format("{0} {1}","Total: $", oCarrito.calcularTotalProductos().ToString());
                     (grvProductos.Rows[fila].Cells[15].FindControl("txtCantidadProducto") as TextBox).BackColor = Color.Beige;
+                    grvCarrito.DataSource = oCarrito.lstProductos;
+                    grvCarrito.DataBind();
                 }
                 
 
@@ -129,7 +134,36 @@ namespace Easy_Stock
 
         protected void btnQuitarProductoCarrito_Click(object sender, EventArgs e)
         {
+            //ClientScript.RegisterStartupScript(GetType(), "obtenerCodigo", "obtenerCodigo();", true);
 
+        }
+
+        protected void grvCarrito_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int id = Convert.ToInt32(e.CommandArgument);
+            string accion = e.CommandName;
+            if (accion.Equals("quitarCarrito"))
+            {
+                Carrito auxCarrito = (Carrito)Session["carrito"];
+                auxCarrito.removerProducto(id);
+                Session["carrito"] = auxCarrito.lstProductos.Count < 1 ? null : auxCarrito;
+            }
+        }
+
+        protected void grvCarrito_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnDescartar_Click(object sender, EventArgs e)
+        {
+            Session["carrito"] = null;
+            Response.Redirect("productos.aspx?accion=carrito", true);
+        }
+
+        protected void btnContinuar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("cliente_carrito.aspx");
         }
     }
 }

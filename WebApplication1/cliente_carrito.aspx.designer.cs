@@ -11,35 +11,62 @@ namespace Easy_Stock
 {
 
 
-    public partial class productos
+    public partial class cliente_carrito
     {
 
         /// <summary>
-        /// hfCodigoQuitar control.
+        /// divTitulo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hfCodigoQuitar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTitulo;
 
         /// <summary>
-        /// txtBuscarProducto control.
+        /// hTitulo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscarProducto;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hTitulo;
 
         /// <summary>
-        /// btnBuscarProducto control.
+        /// divSubtitulo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscarProducto;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divSubtitulo;
+
+        /// <summary>
+        /// txtBuscarCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBuscarCliente;
+
+        /// <summary>
+        /// btnBuscarCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarCliente;
+
+        /// <summary>
+        /// btnAgregarNuevoCliente control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAgregarNuevoCliente;
 
         /// <summary>
         /// divMensaje control.
@@ -51,57 +78,21 @@ namespace Easy_Stock
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divMensaje;
 
         /// <summary>
-        /// btnDescartar control.
+        /// hMensaje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnDescartar;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hMensaje;
 
         /// <summary>
-        /// btnContinuar control.
+        /// grvClienteCarrito control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnContinuar;
-
-        /// <summary>
-        /// divTotal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTotal;
-
-        /// <summary>
-        /// hTotal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hTotal;
-
-        /// <summary>
-        /// grvCarrito control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grvCarrito;
-
-        /// <summary>
-        /// grvProductos control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grvProductos;
+        protected global::System.Web.UI.WebControls.GridView grvClienteCarrito;
     }
 }

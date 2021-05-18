@@ -67,6 +67,11 @@ namespace Easy_Stock
                             break;
                         case "eliminar":
                             break;
+                        case "cli_carrito":
+                            string docu = Request.QueryString["doc"];
+                            if (docu != "0") { txtDocumento.Text = docu;txtCuit.Text = docu; }
+                            btnAgregarCliente.Text = "Guardar y continuar";
+                            break;
 
                         default:
                             break;
@@ -160,7 +165,13 @@ namespace Easy_Stock
         {
             string value = this.cboTipoCliente.SelectedValue;
             string accion = this.cboTipoCliente.SelectedValue == "1" ? "persona" : this.cboTipoCliente.SelectedValue == "2" ? "empresa" : string.Empty;
-            Response.Redirect("editar_clientes.aspx?tipo=" + accion + "&tipoCliente=" + value);
+            string carrito = !string.IsNullOrEmpty(Request.QueryString["accion"]) && Request.QueryString["accion"].Equals("cli_carrito") ? Request.QueryString["accion"]:string.Empty;
+            string docuCarrito = Request.QueryString["doc"] != null ? Request.QueryString["doc"] : string.Empty;
+            if (carrito.Equals("cli_carrito"))
+            {
+                Response.Redirect("editar_clientes.aspx?accion=cli_carrito"+(!string.IsNullOrEmpty(docuCarrito)?"&doc="+docuCarrito + "&tipoCliente=" + value : "&tipoCliente=" + value));
+            }
+            else Response.Redirect("editar_clientes.aspx?tipo=" + accion + "&tipoCliente=" + value);
         }
 
         protected void btnAgregarCliente_Click(object sender, EventArgs e)
@@ -219,20 +230,44 @@ namespace Easy_Stock
                     }
                     else 
                     {
-                        if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                        if (accion.Equals("eliminar"))
                         {
-                            divMensaje.Visible = true;
-                            divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
-                            hMensaje.InnerText = "Cliente cargado correctamente";
-                            reestablecerColoresCampos();
-                            limpiarCampos();
+                            if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                            {
+                                divMensaje.Visible = true;
+                                divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                                hMensaje.InnerText = "Cliente cargado correctamente";
+                                reestablecerColoresCampos();
+                                limpiarCampos();
+                            }
+                            else
+                            {
+                                divMensaje.Visible = true;
+                                divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                                hMensaje.InnerText = "Hubo en error al cargar los datos. Intente nuevamente";
+                            }
                         }
-                        else
-                        {
-                            divMensaje.Visible = true;
-                            divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
-                            hMensaje.InnerText = "Hubo en error al cargar los datos. Intente nuevamente";
+                        else {
+                            if (accion.Equals("cli_carrito"))
+                            {
+                                if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                                {
+                                    divMensaje.Visible = true;
+                                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                                    reestablecerColoresCampos();
+                                    limpiarCampos();
+                                    Session["clienteCarrito"] = oCliente;
+                                    Response.Redirect("pago_carrito.aspx");
+                                }
+                                else
+                                {
+                                    divMensaje.Visible = true;
+                                    divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                                    hMensaje.InnerText = "Hubo en error al cargar los datos. Intente nuevamente";
+                                }
+                            }
                         }
+                       
                     }
                    
                 }
