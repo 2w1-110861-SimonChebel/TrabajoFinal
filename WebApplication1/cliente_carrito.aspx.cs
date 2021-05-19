@@ -57,6 +57,7 @@ namespace Easy_Stock
         protected void grvClienteCarrito_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int idCliente = Convert.ToInt32(e.CommandArgument);
+            Response.Redirect("pago_carrito?accion=pago&id=" + idCliente);
             return;
         }
     }

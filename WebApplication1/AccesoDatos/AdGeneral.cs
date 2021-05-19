@@ -205,5 +205,39 @@ namespace Easy_Stock.AccesoDatos
                 throw ex;
             }
         }
+
+
+        public static List<FormaPago> obtenerFormasDePago()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Formas_Pago ORDER BY formaPago");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    List<FormaPago> lstFormasPago = null;
+                    if (dr.HasRows)
+                    {
+                        lstFormasPago = new List<FormaPago>();
+                        while (dr.Read())
+                        {
+                            lstFormasPago.Add(new FormaPago
+                            {
+                                idFormaPago = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                formaPago = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                            });
+                        }
+                    }
+                    return lstFormasPago;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
+
     }
 }

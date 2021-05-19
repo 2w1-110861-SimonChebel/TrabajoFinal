@@ -21,7 +21,7 @@
                 <div class="col-md-6 col-xl-6 login-form-1">
                     <h3>Ingresar</h3>
 
-                    <div id="divAlertaDatosIncorrectos" class="alert alert-danger" style="display: none" runat="server">
+                    <div id="divAlertaDatosIncorrectos" class="alert alert-danger" visible="false" runat="server">
                         <h6 id="hMensaje" runat="server"></h6>
                     </div>
                     <div class="form-group">

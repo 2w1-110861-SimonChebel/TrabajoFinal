@@ -27,6 +27,10 @@ namespace Easy_Stock
                 {
                     grvProductos.Columns[14].Visible = false;
                     grvProductos.Columns[15].Visible = true;
+                    if (Session["carrito"] != null) {
+                        grvCarrito.DataSource = ((Carrito)Session["carrito"]).lstProductos;
+                        grvCarrito.DataBind();
+                    }
                 }
                 else
                 {
