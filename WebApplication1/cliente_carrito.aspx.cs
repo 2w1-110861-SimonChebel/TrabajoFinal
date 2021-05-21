@@ -23,7 +23,7 @@ namespace Easy_Stock
             Cliente oCliente = null;
             List<Cliente> lst = AdCliente.obtenerClientes("", 0, documento);
             if (lst != null) oCliente = lst.FirstOrDefault();                      
-            Session["clienteCarrito"] = oCliente;
+            Session["clienteCarrito"] = (Cliente) oCliente;
             if (oCliente != null)
             {
                 divMensaje.Visible = false;

@@ -78,7 +78,7 @@ namespace Easy_Stock
                     fechaElab = Convert.ToDateTime(dtpFechaElab.Text),
                     fechaIngreso = accion.Equals("editar") ? Convert.ToDateTime(dtpFechaIngreso.Text): DateTime.Now
                 };
-                if (validarCaposVacios())
+                if (validarCamposVacios())
                 {
                     if (accion.Equals("editar"))
                     {
@@ -133,12 +133,12 @@ namespace Easy_Stock
                 hMensaje.InnerText = "Hubo un error al guardar los cambios. Verifique los campos";
                 return;
                 //Response.Redirect("editar_producto.aspx?response=false");
-                //throw ex;
+                throw ex;
             }
 
         }
 
-        private bool validarCaposVacios()
+        private bool validarCamposVacios()
         {
             WebControl[] aCampos = new WebControl[] {
                 txtCodigo,

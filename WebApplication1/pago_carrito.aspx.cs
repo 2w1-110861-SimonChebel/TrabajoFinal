@@ -15,20 +15,24 @@ namespace Easy_Stock
         protected Usuario oUsuario;
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.oClienteCarrito = (Cliente)Session["clienteCarrito"];
-            Carrito aux = (Carrito)Session["carrito"];
-            grvProductos.DataSource = ((Carrito)Session["carrito"]).lstProductos ;
-            grvProductos.DataBind();
-            this.oUsuario = (Usuario)Session["usuario"];
-            txtCliente.Text = string.Format("{0} {1}",oClienteCarrito.tipoCliente.idTipoCliente==1? this.oClienteCarrito.nombre:oClienteCarrito.razonSocial, oClienteCarrito.tipoCliente.idTipoCliente == 1 ? this.oClienteCarrito.apellido:string.Empty);
-            //txtUsuario.Text = string.Format("{0} {1}", this.oUsuario.nombre, this.oUsuario.apellido);
-            txtDniCLiente.Text = string.Format("{0}", this.oClienteCarrito.tipoCliente.idTipoCliente==1 ? oClienteCarrito.dni : oClienteCarrito.cuit);
-            txtDireccion.Text = oClienteCarrito.direccion;
-            txtBarrio.Text = oClienteCarrito.barrio;
-            txtLocalidad.Text = oClienteCarrito.localidad.localidad;
-            txtProvincia.Text = oClienteCarrito.provincia.provincia;
-            hTotal.InnerText = string.Format("{0} {1}", "Total: $", aux.calcularTotalProductos());
-            cargarCombo();
+            if (!IsPostBack)
+            {
+                this.oClienteCarrito = (Cliente)Session["clienteCarrito"];
+                Carrito aux = (Carrito)Session["carrito"];
+                grvProductos.DataSource = ((Carrito)Session["carrito"]).productos;
+                grvProductos.DataBind();
+                this.oUsuario = (Usuario)Session["usuario"];
+                txtCliente.Text = string.Format("{0} {1}", oClienteCarrito.tipoCliente.idTipoCliente == 1 ? this.oClienteCarrito.nombre : oClienteCarrito.razonSocial, oClienteCarrito.tipoCliente.idTipoCliente == 1 ? this.oClienteCarrito.apellido : string.Empty);
+                //txtUsuario.Text = string.Format("{0} {1}", this.oUsuario.nombre, this.oUsuario.apellido);
+                txtDniCLiente.Text = string.Format("{0}", this.oClienteCarrito.tipoCliente.idTipoCliente == 1 ? oClienteCarrito.dni : oClienteCarrito.cuit);
+                txtDireccion.Text = oClienteCarrito.direccion;
+                txtBarrio.Text = oClienteCarrito.barrio;
+                txtLocalidad.Text = oClienteCarrito.localidad.localidad;
+                txtProvincia.Text = oClienteCarrito.provincia.provincia;
+                hTotal.InnerText = string.Format("{0} {1}", "Total: $", aux.calcularTotalProductos());
+                cargarCombo();
+            }
+           
 
         }
 
@@ -43,7 +47,7 @@ namespace Easy_Stock
                 ListItem li = new ListItem
                 {
                     Text = lst[i].formaPago,
-                    Value = lst[i].idFormaPago.ToString()
+                    Value = string.Format("{0}{1}{2}",lst[i].idFormaPago.ToString(),",",lst[i].porcentajeRecargo)
                 };
                 cboFormaPago.Items.Add(li);
             }
@@ -56,7 +60,50 @@ namespace Easy_Stock
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
+            string[] valuesFormaPago = cboFormaPago.SelectedValue.Split(',');
+            Carrito aux = (Carrito)Session["carrito"];
+            List<DetalleFactura> lstDetalle = new List<DetalleFactura>();
+            foreach (var item in aux.productos)
+            {
+                lstDetalle.Add(new DetalleFactura { 
+                    cantidad = item.cantidad,
+                    producto = item,
+                    iva = 0,
+                    subTotal = item.calcularSubTotal(),
+                    precio = item.precioVenta
+                });
+            }
+            VentaCliente oVenta = new VentaCliente
+            {
+                fecha = DateTime.Now,
+                descripcion = string.Empty,
+                proveedor =null,
+                descuento = 0,
+                total = aux.calcularTotalProductos(),
+                formaPago = new FormaPago { 
+                    idFormaPago = Convert.ToInt32(valuesFormaPago[0]),
+                    formaPago = cboFormaPago.SelectedItem.Text
+                },
+                tipoTransaccion = new TipoTransaccion { 
+                    idTipoTransaccion = 1 //CAMBIARRRRRRRRRRRRRRR
+                },               
+                factura = new Factura {
+                    fecha = DateTime.Now,
+                    total = aux.calcularTotalProductos(),
+                    observaciones = string.Empty,
+                    cliente = (Cliente)Session["clienteCarrito"],
+                    empresa = (Empresa)Session["empresa"],
+                    usuario = (Usuario)Session["usuario"],
+                    detallesFactura =  lstDetalle,
+                    tipoFactura = new TipoFactura{
+                        idTipoFactura = 1
+                    },
+                    iva = 0
+                },
 
+
+            };
+            AdTransaccion.RegistrarVenta(oVenta);
         }
 
         protected void btnVolverCarrito_Click(object sender, EventArgs e)

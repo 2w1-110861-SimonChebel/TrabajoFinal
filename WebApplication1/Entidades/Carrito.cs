@@ -7,18 +7,18 @@ namespace Easy_Stock.Entidades
 {
     public class Carrito
     {
-        public List<Producto> lstProductos { get; set; } = null;
+        public List<Producto> productos { get; set; } = null;
         public Cliente cliente { get; set; } = null;
         public Carrito()
         {
-            this.lstProductos = new List<Producto>();
+            this.productos = new List<Producto>();
             this.cliente = new Cliente();
         }
 
         public float calcularTotal()
         {
             float total = 0;
-            foreach (Producto producto in lstProductos)
+            foreach (Producto producto in productos)
             {
                 total += producto.precioVenta;
             }
@@ -27,7 +27,7 @@ namespace Easy_Stock.Entidades
 
         public int devolverCantidadProducto(int idProducto)
         {
-            foreach (Producto producto in lstProductos)
+            foreach (Producto producto in productos)
             {
                 if (producto.idProducto == idProducto) return producto.cantidad;
             }
@@ -41,19 +41,19 @@ namespace Easy_Stock.Entidades
 
         public void agregarProducto(Producto producto)
         {
-            foreach (var prod in lstProductos)
+            foreach (var prod in productos)
             {
                 if (prod.idProducto == producto.idProducto) { 
                     prod.cantidad += producto.cantidad;
                     return;
                 }
             }
-            this.lstProductos.Add(producto);
+            this.productos.Add(producto);
         }
 
         public float calculcarSubTotalProducto(int idProducto)
         {
-            foreach (var item in lstProductos)
+            foreach (var item in productos)
             {
                 if (item.idProducto == idProducto) return item.calcularSubTotal();
             }
@@ -62,7 +62,7 @@ namespace Easy_Stock.Entidades
         public float calcularTotalProductos()
         {
             float total = 0;
-            foreach (var item in lstProductos)
+            foreach (var item in productos)
             {
                 total += item.calcularSubTotal();
             }
@@ -71,10 +71,10 @@ namespace Easy_Stock.Entidades
 
         public bool removerProducto(int idProducto)
         {
-            foreach (var item in lstProductos)
+            foreach (var item in productos)
             {
                 if (item.idProducto == idProducto) { 
-                    lstProductos.Remove(item);
+                    productos.Remove(item);
                     return true;
                 }
             }

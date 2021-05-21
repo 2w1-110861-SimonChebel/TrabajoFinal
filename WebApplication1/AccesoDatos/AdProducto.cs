@@ -278,7 +278,7 @@ namespace Easy_Stock.AccesoDatos
             List<ProductoReponer> lstProductos = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre, p.cantidadRestante");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre, p.cantidadRestante, p.codigo");
                 sbSql.Append(" FROM Productos p");
                 sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre like '%", nombre, "%' AND habilitado=1"));
 
@@ -295,7 +295,8 @@ namespace Easy_Stock.AccesoDatos
                             {
                                 idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
                                 nombre = dr.IsDBNull(1) ? default(string) : dr.GetString(1),
-                                cantidadRestante = dr.IsDBNull(2) ? default(int) : dr.GetInt32(2)
+                                cantidadRestante = dr.IsDBNull(2) ? default(int) : dr.GetInt32(2),
+                                codigo = dr.IsDBNull(3) ? default(string) : dr.GetString(3)
                             });
                         }
 

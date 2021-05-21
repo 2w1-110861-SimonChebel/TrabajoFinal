@@ -28,7 +28,7 @@ namespace Easy_Stock
                     grvProductos.Columns[14].Visible = false;
                     grvProductos.Columns[15].Visible = true;
                     if (Session["carrito"] != null) {
-                        grvCarrito.DataSource = ((Carrito)Session["carrito"]).lstProductos;
+                        grvCarrito.DataSource = ((Carrito)Session["carrito"]).productos;
                         grvCarrito.DataBind();
                     }
                 }
@@ -114,7 +114,7 @@ namespace Easy_Stock
                     Session["carrito"] = oCarrito;
                     hTotal.InnerText = string.Format("{0} {1}","Total: $", oCarrito.calcularTotalProductos().ToString());
                     (grvProductos.Rows[fila].Cells[15].FindControl("txtCantidadProducto") as TextBox).BackColor = Color.Beige;
-                    grvCarrito.DataSource = oCarrito.lstProductos;
+                    grvCarrito.DataSource = oCarrito.productos;
                     grvCarrito.DataBind();
                 }
                 
@@ -150,7 +150,7 @@ namespace Easy_Stock
             {
                 Carrito auxCarrito = (Carrito)Session["carrito"];
                 auxCarrito.removerProducto(id);
-                Session["carrito"] = auxCarrito.lstProductos.Count < 1 ? null : auxCarrito;
+                Session["carrito"] = auxCarrito.productos.Count < 1 ? null : auxCarrito;
             }
         }
 

@@ -15,12 +15,26 @@ namespace Easy_Stock.Entidades
         public Empresa empresa { get; set; } = null;
         public List<DetalleFactura> detallesFactura { get; set; } = null;
         public TipoFactura tipoFactura { get; set; } = null;
+        public Usuario usuario { get; set; } = null;
+        public int iva { get; set; } = 0;
 
         public Factura()
         {
             empresa = new Empresa();
             detallesFactura = new List<DetalleFactura>();
             tipoFactura = new TipoFactura();
+            usuario = new Usuario();
+            cliente = new Cliente();
+        }
+
+        public int cantidadTotalDeProductos()
+        {
+            int cantTotal = 0;
+            foreach (var item in detallesFactura)
+            {
+                cantTotal += item.cantidad;
+            }
+            return cantTotal;
         }
 
     }

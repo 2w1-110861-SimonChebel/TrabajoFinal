@@ -39,9 +39,6 @@ namespace Easy_Stock.AccesoDatos
                 {
                     sbSql = new StringBuilder("SP_AgregarClientePersona");
 
-                    //sbSql = new StringBuilder("INSERT INTO Clientes(idTipoCliente,telefono,email,direccion,idLocalidad,idProvincia,codigoPostal,fechaNacimiento,idSexo,nombre,apellido,dni,barrio,habilitado)");
-                    //sbSql.Append("VALUES(@idTipoCliente,@telefono,@email,@direccion,@idLocalidad,@idProvincia,@codigoPostal,@fechaNacimiento,@idSexo,@nombre,@apellido,@dni,@barrio,@habilitado)");
-
                     SqlParameter[] parametros = {
                     new SqlParameter("@idTipoCliente", oCliente.tipoCliente.idTipoCliente),
                     new SqlParameter("@telefono", oCliente.telefono),
@@ -223,6 +220,7 @@ namespace Easy_Stock.AccesoDatos
             catch(Exception ex)
             {
                 return null;
+                throw ex;
             }
         }
 

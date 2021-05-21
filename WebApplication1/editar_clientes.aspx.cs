@@ -206,11 +206,13 @@ namespace Easy_Stock
                     },
                     localidad = new Localidad
                     {
-                        idLocalidad = Convert.ToInt32(cboLocalidades.SelectedValue)
+                        idLocalidad = Convert.ToInt32(cboLocalidades.SelectedValue),
+                        localidad = cboLocalidades.SelectedItem.Text
                     },
                     provincia = new Provincia
                     {
-                        idProvincia = Convert.ToInt32(cboProvincias.SelectedValue)
+                        idProvincia = Convert.ToInt32(cboProvincias.SelectedValue),
+                        provincia = cboProvincias.SelectedItem.Text
                     },
                     razonSocial = string.IsNullOrEmpty(txtRazonSocial.Text) ? null : txtRazonSocial.Text,
                     cuit = string.IsNullOrEmpty(txtCuit.Text) ? null : txtCuit.Text,

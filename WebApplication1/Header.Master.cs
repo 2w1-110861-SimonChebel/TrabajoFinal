@@ -1,5 +1,8 @@
-﻿using Easy_Stock.Entidades;
+﻿using Easy_Stock.AccesoDatos;
+using Easy_Stock.Entidades;
 using System;
+using System.Collections;
+using System.Web;
 
 namespace Easy_Stock
 {
@@ -12,12 +15,33 @@ namespace Easy_Stock
                 Response.Redirect("principal.aspx");
             oUsuario = (Usuario)Session["usuario"];
             lblUsuario.Text = string.Format("{0} {1}",oUsuario.nombre,oUsuario.apellido);
+            if (Session["empresa"] == null) Session["empresa"] = AdGeneral.obtenerDatosEmpresa();
         }
 
         protected void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            Session["usuario"] = null;
-            Response.Redirect("principal.aspx?session=out");
+            try
+            {
+                Session["usuario"] = null;
+                Session["carrito"] = null;
+                Session["clienteCarrito"] = null;
+                Session["empresa"] = null;
+                Session.Abandon();
+
+                IDictionaryEnumerator enumerator = HttpContext.Current.Cache.GetEnumerator();
+
+                while (enumerator.MoveNext())
+                {
+                    HttpContext.Current.Cache.Remove(enumerator.Key.ToString());
+                }
+
+                Response.Redirect("principal.aspx?session=out",false);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+           
         }
     }
 }

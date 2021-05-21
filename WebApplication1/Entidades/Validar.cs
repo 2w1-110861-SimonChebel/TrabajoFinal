@@ -18,8 +18,7 @@ namespace Easy_Stock.Entidades
                 {
                     if (control.GetType().Name.Equals("TextBox"))
                     {
-                        var aux = (TextBox)control;
-                        if (string.IsNullOrEmpty(aux.Text))
+                        if (string.IsNullOrEmpty(((TextBox)control).Text))
                         {
                             control.BorderColor = Color.Red;
                             bandera = false;
@@ -27,8 +26,7 @@ namespace Easy_Stock.Entidades
                     }
                     if (control.GetType().Name.Equals("DropDownList"))
                     {
-                        var aux = (DropDownList)control;
-                        if (aux.SelectedValue == "0")
+                        if (((DropDownList)control).SelectedValue == "0")
                         {
                             control.BorderColor = Color.Red;
                             bandera = false;

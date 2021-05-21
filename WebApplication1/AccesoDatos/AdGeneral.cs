@@ -47,6 +47,41 @@ namespace Easy_Stock.AccesoDatos
 
         }
 
+        public static Empresa obtenerDatosEmpresa()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Empresas");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    Empresa oEmpresa = null;
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        oEmpresa = new Empresa
+                        {
+                            idEmpresa = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                            nombre = dr.IsDBNull(1) ? "N/d" : dr.GetString(1),
+                            cuit = dr.IsDBNull(2) ? "N/d" : dr.GetString(2),
+                            inicioActividades = dr.IsDBNull(3) ? DateTime.Today : dr.GetDateTime(3),
+                            direccion = dr.IsDBNull(4) ? "N/d" : dr.GetString(4)
+                        };
+
+                               
+                    }
+                    return oEmpresa;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+
+        }
+
         public static List<Provincia> obtenerProvincias()
         {
             sbSql = null;
@@ -225,7 +260,8 @@ namespace Easy_Stock.AccesoDatos
                             lstFormasPago.Add(new FormaPago
                             {
                                 idFormaPago = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
-                                formaPago = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                                formaPago = dr.IsDBNull(1) ? "N/d" : dr.GetString(1),
+                                porcentajeRecargo = dr.IsDBNull(2) ? 0 : dr.GetInt32(2)
                             });
                         }
                     }

@@ -275,6 +275,7 @@
     <Compile Include="AccesoDatos\AdMarca.cs" />
     <Compile Include="AccesoDatos\AdProducto.cs" />
     <Compile Include="AccesoDatos\AdProveedor.cs" />
+    <Compile Include="AccesoDatos\AdTransaccion.cs" />
     <Compile Include="AccesoDatos\AdUsuario.cs" />
     <Compile Include="AccesoDatos\SqlHelper.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -377,9 +378,12 @@
     <Compile Include="Entidades\TipoCliente.cs" />
     <Compile Include="Entidades\TipoEmpresa.cs" />
     <Compile Include="Entidades\TipoFactura.cs" />
+    <Compile Include="Entidades\TipoTransaccion.cs" />
     <Compile Include="Entidades\TipoUsuario.cs" />
+    <Compile Include="Entidades\Transaccion.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Validar.cs" />
+    <Compile Include="Entidades\VentaCliente.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
