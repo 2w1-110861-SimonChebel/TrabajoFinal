@@ -1,47 +1,87 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Header.Master" AutoEventWireup="true" CodeBehind="home.aspx.cs" Inherits="Easy_Stock.home" %>
 
+<%@ Import Namespace="Easy_Stock.Entidades" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="row">
-
     </div>
-  <%--  <div class="row">
-        <div class="col-xl-12 col-md-12">
-            <table class="table">
+    <div class="row" style="padding: 20px" id="divMensaje" runat="server">
+        <h6 id="hMensaje" runat="server" visible="false">No se econtraron registros</h6>
+    </div>
+    <div class="row col-md-12 col-xs-12">
+        <div class="col-md-6 col-xs-12">
+            <div class="row" style="padding: 20px">
+                <h5>Utlimos 10 movimientos</h5>
+                <h6 id="hMensMov" runat="server" visible="false">No se econtraron registros</h6>
+            </div>
+            <table class="table table-striped table-info">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Fecha</th>
-                        <th scope="col">Descripcion</th>
                         <th scope="col">Cliente</th>
-                        <th scope="col">Proveedor</th>
+                        <th scope="col">Tipo</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <%
+                        if (lstTransacciones != null && lstTransacciones.Count > 0)
+                        {
+                            foreach (var item in lstTransacciones)
+                            {
+                                string ape = item.cliente.tipoCliente.idTipoCliente.Equals(1) ? item.cliente.apellido : string.Empty;
+                                string nombre = item.cliente.tipoCliente.idTipoCliente.Equals(1) ? item.cliente.nombre : item.cliente.razonSocial;
+                    %>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                        <th scope="row"><%=item.fecha%></th>
+                        <td><%=(string.Format("{0} {1}", nombre, ape))%></td>
+                        <td><%=item.tipoTransaccion.tipoTransaccion %></td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
-                        <td>@mdo</td>
-                    </tr>
+                    <%
+                            }
+                        }
+                        else hMensMov.Visible = true;
+                    %>
                 </tbody>
             </table>
         </div>
-    </div>--%>
+
+        <div class="col-md-6 col-xs-12">
+
+             <div class="row" style="padding: 20px">
+                <h5>Productos próximos a vencer</h5>
+                <h6 id="hMensProd" runat="server" visible="false">No se econtraron registros</h6>
+            </div>
+            <% if (lstProductos != null && lstProductos.Count > 0)
+            {%>
+            <table class="table table-striped table-warning">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Fecha Vencimiento</th>
+                        <th scope="col">Fecha Ingreso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                            foreach (var item in lstProductos)
+                            {
+                    %>
+                    <tr>
+                        <th scope="row"><%=item.nombre%></th>
+                        <td><%=item.fechaVenc.ToShortDateString()%></td>
+                        <td><%=item.fechaIngreso %></td>
+                    </tr>
+                <%
+                            }
+                }
+                        else hMensProd.Visible = true;
+               %>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
 </asp:Content>

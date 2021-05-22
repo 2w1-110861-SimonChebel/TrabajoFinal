@@ -150,7 +150,7 @@ namespace Easy_Stock.AccesoDatos
         }
 
 
-        public static List<Producto> obtenerProductos(string nombre = "")
+        public static List<Producto> obtenerProductos(string nombre = "",bool vencimiento=false)
         {
             sbSql = null;
             try
@@ -159,7 +159,9 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
-                if (!string.IsNullOrEmpty(nombre)) sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre LIKE '%", nombre, "%' AND p.habilitado=1"));
+                if (!string.IsNullOrEmpty(nombre) && !vencimiento) sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre LIKE '%", nombre, "%' AND p.habilitado=1"));
+                if (string.IsNullOrEmpty(nombre) && vencimiento) sbSql.Append(" WHERE DATEDIFF(DAY,GETDATE(),p.fechaVenc) <= 7");
+
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
                 {
                     List<Producto> lstProductos = null;

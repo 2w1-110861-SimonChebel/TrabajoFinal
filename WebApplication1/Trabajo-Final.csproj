@@ -375,6 +375,7 @@
     <Compile Include="Entidades\Proveedor.cs" />
     <Compile Include="Entidades\Provincia.cs" />
     <Compile Include="Entidades\Sexo.cs" />
+    <Compile Include="Entidades\Tipo.cs" />
     <Compile Include="Entidades\TipoCliente.cs" />
     <Compile Include="Entidades\TipoEmpresa.cs" />
     <Compile Include="Entidades\TipoFactura.cs" />
