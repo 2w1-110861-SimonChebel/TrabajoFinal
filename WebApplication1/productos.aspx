@@ -9,7 +9,7 @@
     <div class="container">
         <div class="col-xl-12 col-md-12">
 
-            <div class="row">
+            <div class="row" style="padding-left:10%">
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
                     <asp:TextBox ID="txtBuscarProducto" CssClass="form-control" PlaceHolder="Buscar productos" runat="server"></asp:TextBox>
                 </div>
@@ -47,7 +47,7 @@
                             <h4 id="hTotal" runat="server">Total: $</h4>
                         </div>
                     </div>
-                    <asp:GridView ID="grvCarrito" runat="server" Height="150px" Width="80%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvCarrito_SelectedIndexChanged" OnRowCommand="grvCarrito_RowCommand" AutoGenerateColumns="False">
+                    <asp:GridView ID="grvCarrito" runat="server" Height="150px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvCarrito_SelectedIndexChanged" OnRowCommand="grvCarrito_RowCommand" AutoGenerateColumns="False">
                         <Columns>
                             <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                                 <ItemTemplate>
@@ -89,6 +89,14 @@
                                 </ItemTemplate>
                             </asp:TemplateField>
 
+                             <asp:TemplateField HeaderText="cantRestante" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="false">
+                                <ItemTemplate>
+                                    <div id="divCodCarrito" style="padding-top: 10px;">
+                                        <b><%#Eval("cantidadRestante") %></b>
+                                    </div>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                                 <ItemTemplate>
                                     <div id="divAccionesCarrito" style="padding-top: 10px;" runat="server">
@@ -104,77 +112,6 @@
                     </div>
 
                 </div>
-
-                <%--         <div id="accordion">
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <div class="row">
-                            <div class="col-6">
-                                <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Carrito
-                                    </button>
-                                    <asp:LinkButton ID="btnDescartar" Text="Descartar" type="button" class="btn btn-warning" runat="server"></asp:LinkButton>
-                                    <asp:LinkButton ID="btnContinuar" Text="Continuar" type="button" class="btn btn-success" runat="server"></asp:LinkButton>
-
-                                </h5>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <%if (Session["carrito"] != null)
-                        { %>
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                        <div class="card-body">
-
-                            <table class="table table-striped" id="tblCarrito">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" id="thCodigo">Código</th>
-                                        <th scope="col">Producto</th>
-                                        <th scope="col">Precio venta</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">subtotal</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <%
-                                    Carrito auxCarrito = Session["carrito"] != null ? (Carrito)Session["carrito"] : null;
-                                    if (auxCarrito != null)
-                                    {
-                                        foreach (var item in auxCarrito.lstProductos)
-                                        {
-                                %>
-                                <tbody>
-                                    <tr id="trTabla">
-                                        <td id="tdCodigo"><%=item.codigo%></td>
-                                        <td><%=item.nombre%></td>
-                                        <td><%=string.Format("{0}{1}", "$", item.precioVenta)%></td>
-                                        <td><%=item.cantidad%></td>
-                                        <td><%=string.Format("{0}{1}", "$", auxCarrito.calculcarSubTotalProducto(item.idProducto))%></td>
-                                        <td>
-                                            <asp:Button ID="btnQuitarProductoCarrito" Text="Quitar" CssClass="btn btn-danger" runat="server" OnClick="btnQuitarProductoCarrito_Click" /></td>
-                                    </tr>
-
-                                </tbody>
-
-                                <%
-                                        }
-                                    }
-                                %>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h4 id="hTotal" runat="server">Total: $</h4>
-                                    </div>
-                                </div>
-                            </table>
-
-                        </div>
-                    </div>
-                    <%} %>
-                </div>
-            </div>--%>
                 <%} %>
                 <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="btnEditarProducto_Click" OnRowCommand="grvProductos_RowCommand" AutoGenerateColumns="False">
                     <Columns>
@@ -328,5 +265,6 @@
                 %>
             </div>
         </div>
+ </div>
 </asp:Content>
 

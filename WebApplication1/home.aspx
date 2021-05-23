@@ -8,12 +8,12 @@
     <div class="row">
     </div>
     <div class="row" style="padding: 20px" id="divMensaje" runat="server">
-        <h6 id="hMensaje" runat="server" visible="false">No se econtraron registros</h6>
+        <h6 id="hMensaje" runat="server" visible="true"></h6>
     </div>
     <div class="row col-md-12 col-xs-12">
         <div class="col-md-6 col-xs-12">
             <div class="row" style="padding: 20px">
-                <h5>Utlimos 10 movimientos</h5>
+                <h5>Utlimos 5 movimientos</h5>
                 <h6 id="hMensMov" runat="server" visible="false">No se econtraron registros</h6>
             </div>
             <table class="table table-striped table-info">
@@ -76,7 +76,7 @@
                 <%
                             }
                 }
-                        else hMensProd.Visible = true;
+                else hMensProd.Visible = true;
                %>
                 </tbody>
             </table>

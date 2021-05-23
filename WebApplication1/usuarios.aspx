@@ -7,7 +7,7 @@
     <div class="table-responsive">
         <div class="col-xl-12 col-md-12">
 
-            <div class="row">
+            <div class="row" style="padding-left:5%">
 
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
                     <asp:TextBox ID="txtBuscarUsuario" CssClass="form-control" PlaceHolder="Buscar usuarios" runat="server"></asp:TextBox>
@@ -22,7 +22,7 @@
             </div>
 
 
-            <asp:GridView ID="grvUsuarios" runat="server" Height="277px" Width="897px" CssClass="mydatagrid; header; rows;" OnRowCommand="grvUsuarios_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
+            <asp:GridView ID="grvUsuarios" runat="server" Height="277px" Width="90%" CssClass="gridViewCarritoHeader gridView" OnRowCommand="grvUsuarios_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
                 <Columns>
 
                     <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" Visible="false" ItemStyle-CssClass="col-lg-5 col-xs-10">

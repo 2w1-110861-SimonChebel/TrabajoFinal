@@ -4,6 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <div id="divMensaje" class="alert alert-warning" style="padding-top: 20px" visible="false" runat="server">
+                <h6 id="hMensaje" runat="server"></h6>
+    </div>
+
     <div class="col-10">
         <div class="row" id="divCliente" runat="server">
             <h6 id="hNombreCliente" style="padding-right: 10px" runat="server"></h6>
@@ -65,19 +69,12 @@
                             <div class="row">
                                 <div class="col-6">
 
-                                    <h5 class="mb-0">
-                                        <%--                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            Carrito
-                                        </button>
-                                        <asp:LinkButton ID="btnCancelar" Text="Cancelar compra y volver" type="button" class="btn btn-danger" CommandName="cancelar" runat="server" OnClick="btnCancelar_Click"></asp:LinkButton>
-                                        <asp:LinkButton ID="btnConfirmar" Text="Confirmar" type="button" class="btn btn-success" runat="server" OnClick="btnConfirmar_Click"></asp:LinkButton>--%>
-
-                                    </h5>
+                                    <h5 class="mb-0"></h5>
                                 </div>
                             </div>
                         </div>
 
-                        <asp:GridView ID="grvProductos" runat="server" Height="150px" Width="80%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvProductos_SelectedIndexChanged" OnRowCommand="grvProductos_RowCommand" AutoGenerateColumns="False">
+                        <asp:GridView ID="grvProductos" runat="server" Height="150px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvProductos_SelectedIndexChanged" OnRowCommand="grvProductos_RowCommand" AutoGenerateColumns="False">
                             <Columns>
                                 <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                                     <ItemTemplate>
@@ -119,7 +116,6 @@
                                     </ItemTemplate>
                                 </asp:TemplateField>
 
-
                             </Columns>
 
                         </asp:GridView>
@@ -130,6 +126,13 @@
 
         <div id="divFormaPago" runat="server" class="form-group col-xl-4 col-md-4 col-xs-12">
 
+             <div class="form-group">
+                <label for="cboTipoTransaccion" class="control-label">Acción</label>
+                <asp:DropDownList class="form-control" ID="cboTipoTransaccion" name="cboTipoTransaccion" runat="server">
+                    <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+
             <div class="form-group">
                 <label for="cboFormaPago" class="control-label">Forma de pago</label>
                 <asp:DropDownList class="form-control" ID="cboFormaPago" name="cboFormaPago" runat="server">
@@ -137,133 +140,16 @@
                 </asp:DropDownList>
             </div>
             <h4 id="hTotal" runat="server"></h4>
-            <div class="row" style="padding:5px">
-                <div style="padding:5px"><asp:Button ID="btnConfirmar" Text="Confirmar" type="button" class="btn btn-primary btn-lg" runat="server" OnClick="btnConfirmar_Click" /></div>
-                <div style="padding:5px"><asp:Button ID="btnCancelar" Text="Cancelar y volver" type="button" class="btn btn-danger btn-lg" runat="server" OnClick="btnCancelar_Click" /></div>
+            <div class="row" style="padding: 5px">
+                <div style="padding: 5px">
+                    <asp:Button ID="btnConfirmar" Text="Confirmar" type="button" class="btn btn-primary btn-lg" runat="server" OnClick="btnConfirmar_Click" /></div>
+                <div style="padding: 5px">
+                    <asp:Button ID="btnCancelar" Text="Cancelar y volver" type="button" class="btn btn-danger btn-lg" runat="server" OnClick="btnCancelar_Click" /></div>
             </div>
             <div>
-                <asp:LinkButton id="btnVolverCarrito" runat="server" OnClick="btnVolverCarrito_Click">Volver al carrito</asp:LinkButton>
+                <asp:LinkButton ID="btnVolverCarrito" runat="server" OnClick="btnVolverCarrito_Click">Volver al carrito</asp:LinkButton>
             </div>
-
-
         </div>
     </div>
-
-    <style>
-        .gridViewCarrito {
-            margin: 0 auto;
-            font-size: 11px;
-            text-align: center;
-            border: hidden;
-        }
-            /*Selecciona las filas pares y las colorea*/
-            .gridViewCarrito tr:nth-child(even) {
-                background-color: lightgray;
-            }
-            /*Selecciona las filas impares y las colorea*/
-            .gridViewCarrito tr:nth-child(odd) {
-                background-color: #fff;
-            }
-            /*Estilo para las casillas del gridView*/
-            .gridViewCarrito td {
-                padding-left: 3px;
-                padding-right: 3px;
-                border: hidden;
-            }
-        /*Color de fondo para la paginación*/
-        .gridViewCarritoPaginacion td {
-            background-color: #435B14;
-        }
-
-        /*Bordes redondeados para la paginacion*/
-
-        .gridViewCarritoPaginacion > td {
-            border-radius: 0px 0px 5px 5px;
-        }
-
-        /*Centramos la tabla que contiene los enlaces para las paginas*/
-
-        .gridViewCarritoPaginacion table {
-            margin: 2px auto;
-        }
-
-        /*El span representa el enlace a la pagina en la que estamos actualmente*/
-
-        .gridViewCarritoPaginacion span {
-            display: block;
-            margin: 0;
-            padding: 5px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50% 50%;
-            background: #B1C689;
-            color: #3743a1;
-        }
-
-        /*Estilo para los enlaces redondos*/
-
-        .gridViewCarritoPaginacion a {
-            display: block;
-            text-decoration: none;
-            margin: 0;
-            padding: 5px;
-            width: 15px;
-            height: 15px;
-            border-radius: 50% 50%;
-            background: #367DEE;
-            color: #fff;
-        }
-
-            .gridViewCarritoPaginacion a:hover {
-                display: block;
-                margin: 0;
-                padding: 5px;
-                width: 18px;
-                height: 18px;
-                border-radius: 50% 50%;
-                background: #B1C689;
-                color: #3743a1;
-                box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
-            }
-
-        .gridViewCarritoHeader {
-            height: 35px;
-        }
-
-            .gridViewCarritoHeader th {
-                background-color: black;
-                padding: 5px;
-                border: hidden;
-                color: #fff;
-            }
-
-                /*Redondeamos el borde superior izquierdo de la primera casilla del header*/
-
-                .gridViewCarritoHeader th:first-child {
-                    border-radius: 5px 0 0 0;
-                }
-
-                /*Y el borde superior derecho de la ultima casilla*/
-
-                .gridViewCarritoHeader th:last-child {
-                    border-radius: 0 5px 0 0;
-                }
-
-                /*Estilo para los enlaces del header...*/
-
-                .gridViewCarritoHeader th a {
-                    padding: 5px;
-                    text-decoration: none;
-                    color: #435B14;
-                    background-color: #a9c673;
-                    border-radius: 5px;
-                }
-
-                    .gridViewCarritoHeader th a:hover {
-                        color: #435B14;
-                        background-color: #B1C689;
-                        box-shadow: 0 0 .9em rgba(0, 0, 0, .8);
-                    }
-    </style>
 
 </asp:Content>

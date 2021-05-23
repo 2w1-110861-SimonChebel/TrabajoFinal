@@ -31,18 +31,14 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@idFormaPago", oVentaCliente.formaPago.idFormaPago),
                     new SqlParameter("@idTipoTransaccion", oVentaCliente.tipoTransaccion.idTipoTransaccion),
                     new SqlParameter("@idUsuario", oVentaCliente.factura.usuario.idUsuario),
-                    //new SqlParameter("@idFactura", oVentaCliente.factura.nroFactura),
-                    //new SqlParameter("@cantidad", oVentaCliente.factura.cantidadTotalDeProductos()),
-                    //new SqlParameter("@idProducto", oCliente.apellido),
-                    //new SqlParameter("@iva", oCliente.dni),
-                    //new SqlParameter("@subTotal", oCliente.barrio),
                 };
 
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros)) 
                 {
-                     int idFactura = obtenerUltimoNroFactura();
+                    int idFactura = obtenerUltimoNroFactura();
                     string sql = "INSERT INTO Detalles_Facturas (nroFactura,cantidad,idProducto,iva, subTotal,precio) ";
-                    sql += "VALUES (@nroFactura,@cantidad,@idProducto,@iva,@subTotal,@precio)";
+                    sql += "VALUES (@nroFactura,@cantidad,@idProducto,@iva,@subTotal,@precio) ";
+                    sql += " UPDATE Productos set cantidadRestante = @cantActualizada WHERE idProducto=@idProducto ";
                     for (int i = 0; i < oVentaCliente.factura.detallesFactura.Count; i++)
                     {
                         var item = oVentaCliente.factura.detallesFactura[i];
@@ -53,6 +49,7 @@ namespace Easy_Stock.AccesoDatos
                             new SqlParameter("@iva", 0),
                             new SqlParameter("@subTotal", item.producto.calcularSubTotal()),
                             new SqlParameter("@precio", item.precio),
+                            new SqlParameter("@cantActualizada", (item.producto.cantidadRestante-item.cantidad)),
 
                         };
 
@@ -77,14 +74,14 @@ namespace Easy_Stock.AccesoDatos
             return true;
         }
 
-        public static List<Transaccion> obtenerTransacciones(bool top10=false)
+        public static List<Transaccion> obtenerTransacciones(bool top5=false)
         {
             sbSql = null;
             List<Transaccion> lstTransacciones = null;
             try
             {
-                if (top10) sbSql = new StringBuilder(" SELECT TOP 10 t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion,");
-                sbSql = new StringBuilder("SELECT t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion, ");
+                if (top5) sbSql = new StringBuilder(" SELECT TOP 5 t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion,");
+                else sbSql = new StringBuilder("SELECT t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion, ");
                 sbSql.Append(" c.idCliente,c.nombre,c.apellido,c.dni,c.cuit,c.direccion,c.barrio,lo.idLocalidad,lo.localidad,p.idProvincia,p.provincia,pr.idProveedor, pr.nombre, c.razonSocial, tc.idTipoCliente,tc.tipoCliente  ");
                 sbSql.Append(" FROM Transacciones t ");
                 sbSql.Append(" JOIN Clientes c on T.idCliente = C.idCliente");
@@ -93,7 +90,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente");
                 sbSql.Append(" JOIN Tipos_Transacciones tt ON t.idTipoTransaccion = tt.idTipoTransaccion");
                 sbSql.Append(" LEFT JOIN Proveedores pr ON t.idProveedor = pr.idProveedor");
-                if (top10) sbSql.Append(" ORDER BY t.fecha DESC");
+                if (top5) sbSql.Append(" ORDER BY t.fecha DESC");
 
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
                 {

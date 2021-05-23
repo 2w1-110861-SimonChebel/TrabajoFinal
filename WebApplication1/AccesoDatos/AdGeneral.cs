@@ -47,6 +47,44 @@ namespace Easy_Stock.AccesoDatos
 
         }
 
+        public static List<TipoTransaccion> obtenerTiposTransacciones(int idTipo = 0)
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Tipos_Transacciones ORDER BY tipoTransaccion");
+                if (idTipo > 0) sbSql.Append(" WHERE idTipoTransaccion=@idTipo");
+                SqlParameter[] param = { 
+                    new SqlParameter("@idTipo",idTipo)
+                };
+
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), param))
+                {
+                    List<TipoTransaccion> lstTipos = null;
+                    if (dr.HasRows)
+                    {
+                        lstTipos = new List<TipoTransaccion>();
+                        while (dr.Read())
+                        {
+                            lstTipos.Add(new TipoTransaccion
+                            {
+                                idTipoTransaccion = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                tipoTransaccion = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                            });
+                        }
+                    }
+                    return lstTipos;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+
+        }
+
         public static Empresa obtenerDatosEmpresa()
         {
             sbSql = null;

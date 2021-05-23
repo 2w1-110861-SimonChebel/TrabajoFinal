@@ -17,6 +17,12 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
+                if (Request.QueryString["transaction"] != null && Request.QueryString["transaction"].Equals("ok"))
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "La transacción se realizó correctamente";
+                }
                 lstTransacciones = AdTransaccion.obtenerTransacciones(true);
                 lstProductos = AdProducto.obtenerProductos("",true);
             }

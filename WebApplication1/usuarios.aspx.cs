@@ -24,6 +24,7 @@ namespace Easy_Stock
                 }               
                 grvUsuarios.DataSource = AdUsuario.ObtenerUsuarios();
                 grvUsuarios.DataBind();
+                grvUsuarios.Columns[0].Visible = true;
                 
             }
         }

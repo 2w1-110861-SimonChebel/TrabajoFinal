@@ -9,7 +9,7 @@ namespace Easy_Stock.Entidades
     public static class Tipo
     {
 
-        public enum TipoCliente
+        public enum tipoCliente
         {
             persona = 1,
             empresa = 2
