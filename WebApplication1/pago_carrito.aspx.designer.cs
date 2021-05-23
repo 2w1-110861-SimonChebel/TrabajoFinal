@@ -150,13 +150,13 @@ namespace Easy_Stock
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFormaPago;
 
         /// <summary>
-        /// cboTipoTransaccion control.
+        /// txtTipoTran control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList cboTipoTransaccion;
+        protected global::System.Web.UI.WebControls.TextBox txtTipoTran;
 
         /// <summary>
         /// cboFormaPago control.

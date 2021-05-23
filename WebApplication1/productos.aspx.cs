@@ -17,6 +17,7 @@ namespace Easy_Stock
         protected void Page_Load(object sender, EventArgs e)
         {
             string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
+            Session["tipoTranActual"] = Session["tipoTranActual"] != null ?(TipoTransaccion) Session["tipoTranActual"] : AdGeneral.obtenerTiposTransacciones(Convert.ToInt32(Request.QueryString["tipoTransaccion"])).First();
             if (!IsPostBack)
             {
                 divMensaje.Visible = false;
@@ -162,7 +163,9 @@ namespace Easy_Stock
         protected void btnDescartar_Click(object sender, EventArgs e)
         {
             Session["carrito"] = null;
-            Response.Redirect("productos.aspx?accion=carrito", true);
+            Session["clienteCarrito"] = null;
+            Session["tipoTranActual"] = null;
+            Response.Redirect("home.aspx?", true);
         }
 
         protected void btnContinuar_Click(object sender, EventArgs e)

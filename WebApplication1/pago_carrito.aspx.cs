@@ -18,6 +18,7 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
+                txtTipoTran.Text = ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion;
                 this.oClienteCarrito = (Cliente)Session["clienteCarrito"];
                 Carrito aux = (Carrito)Session["carrito"];
                 grvProductos.DataSource = ((Carrito)Session["carrito"]).productos;
@@ -52,26 +53,14 @@ namespace Easy_Stock
                 };
                 cboFormaPago.Items.Add(li);
             }
-
-            List<TipoTransaccion> lstTiposTransacciones = AdGeneral.obtenerTiposTransacciones();
-            cboTipoTransaccion.DataSource = null;
-            cboTipoTransaccion.DataBind();
-            cboTipoTransaccion.DataSource = lstTiposTransacciones;
-
-            for (int i = 0; i < lstTiposTransacciones.Count; i++)
-            {
-                ListItem li = new ListItem
-                {
-                    Text = lstTiposTransacciones[i].tipoTransaccion,
-                    Value = lstTiposTransacciones[i].idTipoTransaccion.ToString()
-                };
-                cboTipoTransaccion.Items.Add(li);
-            }
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-
+            Session["carrito"] = null;
+            Session["clienteCarrito"] = null;
+            Session["tipoTranActual"] = null;
+            Response.Redirect("home.aspx", false);
         }
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
@@ -107,7 +96,8 @@ namespace Easy_Stock
                     },
                     tipoTransaccion = new TipoTransaccion
                     {
-                        idTipoTransaccion = 1 //CAMBIARRRRRRRRRRRRRRR
+                        idTipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).idTipoTransaccion,
+                        tipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion
                     },
                     factura = new Factura
                     {
@@ -131,6 +121,7 @@ namespace Easy_Stock
                 {
                     Session["carrito"] = null;
                     Session["clienteCarrito"] = null;
+                    Session["tipoTranActual"] = null;
                     Response.Redirect("home.aspx?transaction=ok");
                 }
                 else

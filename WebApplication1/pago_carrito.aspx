@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div id="divMensaje" class="alert alert-warning" style="padding-top: 20px" visible="false" runat="server">
-                <h6 id="hMensaje" runat="server"></h6>
+        <h6 id="hMensaje" runat="server"></h6>
     </div>
 
     <div class="col-10">
@@ -126,11 +126,9 @@
 
         <div id="divFormaPago" runat="server" class="form-group col-xl-4 col-md-4 col-xs-12">
 
-             <div class="form-group">
-                <label for="cboTipoTransaccion" class="control-label">Acción</label>
-                <asp:DropDownList class="form-control" ID="cboTipoTransaccion" name="cboTipoTransaccion" runat="server">
-                    <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
-                </asp:DropDownList>
+            <div class="form-group">
+                <label for="txtTipoTran" class="control-label">Acción</label>
+                <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtTipoTran" name="txtTipoTran" runat="server" MaxLength="70"> </asp:TextBox>
             </div>
 
             <div class="form-group">
@@ -142,9 +140,11 @@
             <h4 id="hTotal" runat="server"></h4>
             <div class="row" style="padding: 5px">
                 <div style="padding: 5px">
-                    <asp:Button ID="btnConfirmar" Text="Confirmar" type="button" class="btn btn-primary btn-lg" runat="server" OnClick="btnConfirmar_Click" /></div>
+                    <asp:Button ID="btnConfirmar" Text="Confirmar" type="button" class="btn btn-primary btn-lg" runat="server" OnClick="btnConfirmar_Click" />
+                </div>
                 <div style="padding: 5px">
-                    <asp:Button ID="btnCancelar" Text="Cancelar y volver" type="button" class="btn btn-danger btn-lg" runat="server" OnClick="btnCancelar_Click" /></div>
+                    <asp:Button ID="btnCancelar" Text="Cancelar y volver" type="button" class="btn btn-danger btn-lg" runat="server" OnClick="btnCancelar_Click" />
+                </div>
             </div>
             <div>
                 <asp:LinkButton ID="btnVolverCarrito" runat="server" OnClick="btnVolverCarrito_Click">Volver al carrito</asp:LinkButton>

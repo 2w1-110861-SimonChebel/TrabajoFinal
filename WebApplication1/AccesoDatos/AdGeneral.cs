@@ -52,8 +52,9 @@ namespace Easy_Stock.AccesoDatos
             sbSql = null;
             try
             {
-                sbSql = new StringBuilder("SELECT * FROM Tipos_Transacciones ORDER BY tipoTransaccion");
+                sbSql = new StringBuilder("SELECT * FROM Tipos_Transacciones ");
                 if (idTipo > 0) sbSql.Append(" WHERE idTipoTransaccion=@idTipo");
+                sbSql.Append(" ORDER BY tipoTransaccion");
                 SqlParameter[] param = { 
                     new SqlParameter("@idTipo",idTipo)
                 };
