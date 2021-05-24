@@ -26,6 +26,7 @@ namespace Easy_Stock
                 Session["carrito"] = null;
                 Session["clienteCarrito"] = null;
                 Session["empresa"] = null;
+                Session["tipoTranActual"] = null;
                 Session.Abandon();
 
                 IDictionaryEnumerator enumerator = HttpContext.Current.Cache.GetEnumerator();

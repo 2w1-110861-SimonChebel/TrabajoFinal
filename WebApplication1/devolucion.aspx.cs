@@ -90,5 +90,15 @@ namespace Easy_Stock
         {
 
         }
+
+        protected void grvDetalleVenta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void grvDetalleVenta_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+        }
     }
 }

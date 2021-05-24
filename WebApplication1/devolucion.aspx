@@ -122,6 +122,84 @@
             </Columns>
         </asp:GridView>
     </div>
+    <%} %>
+
+
+    <div class="col-xs-12 col-md-10 col-xl-10 table table-responsive">
+
+        <asp:GridView ID="grvDetalleVenta" runat="server" Height="150px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="grvDetalleVenta_SelectedIndexChanged"OnRowCommand="grvDetalleVenta_RowCommand" AutoGenerateColumns="False">
+            <Columns>
+
+                <asp:TemplateField HeaderText="Codigo producto" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divIdTransaccion" style="padding-top: 10px;">
+                            <b><%#Eval("idTransaccion")%></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Fecha y hora" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divFecha" style="padding-top: 10px;">
+                            <b><%#Eval("fecha")%></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Descripción" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divDescripcion" style="padding-top: 10px;">
+                            <b><%#Eval("descripcion")%></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Nombre o razón social" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divNombreCliente" style="padding-top: 10px;">
+                            <b><%#(int)Eval("cliente.tipoCliente.idTipoCliente")==(int) Tipo.tipoCliente.persona? Eval("cliente.nombre") : Eval("cliente.razonSocial") %></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="N° Factura" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divNroFactura" style="padding-top: 10px;">
+                            <b><%#Eval("factura.nroFactura") %></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Total" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divTotalFactura" style="padding-top: 10px;">
+                            <b><%#string.Format("{0}{1}","$", Eval("factura.total")) %></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="Operador" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divOperador" style="padding-top: 10px;">
+                            <b><%#String.Format("{0} {1}" ,Eval("usuario.nombre"),Eval("usuario.apellido"))%></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:TemplateField HeaderText="" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divAcciones" style="padding-top: 10px;">
+                            <b>
+                                <asp:Button runat="server" ID="btnElegirVenta" type="button" class="btn btn-info" Text="Elegir" CommandArgument='<%#string.Format("{0}{1}{2}",Eval("idTransaccion"),",",Eval("cliente.idCliente"))%>' CommandName="editar" OnClick="btnElegirVenta_Click" /></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+    </div>
+
+
+
     <div class="row" style="padding-left: 4%">
         <div class="form-group col-6">
             <asp:RadioButton ID="rbCreditoAfavor" runat="server" GroupName="rdbDevolver" />
@@ -141,5 +219,4 @@
             <asp:TextBox type="text" TextMode="MultiLine" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" MaxLength="150"> </asp:TextBox>
         </div>
     </div>
-    <%} %>
 </asp:Content>

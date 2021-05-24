@@ -19,5 +19,6 @@ namespace Easy_Stock.Entidades
             producto = new Producto();
         }
 
+
     }
 }

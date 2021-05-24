@@ -37,5 +37,31 @@ namespace Easy_Stock.Entidades
             return cantTotal;
         }
 
+        //meotodo para devolver individualmente productos que esten en el detalle de una factura
+        // Ej: si en un renglon del detalle tengo 3 productos A, este metodo devolveria:
+        // producto A, producto A, producto A. Los 3 por separado 
+        public List<DetalleFactura> listaProductosIndividuales()
+        {
+            List<DetalleFactura> lstResultado = new List<DetalleFactura>();
+            foreach (var detalle in detallesFactura)
+            {
+                for (int i = 0; i < detalle.producto.cantidad; i++)
+                {
+                    Producto auxProducto = detalle.producto;
+                    auxProducto.cantidad = detalle.producto.cantidad / detalle.producto.cantidad;
+                    lstResultado.Add(
+                        new DetalleFactura
+                        {
+                          idDetalle = detalle.idDetalle,
+                          producto = auxProducto                      
+                        }
+                    );
+                }
+
+            }
+            lstResultado.OrderBy(r => r.producto.idProducto);
+            return lstResultado;
+        }
+
     }
 }
