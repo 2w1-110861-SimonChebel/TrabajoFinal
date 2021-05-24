@@ -25,7 +25,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append("FROM Usuarios u  JOIN Tipos_Usuarios tu ON u.idTipoUsuario = tu.idTipoUsuario ");
                 if (!string.IsNullOrEmpty(nombre))
                 {
-                    sbSql.Append(string.Format("{0}{1}{2}{3}{4}", " WHERE nombre LIKE '%", nombre, "%' OR apellido LIKE '%",nombre,"%'"));
+                    sbSql.Append(" WHERE nombre LIKE '%@nombre%' OR apellido LIKE '%@nombre%'");
                     SqlParameter[] param = {
                         new SqlParameter("@nombre",nombre)
                         };

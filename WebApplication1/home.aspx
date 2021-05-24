@@ -22,6 +22,7 @@
                         <th scope="col">Fecha</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Tipo</th>
+                        <th scope="col">Operador</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,7 @@
                         <th scope="row"><%=item.fecha%></th>
                         <td><%=(string.Format("{0} {1}", nombre, ape))%></td>
                         <td><%=item.tipoTransaccion.tipoTransaccion %></td>
+                        <td><%=string.Format("{0} {1}",item.usuario.nombre,item.usuario.apellido)%></td>
                     </tr>
                     <%
                             }

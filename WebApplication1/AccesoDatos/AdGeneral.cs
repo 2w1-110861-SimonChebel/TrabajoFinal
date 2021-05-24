@@ -14,6 +14,21 @@ namespace Easy_Stock.AccesoDatos
         static StringBuilder sbSql = null;
         private static readonly string cadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings["conexion"].ConnectionString.ToString();
 
+
+        //public static List<Usuario> obtenerUsuarios()
+        //{
+        //    sbSql = null;
+        //    try
+        //    {
+        //        sbSql = new StringBuilder("SELECT u.idUsuario,u.nombre,u.apellido, tu.idTipoUsuario,tu.tipoUsuario ");
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        throw ex;
+        //    }
+        //}
+
         public static List<Localidad> obtenerLocalidades()
         {
             sbSql = null;
@@ -47,6 +62,33 @@ namespace Easy_Stock.AccesoDatos
 
         }
 
+
+        public static List<TipoFactura> obtenerTiposFacturas()
+        {
+            sbSql = null;
+            sbSql = new StringBuilder("SELECT * FROM Tipos_Facturas ");
+            sbSql.Append(" ORDER BY idTipoFactura");
+
+            using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+            {
+                List<TipoFactura> lstTipos = null;
+                if (dr.HasRows)
+                {
+                    lstTipos = new List<TipoFactura>();
+                    while (dr.Read())
+                    {
+                        lstTipos.Add(new TipoFactura
+                        {
+                            idTipoFactura = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                            tipoFactura = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                        });
+                    }
+                }
+                return lstTipos;
+            }
+
+        }
+
         public static List<TipoTransaccion> obtenerTiposTransacciones(int idTipo = 0)
         {
             sbSql = null;
@@ -55,7 +97,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql = new StringBuilder("SELECT * FROM Tipos_Transacciones ");
                 if (idTipo > 0) sbSql.Append(" WHERE idTipoTransaccion=@idTipo");
                 sbSql.Append(" ORDER BY tipoTransaccion");
-                SqlParameter[] param = { 
+                SqlParameter[] param = {
                     new SqlParameter("@idTipo",idTipo)
                 };
 
@@ -108,7 +150,7 @@ namespace Easy_Stock.AccesoDatos
                             direccion = dr.IsDBNull(4) ? "N/d" : dr.GetString(4)
                         };
 
-                               
+
                     }
                     return oEmpresa;
                 }

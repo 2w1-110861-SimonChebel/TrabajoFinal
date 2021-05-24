@@ -16,13 +16,14 @@ namespace Easy_Stock.Entidades
         public FormaPago formaPago { get; set; } = null;
         public TipoTransaccion tipoTransaccion { get; set; } = null;
         public Cliente cliente { get; set; } = null;
-
+        public Usuario usuario { get; set; } = null;
         public Transaccion()
         {
             this.proveedor = new Proveedor();
             this.formaPago = new FormaPago();
             this.tipoTransaccion = new TipoTransaccion();
             this.cliente = new Cliente();
+            this.usuario = new Usuario();
         }
     }
 }

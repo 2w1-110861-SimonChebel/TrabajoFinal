@@ -48,6 +48,31 @@ namespace Easy_Stock.Entidades
             }
         }
 
+        public static bool HayUnCampoSeleccionado(WebControl[] aControles)
+        {
+            foreach (var control in aControles)
+            {
+                if (control != null)
+                {
+                    if (control.GetType().Name.Equals("TextBox"))
+                    {
+                        if (!string.IsNullOrEmpty(((TextBox)control).Text))
+                        {
+                            return true;
+                        }
+                    }
+                    if (control.GetType().Name.Equals("DropDownList"))
+                    {
+                        if (Convert.ToInt32(((DropDownList)control).SelectedValue) > 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
 
         //public static void LimpiarCampos(WebControl[] aControles)
         //{

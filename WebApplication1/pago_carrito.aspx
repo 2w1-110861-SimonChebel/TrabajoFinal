@@ -137,6 +137,15 @@
                     <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
                 </asp:DropDownList>
             </div>
+
+            <div class="form-group">
+                <label for="cboTipoFactura" class="control-label">Tipo de factura</label>
+                <asp:DropDownList class="form-control" ID="cboTipoFactura" name="cboTipoFactura" runat="server">
+                    <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+
+
             <h4 id="hTotal" runat="server"></h4>
             <div class="row" style="padding: 5px">
                 <div style="padding: 5px">

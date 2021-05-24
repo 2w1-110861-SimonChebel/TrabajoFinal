@@ -39,7 +39,7 @@
                                 <a class="dropdown-item" href="reponer_producto.aspx">Reponer</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="productos.aspx?accion=carrito&tipoTransaccion=<%=(int)Tipo.tipoTransaccion.ventaCliente%>">Nueva venta</a>
-                                <a class="dropdown-item" href="editar_clientes.aspx">Devolución</a>
+                                <a class="dropdown-item" href="devolucion.aspx">Devolución</a>
                                 <a class="dropdown-item" href="editar_clientes.aspx">Cambio</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="productos.aspx?accion=inactivos">Ver inactivos</a>
@@ -136,7 +136,7 @@
      
             .gridView {
                 margin: 0 auto;
-                font-size: 11px;
+                font-size: 12px;
                 text-align: center;
                 border: hidden;
             }
@@ -251,7 +251,7 @@
 
             .gridViewCarrito {
                 margin: 0 auto;
-                font-size: 11px;
+                font-size: 12px;
                 text-align: center;
                 border: hidden;
             }

@@ -29,7 +29,11 @@ namespace Easy_Stock.Entidades
         public enum tipoTransaccion
         {
             ventaCliente = 1,
-            compraProveedor = 2
+            compraProveedor = 2,
+            devolucionDeCliente = 3,
+            devolucionAproveedor = 4,
+            cambioProductoDeCliente = 5,
+            cambioProductoAproveedor = 6
         }
         public enum tipoUsuario
         {

@@ -121,6 +121,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="depositos.aspx" />
+    <Content Include="devolucion.aspx" />
     <Content Include="editar_clientes.aspx" />
     <Content Include="editar_deposito.aspx" />
     <Content Include="editar_producto.aspx" />
@@ -322,6 +323,13 @@
     <Compile Include="depositos.aspx.designer.cs">
       <DependentUpon>depositos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="devolucion.aspx.cs">
+      <DependentUpon>devolucion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="devolucion.aspx.designer.cs">
+      <DependentUpon>devolucion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="editar_clientes.aspx.cs">
       <DependentUpon>editar_clientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -364,6 +372,7 @@
     <Compile Include="Entidades\Deposito.cs" />
     <Compile Include="Entidades\DetalleFactura.cs" />
     <Compile Include="Entidades\DeudaCliente.cs" />
+    <Compile Include="Entidades\DevolucionCliente.cs" />
     <Compile Include="Entidades\Empresa.cs" />
     <Compile Include="Entidades\Factura.cs" />
     <Compile Include="Entidades\FormaPago.cs" />

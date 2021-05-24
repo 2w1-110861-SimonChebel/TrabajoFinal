@@ -25,7 +25,6 @@ namespace Easy_Stock
                 grvProductos.DataBind();
                 this.oUsuario = (Usuario)Session["usuario"];
                 txtCliente.Text = string.Format("{0} {1}", oClienteCarrito.tipoCliente.idTipoCliente == 1 ? this.oClienteCarrito.nombre : oClienteCarrito.razonSocial, oClienteCarrito.tipoCliente.idTipoCliente == 1 ? this.oClienteCarrito.apellido : string.Empty);
-                //txtUsuario.Text = string.Format("{0} {1}", this.oUsuario.nombre, this.oUsuario.apellido);
                 txtDniCLiente.Text = string.Format("{0}", this.oClienteCarrito.tipoCliente.idTipoCliente == 1 ? oClienteCarrito.dni : oClienteCarrito.cuit);
                 txtDireccion.Text = oClienteCarrito.direccion;
                 txtBarrio.Text = oClienteCarrito.barrio;
@@ -40,18 +39,32 @@ namespace Easy_Stock
 
         private void cargarCombos()
         {
-            List<FormaPago> lst = AdGeneral.obtenerFormasDePago();
+            List<FormaPago> lstFormasPago = AdGeneral.obtenerFormasDePago();
+            List<TipoFactura> lstTipoFactura = AdGeneral.obtenerTiposFacturas();
+
             cboFormaPago.DataSource = null;
             cboFormaPago.DataBind();
-            cboFormaPago.DataSource = lst;
-            for (int i = 0; i < lst.Count; i++)
+            cboFormaPago.DataSource = lstFormasPago;
+            for (int i = 0; i < lstFormasPago.Count; i++)
             {
                 ListItem li = new ListItem
                 {
-                    Text = lst[i].formaPago,
-                    Value = string.Format("{0}{1}{2}", lst[i].idFormaPago.ToString(), ",", lst[i].porcentajeRecargo)
+                    Text = lstFormasPago[i].formaPago,
+                    Value = string.Format("{0}{1}{2}", lstFormasPago[i].idFormaPago.ToString(), ",", lstFormasPago[i].porcentajeRecargo)
                 };
                 cboFormaPago.Items.Add(li);
+            }
+
+            cboTipoFactura.DataSource = null;
+            cboTipoFactura.DataBind();
+            cboTipoFactura.DataSource = lstTipoFactura;
+            for (int i = 0; i < lstTipoFactura.Count; i++)
+            {
+                ListItem li = new ListItem
+                {
+                    Text = lstTipoFactura[i].tipoFactura,
+                    Value = lstTipoFactura[i].idTipoFactura.ToString()
+                };
             }
         }
 
@@ -66,7 +79,7 @@ namespace Easy_Stock
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
 
-            if (cboFormaPago.SelectedValue != "0")
+            if (cboFormaPago.SelectedValue != "0" || cboTipoFactura.SelectedValue !="0")
             {
                 string[] valuesFormaPago = cboFormaPago.SelectedValue.Split(',');
                 Carrito aux = (Carrito)Session["carrito"];
@@ -110,7 +123,8 @@ namespace Easy_Stock
                         detallesFactura = lstDetalle,
                         tipoFactura = new TipoFactura
                         {
-                            idTipoFactura = 1
+                            idTipoFactura = Convert.ToInt32(cboTipoFactura.SelectedValue),
+                            tipoFactura = cboTipoFactura.SelectedItem.Text
                         },
                         iva = 0
                     },
@@ -131,7 +145,8 @@ namespace Easy_Stock
                 }
             }
             else {
-                cboFormaPago.BorderColor = Color.Red;
+                if(cboFormaPago.SelectedValue =="0") cboFormaPago.BorderColor = Color.Red;
+                if (cboTipoFactura.SelectedValue == "0")  cboTipoFactura.BorderColor = Color.Red;
             }
 
         }
