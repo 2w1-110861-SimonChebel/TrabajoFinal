@@ -168,7 +168,7 @@ namespace Easy_Stock.AccesoDatos
                             oCliente.deuda = new DeudaCliente
                             {
                                 idDeudaCliente = dr.IsDBNull(16) ? default(int) : dr.GetInt32(16),
-                                monto = dr.IsDBNull(17) ? default(float) : dr.GetFloat(17)
+                                monto = dr.IsDBNull(17) ? default(decimal) : dr.GetDecimal(17)
                             };
                             oCliente.sexo = new Sexo
                             {
@@ -201,7 +201,7 @@ namespace Easy_Stock.AccesoDatos
                             oCliente.deuda = new DeudaCliente
                             {
                                 idDeudaCliente = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
-                                monto = dr.IsDBNull(14) ? default(float) : dr.GetFloat(14),
+                                monto = dr.IsDBNull(14) ? default(decimal) : dr.GetDecimal(14),
                             };
                             oCliente.tipoEmpresa = new TipoEmpresa
                             {
@@ -294,7 +294,7 @@ namespace Easy_Stock.AccesoDatos
                                 deuda = new DeudaCliente
                                 {
                                     idDeudaCliente = dr.IsDBNull(17) ? default(int) : dr.GetInt32(17),
-                                    monto = dr.IsDBNull(18) ? default(float) : dr.GetFloat(18),
+                                    monto = dr.IsDBNull(18) ? default(decimal) : dr.GetDecimal(18),
                                 },
                                 sexo = new Sexo
                                 {

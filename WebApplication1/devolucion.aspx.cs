@@ -15,7 +15,14 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
-                cargarCombos();
+                if (!string.IsNullOrEmpty(Request.QueryString["idTran"]) && (!string.IsNullOrEmpty(Request.QueryString["idCli"])))
+                {
+                    grvDetalleVenta.DataSource = Session["facturaVentaDevolucion"] != null ? ((Factura)Session["facturaVentaDevolucion"]).listaProductosIndividuales() : null;
+                    grvDetalleVenta.DataBind();
+                }
+                else { 
+                    cargarCombos(); 
+                }
             }
         }
 
@@ -67,7 +74,11 @@ namespace Easy_Stock
             string[] arg = e.CommandArgument.ToString().Split(',');
             int idTransaccion = Convert.ToInt32(arg[0]);
             int idCliente = Convert.ToInt32(arg[1]);
+            Factura oFactura = AdTransaccion.obtenerFacturas(idTransaccion);
+            Session["facturaVentaDevolucion"] = oFactura;
             Response.Redirect("devolucion.aspx?idTran=" + idTransaccion + "&idCli=" + idCliente);
+            //grvDetalleVenta.DataSource = oFactura != null ? oFactura.detallesFactura : null;
+            //grvDetalleVenta.DataBind();
         }
 
         private void cargarCombos()
@@ -100,5 +111,6 @@ namespace Easy_Stock
         {
 
         }
+
     }
 }

@@ -12,8 +12,8 @@ namespace Easy_Stock.Entidades
         public string descripcion { get; set; } = string.Empty;
         public string nombre { get; set; } = string.Empty;
         public Marca marca { get; set; } = null;
-        public float precioVenta { get; set; } = 0;
-        public float precioCosto { get; set; } = 0;
+        public decimal precioVenta { get; set; } = 0;
+        public decimal precioCosto { get; set; } = 0;
         public Categoria categoria { get; set; } = null;
         public Proveedor proveedor { get; set; } = null;
         public Deposito deposito { get; set; } = null;
@@ -24,7 +24,7 @@ namespace Easy_Stock.Entidades
         public DateTime fechaElab { get; set; } = DateTime.Today;
         public DateTime fechaIngreso { get; set; } = DateTime.Today;
         public int cantidad { get; set; } = 0;//solo se usa para el carrito
-        public float subTotal { get; set; } = 0;//solo se usa para el carrito
+        public decimal subTotal { get; set; } = 0;//solo se usa para el carrito
 
         public Producto() {
             idProducto = 0;
@@ -45,7 +45,7 @@ namespace Easy_Stock.Entidades
             fechaIngreso = DateTime.Today;
         }
 
-        public float calcularSubTotal()
+        public decimal calcularSubTotal()
         {
             return (precioVenta*cantidad);
         }

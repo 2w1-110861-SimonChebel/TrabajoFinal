@@ -10,9 +10,9 @@ namespace Easy_Stock.Entidades
         public int idDetalle { get; set; } = 0;
         public int cantidad { get; set; } = 0;
         public Producto producto { get; set; } = null;
-        public float precio { get; set; } = 0;
-        public float iva { get; set; } = 0;
-        public float subTotal { get; set; }
+        public decimal precio { get; set; } = 0;
+        public decimal iva { get; set; } = 0;
+        public decimal subTotal { get; set; }
 
         public DetalleFactura()
         {

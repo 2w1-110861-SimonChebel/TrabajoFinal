@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Header.Master.cs" Inherits="Easy_Stock.MyMaster" %>
-<%@ Import Namespace= "Easy_Stock.Entidades" %>
+
+<%@ Import Namespace="Easy_Stock.Entidades" %>
 <!DOCTYPE html>
 
 <html>
@@ -18,7 +19,7 @@
 <body>
     <form id="form1" runat="server">
         <div>
-             <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -67,7 +68,7 @@
                             </div>
                         </li>
 
-                         <li class="nav-item dropdown">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropDownProveedores" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -120,7 +121,7 @@
 
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
-           
+
         </div>
 
     </form>
@@ -133,47 +134,72 @@
             background: #428bca;
             border-radius: 30px
         }
-     
-            .gridView {
-                margin: 0 auto;
-                font-size: 12px;
-                text-align: center;
+
+        .gridView {
+            margin: 0 auto;
+            font-size: 12px;
+            text-align: center;
+            border: hidden;
+        }
+            /*Selecciona las filas pares y las colorea*/
+            .gridView tr:nth-child(even) {
+                background-color: lightblue;
+            }
+            /*Selecciona las filas impares y las colorea*/
+            .gridView tr:nth-child(odd) {
+                background-color: #fff;
+            }
+            /*Estilo para las casillas del gridView*/
+            .gridView td {
+                padding-left: 3px;
+                padding-right: 3px;
                 border: hidden;
             }
-                /*Selecciona las filas pares y las colorea*/
-                .gridView tr:nth-child(even) {
-                    background-color: lightblue;
-                }
-                /*Selecciona las filas impares y las colorea*/
-                .gridView tr:nth-child(odd) {
-                    background-color: #fff;
-                }
-                /*Estilo para las casillas del gridView*/
-                .gridView td {
-                    padding-left: 3px;
-                    padding-right: 3px;
-                    border: hidden;
-                }
-            /*Color de fondo para la paginación*/
-            .gridViewPaginacion td {
-                background-color: #435B14;
-            }
+        /*Color de fondo para la paginación*/
+        .gridViewPaginacion td {
+            background-color: #435B14;
+        }
 
-            /*Bordes redondeados para la paginacion*/
+        /*Bordes redondeados para la paginacion*/
 
-            .gridViewPaginacion > td {
-                border-radius: 0px 0px 5px 5px;
-            }
+        .gridViewPaginacion > td {
+            border-radius: 0px 0px 5px 5px;
+        }
 
-            /*Centramos la tabla que contiene los enlaces para las paginas*/
+        /*Centramos la tabla que contiene los enlaces para las paginas*/
 
-            .gridViewPaginacion table {
-                margin: 2px auto;
-            }
+        .gridViewPaginacion table {
+            margin: 2px auto;
+        }
 
-            /*El span representa el enlace a la pagina en la que estamos actualmente*/
+        /*El span representa el enlace a la pagina en la que estamos actualmente*/
 
-            .gridViewPaginacion span {
+        .gridViewPaginacion span {
+            display: block;
+            margin: 0;
+            padding: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50% 50%;
+            background: #B1C689;
+            color: #3743a1;
+        }
+
+        /*Estilo para los enlaces redondos*/
+
+        .gridViewPaginacion a {
+            display: block;
+            text-decoration: none;
+            margin: 0;
+            padding: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50% 50%;
+            background: #367DEE;
+            color: #fff;
+        }
+
+            .gridViewPaginacion a:hover {
                 display: block;
                 margin: 0;
                 padding: 5px;
@@ -182,113 +208,113 @@
                 border-radius: 50% 50%;
                 background: #B1C689;
                 color: #3743a1;
+                box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
             }
 
-            /*Estilo para los enlaces redondos*/
+        .gridViewHeader {
+            height: 35px;
+        }
 
-            .gridViewPaginacion a {
-                display: block;
-                text-decoration: none;
-                margin: 0;
+            .gridViewHeader th {
+                background-color: steelblue;
                 padding: 5px;
-                width: 15px;
-                height: 15px;
-                border-radius: 50% 50%;
-                background: #367DEE;
+                border: hidden;
                 color: #fff;
             }
 
-                .gridViewPaginacion a:hover {
-                    display: block;
-                    margin: 0;
-                    padding: 5px;
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50% 50%;
-                    background: #B1C689;
-                    color: #3743a1;
-                    box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+                /*Redondeamos el borde superior izquierdo de la primera casilla del header*/
+
+                .gridViewHeader th:first-child {
+                    border-radius: 5px 0 0 0;
                 }
 
-            .gridViewHeader {
-                height: 35px;
-            }
+                /*Y el borde superior derecho de la ultima casilla*/
 
-                .gridViewHeader th {
-                    background-color: steelblue;
-                    padding: 5px;
-                    border: hidden;
-                    color: #fff;
+                .gridViewHeader th:last-child {
+                    border-radius: 0 5px 0 0;
                 }
 
-                    /*Redondeamos el borde superior izquierdo de la primera casilla del header*/
+                /*Estilo para los enlaces del header...*/
 
-                    .gridViewHeader th:first-child {
-                        border-radius: 5px 0 0 0;
-                    }
+                .gridViewHeader th a {
+                    padding: 5px;
+                    text-decoration: none;
+                    color: #435B14;
+                    background-color: #a9c673;
+                    border-radius: 5px;
+                }
 
-                    /*Y el borde superior derecho de la ultima casilla*/
-
-                    .gridViewHeader th:last-child {
-                        border-radius: 0 5px 0 0;
-                    }
-
-                    /*Estilo para los enlaces del header...*/
-
-                    .gridViewHeader th a {
-                        padding: 5px;
-                        text-decoration: none;
+                    .gridViewHeader th a:hover {
                         color: #435B14;
-                        background-color: #a9c673;
-                        border-radius: 5px;
+                        background-color: #B1C689;
+                        box-shadow: 0 0 .9em rgba(0, 0, 0, .8);
                     }
 
-                        .gridViewHeader th a:hover {
-                            color: #435B14;
-                            background-color: #B1C689;
-                            box-shadow: 0 0 .9em rgba(0, 0, 0, .8);
-                        }
-
-            .gridViewCarrito {
-                margin: 0 auto;
-                font-size: 12px;
-                text-align: center;
+        .gridViewCarrito {
+            margin: 0 auto;
+            font-size: 12px;
+            text-align: center;
+            border: hidden;
+        }
+            /*Selecciona las filas pares y las colorea*/
+            .gridViewCarrito tr:nth-child(even) {
+                background-color: lightgray;
+            }
+            /*Selecciona las filas impares y las colorea*/
+            .gridViewCarrito tr:nth-child(odd) {
+                background-color: #fff;
+            }
+            /*Estilo para las casillas del gridView*/
+            .gridViewCarrito td {
+                padding-left: 3px;
+                padding-right: 3px;
                 border: hidden;
             }
-                /*Selecciona las filas pares y las colorea*/
-                .gridViewCarrito tr:nth-child(even) {
-                    background-color: lightgray;
-                }
-                /*Selecciona las filas impares y las colorea*/
-                .gridViewCarrito tr:nth-child(odd) {
-                    background-color: #fff;
-                }
-                /*Estilo para las casillas del gridView*/
-                .gridViewCarrito td {
-                    padding-left: 3px;
-                    padding-right: 3px;
-                    border: hidden;
-                }
-            /*Color de fondo para la paginación*/
-            .gridViewCarritoPaginacion td {
-                background-color: #435B14;
-            }
+        /*Color de fondo para la paginación*/
+        .gridViewCarritoPaginacion td {
+            background-color: #435B14;
+        }
 
-            /*Bordes redondeados para la paginacion*/
+        /*Bordes redondeados para la paginacion*/
 
-            .gridViewCarritoPaginacion > td {
-                border-radius: 0px 0px 5px 5px;
-            }
+        .gridViewCarritoPaginacion > td {
+            border-radius: 0px 0px 5px 5px;
+        }
 
-            /*Centramos la tabla que contiene los enlaces para las paginas*/
+        /*Centramos la tabla que contiene los enlaces para las paginas*/
 
-            .gridViewCarritoPaginacion table {
-                margin: 2px auto;
-            }
+        .gridViewCarritoPaginacion table {
+            margin: 2px auto;
+        }
 
-            /*El span representa el enlace a la pagina en la que estamos actualmente*/
+        /*El span representa el enlace a la pagina en la que estamos actualmente*/
 
-            .gridViewCarritoPaginacion span {
+        .gridViewCarritoPaginacion span {
+            display: block;
+            margin: 0;
+            padding: 5px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50% 50%;
+            background: #B1C689;
+            color: #3743a1;
+        }
+
+        /*Estilo para los enlaces redondos*/
+
+        .gridViewCarritoPaginacion a {
+            display: block;
+            text-decoration: none;
+            margin: 0;
+            padding: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50% 50%;
+            background: #367DEE;
+            color: #fff;
+        }
+
+            .gridViewCarritoPaginacion a:hover {
                 display: block;
                 margin: 0;
                 padding: 5px;
@@ -297,72 +323,115 @@
                 border-radius: 50% 50%;
                 background: #B1C689;
                 color: #3743a1;
+                box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
             }
 
-            /*Estilo para los enlaces redondos*/
+        .gridViewCarritoHeader {
+            height: 35px;
+        }
 
-            .gridViewCarritoPaginacion a {
-                display: block;
-                text-decoration: none;
-                margin: 0;
+            .gridViewCarritoHeader th {
+                background-color: black;
                 padding: 5px;
-                width: 15px;
-                height: 15px;
-                border-radius: 50% 50%;
-                background: #367DEE;
+                border: hidden;
                 color: #fff;
             }
 
-                .gridViewCarritoPaginacion a:hover {
-                    display: block;
-                    margin: 0;
-                    padding: 5px;
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50% 50%;
-                    background: #B1C689;
-                    color: #3743a1;
-                    box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+                /*Redondeamos el borde superior izquierdo de la primera casilla del header*/
+
+                .gridViewCarritoHeader th:first-child {
+                    border-radius: 5px 0 0 0;
                 }
 
-            .gridViewCarritoHeader {
-                height: 35px;
+                /*Y el borde superior derecho de la ultima casilla*/
+
+                .gridViewCarritoHeader th:last-child {
+                    border-radius: 0 5px 0 0;
+                }
+
+                /*Estilo para los enlaces del header...*/
+
+                .gridViewCarritoHeader th a {
+                    padding: 5px;
+                    text-decoration: none;
+                    color: #435B14;
+                    background-color: #a9c673;
+                    border-radius: 5px;
+                }
+
+                    .gridViewCarritoHeader th a:hover {
+                        color: #435B14;
+                        background-color: #B1C689;
+                        box-shadow: 0 0 .9em rgba(0, 0, 0, .8);
+                    }
+
+
+        .container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            /* Hide the browser's default checkbox */
+            .container input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
             }
 
-                .gridViewCarritoHeader th {
-                    background-color: black;
-                    padding: 5px;
-                    border: hidden;
-                    color: #fff;
-                }
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+        }
 
-                    /*Redondeamos el borde superior izquierdo de la primera casilla del header*/
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
 
-                    .gridViewCarritoHeader th:first-child {
-                        border-radius: 5px 0 0 0;
-                    }
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
 
-                    /*Y el borde superior derecho de la ultima casilla*/
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
 
-                    .gridViewCarritoHeader th:last-child {
-                        border-radius: 0 5px 0 0;
-                    }
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+            display: block;
+        }
 
-                    /*Estilo para los enlaces del header...*/
-
-                    .gridViewCarritoHeader th a {
-                        padding: 5px;
-                        text-decoration: none;
-                        color: #435B14;
-                        background-color: #a9c673;
-                        border-radius: 5px;
-                    }
-
-                        .gridViewCarritoHeader th a:hover {
-                            color: #435B14;
-                            background-color: #B1C689;
-                            box-shadow: 0 0 .9em rgba(0, 0, 0, .8);
-                        }
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
     </style>
 </body>
 

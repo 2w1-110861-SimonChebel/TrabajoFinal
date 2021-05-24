@@ -11,8 +11,8 @@ namespace Easy_Stock.Entidades
         public DateTime fecha { get; set; } = DateTime.Now;
         public string descripcion { get; set; } = string.Empty;
         public Proveedor proveedor { get; set; } = null;
-        public float descuento { get; set; } = 0;
-        public float total { get; set; } = 0;
+        public decimal descuento { get; set; } = 0;
+        public decimal total { get; set; } = 0;
         public FormaPago formaPago { get; set; } = null;
         public TipoTransaccion tipoTransaccion { get; set; } = null;
         public Cliente cliente { get; set; } = null;

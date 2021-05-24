@@ -9,7 +9,7 @@
         <h5 id="hMensaje" runat="server">Devolución de productos</h5>
     </div>
 
-    <%if (string.IsNullOrEmpty(Request.QueryString["idTran"]) && string.IsNullOrEmpty(Request.QueryString["idClie"]))
+    <%if (string.IsNullOrEmpty(Request.QueryString["idTran"]) && string.IsNullOrEmpty(Request.QueryString["idCli"]))
         { %>
     <div class="col-12">
         <div class="row col-12">
@@ -124,45 +124,64 @@
     </div>
     <%} %>
 
-
+    <%if (!string.IsNullOrEmpty(Request.QueryString["idTran"]) && (!string.IsNullOrEmpty(Request.QueryString["idCli"])))
+        {%>
     <div class="col-xs-12 col-md-10 col-xl-10 table table-responsive">
 
-        <asp:GridView ID="grvDetalleVenta" runat="server" Height="150px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="grvDetalleVenta_SelectedIndexChanged"OnRowCommand="grvDetalleVenta_RowCommand" AutoGenerateColumns="False">
+        <asp:GridView ID="grvDetalleVenta" runat="server" Height="150px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="grvDetalleVenta_SelectedIndexChanged" OnRowCommand="grvDetalleVenta_RowCommand" AutoGenerateColumns="False">
             <Columns>
+
 
                 <asp:TemplateField HeaderText="Codigo producto" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divIdTransaccion" style="padding-top: 10px;">
-                            <b><%#Eval("idTransaccion")%></b>
+                            <b><%#Eval("producto.codigo")%></b>
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Fecha y hora" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                <%--   <asp:TemplateField HeaderText="Fecha y hora" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divFecha" style="padding-top: 10px;">
                             <b><%#Eval("fecha")%></b>
                         </div>
                     </ItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField>--%>
 
-                <asp:TemplateField HeaderText="Descripción" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                <asp:TemplateField HeaderText="Producto" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
-                        <div id="divDescripcion" style="padding-top: 10px;">
-                            <b><%#Eval("descripcion")%></b>
+                        <div id="divProducto" style="padding-top: 10px;">
+                            <b><%#Eval("producto.nombre")%></b>
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Nombre o razón social" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                <asp:TemplateField HeaderText="Cantidad" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divNombreCliente" style="padding-top: 10px;">
-                            <b><%#(int)Eval("cliente.tipoCliente.idTipoCliente")==(int) Tipo.tipoCliente.persona? Eval("cliente.nombre") : Eval("cliente.razonSocial") %></b>
+                            <b><%#Eval("cantidad") %></b>
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="N° Factura" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                 <asp:TemplateField HeaderText="Precio unitario" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divPrecio" style="padding-top: 10px;">
+                            <b><%#string.Format("{0}{1}","$", Eval("precio")) %></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                
+                <asp:TemplateField HeaderText="Seleccionar  " HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divSeleccion" class="form-group" style="padding-top: 10px;">
+                            <asp:CheckBox iD="chkSeleccion" runat="server"/>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <%--                <asp:TemplateField HeaderText="N° Factura" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divNroFactura" style="padding-top: 10px;">
                             <b><%#Eval("factura.nroFactura") %></b>
@@ -193,7 +212,7 @@
                                 <asp:Button runat="server" ID="btnElegirVenta" type="button" class="btn btn-info" Text="Elegir" CommandArgument='<%#string.Format("{0}{1}{2}",Eval("idTransaccion"),",",Eval("cliente.idCliente"))%>' CommandName="editar" OnClick="btnElegirVenta_Click" /></b>
                         </div>
                     </ItemTemplate>
-                </asp:TemplateField>
+                </asp:TemplateField>--%>
             </Columns>
         </asp:GridView>
     </div>
@@ -219,4 +238,6 @@
             <asp:TextBox type="text" TextMode="MultiLine" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" MaxLength="150"> </asp:TextBox>
         </div>
     </div>
+    <%} %>
+
 </asp:Content>

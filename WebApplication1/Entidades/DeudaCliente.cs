@@ -8,7 +8,7 @@ namespace Easy_Stock.Entidades
     public class DeudaCliente
     {
         public int idDeudaCliente { get; set; } = 0;
-        public float monto { get; set; } = 0;
+        public decimal monto { get; set; } = 0;
 
         public DeudaCliente()
         {

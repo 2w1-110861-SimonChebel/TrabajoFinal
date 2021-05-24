@@ -15,9 +15,9 @@ namespace Easy_Stock.Entidades
             this.cliente = new Cliente();
         }
 
-        public float calcularTotal()
+        public decimal calcularTotal()
         {
-            float total = 0;
+            decimal total = 0;
             foreach (Producto producto in productos)
             {
                 total += producto.precioVenta;
@@ -34,7 +34,7 @@ namespace Easy_Stock.Entidades
             return 0;
         }
 
-        public float calcularPrecioConIva()
+        public decimal calcularPrecioConIva()
         {
             return 0;
         }
@@ -51,7 +51,7 @@ namespace Easy_Stock.Entidades
             this.productos.Add(producto);
         }
 
-        public float calculcarSubTotalProducto(int idProducto)
+        public decimal calculcarSubTotalProducto(int idProducto)
         {
             foreach (var item in productos)
             {
@@ -59,9 +59,9 @@ namespace Easy_Stock.Entidades
             }
             return 0;
         }
-        public float calcularTotalProductos()
+        public decimal calcularTotalProductos()
         {
-            float total = 0;
+            decimal total = 0;
             foreach (var item in productos)
             {
                 total += item.calcularSubTotal();

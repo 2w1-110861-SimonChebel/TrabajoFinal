@@ -180,8 +180,8 @@ namespace Easy_Stock.AccesoDatos
                                     idMarca = dr.IsDBNull(3) ? default(int) : dr.GetInt32(3),
                                     marca = dr.IsDBNull(4) ? default(string) : dr.GetString(4)
                                 },
-                                precioVenta = dr.IsDBNull(5) ? default(float) : dr.GetFloat(5),
-                                precioCosto = dr.IsDBNull(6) ? default(float) : dr.GetFloat(6),
+                                precioVenta = dr.IsDBNull(5) ? default(decimal) : dr.GetDecimal(5),
+                                precioCosto = dr.IsDBNull(6) ? default(decimal) : dr.GetDecimal(6),
                                 stockMinimo = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7),
                                 stockMaximo = dr.IsDBNull(8) ? default(int) : dr.GetInt32(8),
                                 categoria = new Categoria
@@ -243,8 +243,8 @@ namespace Easy_Stock.AccesoDatos
                                 idMarca = dr.IsDBNull(3) ? default(int) : dr.GetInt32(3),
                                 marca = dr.IsDBNull(4) ? default(string) : dr.GetString(4)
                             },
-                            precioVenta = dr.IsDBNull(5) ? default(float) : dr.GetFloat(5),
-                            precioCosto = dr.IsDBNull(6) ? default(float) : dr.GetFloat(6),
+                            precioVenta = dr.IsDBNull(5) ? default(decimal) : dr.GetDecimal(5),
+                            precioCosto = dr.IsDBNull(6) ? default(decimal) : dr.GetDecimal(6),
                             stockMinimo = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7),
                             stockMaximo = dr.IsDBNull(8) ? default(int) : dr.GetInt32(8),
                             categoria = new Categoria

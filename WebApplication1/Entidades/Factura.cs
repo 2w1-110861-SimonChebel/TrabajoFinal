@@ -9,7 +9,7 @@ namespace Easy_Stock.Entidades
     {
         public int nroFactura { get; set; } = 0;
         public DateTime fecha { get; set; } = DateTime.Now;
-        public float total { get; set; } = 0;
+        public decimal total { get; set; } = 0;
         public string observaciones { get; set; } = string.Empty;
         public Cliente cliente { get; set; } = null;
         public Empresa empresa { get; set; } = null;
@@ -45,15 +45,17 @@ namespace Easy_Stock.Entidades
             List<DetalleFactura> lstResultado = new List<DetalleFactura>();
             foreach (var detalle in detallesFactura)
             {
-                for (int i = 0; i < detalle.producto.cantidad; i++)
+                for (int i = 0; i < detalle.cantidad; i++)
                 {
                     Producto auxProducto = detalle.producto;
-                    auxProducto.cantidad = detalle.producto.cantidad / detalle.producto.cantidad;
+                    auxProducto.cantidad = detalle.cantidad / detalle.cantidad;
                     lstResultado.Add(
                         new DetalleFactura
                         {
                           idDetalle = detalle.idDetalle,
-                          producto = auxProducto                      
+                          cantidad = auxProducto.cantidad,
+                          precio = detalle.precio,
+                          producto = auxProducto                         
                         }
                     );
                 }

@@ -109,13 +109,13 @@
 
             <div class="form-group">
                 <label for="precioVenta" class="control-label">Precio de venta</label>
-                <asp:TextBox type="number" class="form-control" ID="txtPrecioVenta" PlaceHolder="$" name="txtPrecioVenta" runat="server"> </asp:TextBox>
+                <asp:TextBox type="number" class="form-control" ID="txtPrecioVenta" PlaceHolder="$" name="txtPrecioVenta" step="any" runat="server"> </asp:TextBox>
 
             </div>
 
             <div class="form-group">
                 <label for="precioCosto" class="control-label">Precio de Costo</label>
-                <asp:TextBox type="number" class="form-control" ID="txtPrecioCosto" PlaceHolder="$" name="txtprecioCosto" runat="server"> </asp:TextBox>
+                <asp:TextBox type="number" class="form-control" ID="txtPrecioCosto" PlaceHolder="$" name="txtprecioCosto" step="any" runat="server"> </asp:TextBox>
             </div>
             <div class="form-group">
                 <label for="categoria" class="control-label">Categoria</label>
