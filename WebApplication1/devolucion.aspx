@@ -126,6 +126,24 @@
 
     <%if (!string.IsNullOrEmpty(Request.QueryString["idTran"]) && (!string.IsNullOrEmpty(Request.QueryString["idCli"])))
         {%>
+
+    <div class="row col-12">
+        <div class="row" style="padding-left: 4%">
+            <div class="form-group col-12">
+                <asp:RadioButton ID="rbDevolucionParcial" runat="server" GroupName="rdbDev" AutoPostBack="true" OnCheckedChanged="rbDevolucionParcial_CheckedChanged" />
+                <label for="rbDevolucionParcial" class="control-label">Devolución parcial</label>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 4%">
+            <div class="form-group col-12">
+                <asp:RadioButton ID="rbDevolucionTotal" runat="server" GroupName="rdbDev" AutoPostBack="true" OnCheckedChanged="rbDevolucionTotal_CheckedChanged" />
+                <label for="rbDevolucionTotal" class="control-label">Devolución completa</label>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="col-xs-12 col-md-10 col-xl-10 table table-responsive">
 
         <asp:GridView ID="grvDetalleVenta" runat="server" Height="150px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="grvDetalleVenta_SelectedIndexChanged" OnRowCommand="grvDetalleVenta_RowCommand" AutoGenerateColumns="False">
@@ -139,14 +157,6 @@
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
-
-                <%--   <asp:TemplateField HeaderText="Fecha y hora" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                    <ItemTemplate>
-                        <div id="divFecha" style="padding-top: 10px;">
-                            <b><%#Eval("fecha")%></b>
-                        </div>
-                    </ItemTemplate>
-                </asp:TemplateField>--%>
 
                 <asp:TemplateField HeaderText="Producto" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
@@ -164,60 +174,51 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                 <asp:TemplateField HeaderText="Precio unitario" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                <asp:TemplateField HeaderText="Precio unitario" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
-                        <div id="divPrecio" style="padding-top: 10px;">
+                        <div id="divPrecio" style="padding-top: 10px;" runat="server">
                             <b><%#string.Format("{0}{1}","$", Eval("precio")) %></b>
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                
+                 <asp:TemplateField HeaderText="idProd" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="false">
+                    <ItemTemplate>
+                        <div id="dividProd" style="padding-top: 10px;">
+                            <b><%#Eval("producto.idProducto") %></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+
+
                 <asp:TemplateField HeaderText="Seleccionar  " HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divSeleccion" class="form-group" style="padding-top: 10px;">
-                            <asp:CheckBox iD="chkSeleccion" runat="server"/>
+                            <asp:CheckBox ID="chkSeleccion" runat="server" />
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <%--                <asp:TemplateField HeaderText="N° Factura" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                    <ItemTemplate>
-                        <div id="divNroFactura" style="padding-top: 10px;">
-                            <b><%#Eval("factura.nroFactura") %></b>
-                        </div>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Total" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                    <ItemTemplate>
-                        <div id="divTotalFactura" style="padding-top: 10px;">
-                            <b><%#string.Format("{0}{1}","$", Eval("factura.total")) %></b>
-                        </div>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="Operador" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                    <ItemTemplate>
-                        <div id="divOperador" style="padding-top: 10px;">
-                            <b><%#String.Format("{0} {1}" ,Eval("usuario.nombre"),Eval("usuario.apellido"))%></b>
-                        </div>
-                    </ItemTemplate>
-                </asp:TemplateField>
-
-                <asp:TemplateField HeaderText="" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                    <ItemTemplate>
-                        <div id="divAcciones" style="padding-top: 10px;">
-                            <b>
-                                <asp:Button runat="server" ID="btnElegirVenta" type="button" class="btn btn-info" Text="Elegir" CommandArgument='<%#string.Format("{0}{1}{2}",Eval("idTransaccion"),",",Eval("cliente.idCliente"))%>' CommandName="editar" OnClick="btnElegirVenta_Click" /></b>
-                        </div>
-                    </ItemTemplate>
-                </asp:TemplateField>--%>
             </Columns>
         </asp:GridView>
     </div>
 
+    <div class="row col-12">
+        <div class="col-3" style="display: flex; justify-items: right; padding: 2%">
+            <h5 id="hTotal" runat="server">Total a devolver: $0.0</h5>
+        </div>
+        <%if (rbDevolucionParcial.Checked)
+            { %>
+        <div class="col-3" style="padding-top:1%">
+            <asp:Button ID="btnSeleccionarProductos" runat="server" Text="Confirmar seleccionados" class="btn btn-dark" />
+        </div>
+        <%} %>
+    </div>
 
+    <div class="row" style="padding-left: 5%">
+        <h6>Forma de devolución</h6>
+    </div>
 
     <div class="row" style="padding-left: 4%">
         <div class="form-group col-6">
@@ -228,16 +229,18 @@
     <div class="row" style="padding-left: 4%">
         <div class="form-group col-6">
             <asp:RadioButton ID="rbDevolverDinero" runat="server" GroupName="rdbDevolver" />
-            <label for="rbDevolverDinero" class="control-label">2) Credito a favor del cliente para futuras compras</label>
+            <label for="rbDevolverDinero" class="control-label">2) Devolución del valor del pago</label>
+        </div>
+    </div>
+    <div class="row col-xs-12" style="padding-left: 4%">
+        <div class="form-group col-xs-12 col-10">
+            <%--<label for="txtObservaciones" class="control-label">Observaciones (*)</label>--%>
+            <asp:TextBox type="text" TextMode="MultiLine" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" PlaceHolder="Observaciones(*)" MaxLength="150"> </asp:TextBox>
+        </div>
+        <div class="form-col-xs-12 col-2">
+            <asp:Button ID="btnFinalizar" runat="server" Text="Finalizar" class="btn btn-success" />
         </div>
 
-    </div>
-    <div class="row" style="padding-left: 4%">
-        <div class="form-group col-10">
-            <label for="txtObservaciones" class="control-label">Observaciones (opcional)</label>
-            <asp:TextBox type="text" TextMode="MultiLine" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" MaxLength="150"> </asp:TextBox>
-        </div>
     </div>
     <%} %>
-
 </asp:Content>

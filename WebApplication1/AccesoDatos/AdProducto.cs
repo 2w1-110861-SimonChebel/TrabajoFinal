@@ -45,8 +45,8 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@fechaElab", oProducto.fechaElab),
                     new SqlParameter("@habilitado",1),
                     new SqlParameter("@fechaIngreso",DateTime.Now)
-                    };   
-                    SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
+                    };
+                  
                 }
                 else
                 {
@@ -67,6 +67,17 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@habilitado",1),
                     new SqlParameter("@fechaIngreso",DateTime.Now)
                     };
+
+                    SqlParameter[] auxParam = new SqlParameter[] {
+                        new SqlParameter("@codigo",oProducto.codigo)
+                    };
+                    for (int i = 0; i < oProducto.cantidadRestante; i++)
+                    {
+                        string auxSql = "INSERT INTO Inventario (codigoProducto) VALUES(@codigo)";
+                        SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, auxSql, auxParam);
+                    }
+
+
                     SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
                 }
 
@@ -170,34 +181,6 @@ namespace Easy_Stock.AccesoDatos
                         lstProductos = new List<Producto>();
                         while (dr.Read())
                         {
-
-                            //var a = dr.IsDBNull(5) ? default(float) : dr.GetFloat(5); 
-                            //var b = dr.IsDBNull(6) ? default(float) : dr.GetFloat(6); 
-
-                            //Producto aux = new Producto();
-                            //aux.idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0);
-                            //aux.nombre = dr.IsDBNull(1) ? default(string) : dr.GetString(1);
-                            //aux.descripcion = dr.IsDBNull(2) ? default(string) : dr.GetString(2);
-                            //Marca auxMarca = new Marca();
-                            //auxMarca.idMarca = dr.IsDBNull(3) ? default(int) : dr.GetInt32(3);
-                            //auxMarca.marca = dr.IsDBNull(4) ? default(string) : dr.GetString(4);
-                            //aux.precioVenta = dr.IsDBNull(5) ? default(decimal) : dr.GetDecimal(5);
-                            //aux.precioCosto = dr.IsDBNull(6) ? default(decimal) : dr.GetDecimal(6);
-                            //aux.stockMinimo = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7);
-                            //aux.stockMaximo = dr.IsDBNull(8) ? default(int) : dr.GetInt32(8);
-                            //Categoria cat = new Categoria();
-                            //cat.idCategoria = dr.IsDBNull(9) ? default(int) : dr.GetInt32(9);
-                            //cat.nombre = dr.IsDBNull(10) ? default(string) : dr.GetString(10);
-                            //Proveedor pr = new Proveedor();
-                            //pr.idProveedor = dr.IsDBNull(11) ? default(int) : dr.GetInt32(11);
-                            //pr.nombre = nombre = dr.IsDBNull(12) ? default(string) : dr.GetString(12);
-                            //aux.cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13);
-                            //aux.fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14);
-                            //aux.fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15);
-                            //aux.codigo = dr.IsDBNull(16) ? default(string) : dr.GetString(16);
-                            //aux.fechaIngreso = dr.IsDBNull(17) ? default(DateTime) : dr.GetDateTime(17);
-
-
                             lstProductos.Add(new Producto
                             {
                                 idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),

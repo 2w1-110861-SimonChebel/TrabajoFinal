@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace Easy_Stock
 {
-    public partial class clientes : System.Web.UI.Page
+    public partial class clientes : Page
     {
         public Cliente oCliente ;
         public List<Cliente> lstClientes;
@@ -26,8 +26,8 @@ namespace Easy_Stock
                     hMensaje.InnerText = "El cliente se borró correctamente";
                 }
                 else divMensaje.Visible = false;
-                lstClientes = AdCliente.obtenerClientes();
-                grvClientes.DataSource = lstClientes;
+                if(Session["clientes"] == null) Session["clientes"]= AdCliente.obtenerClientes();
+                grvClientes.DataSource = Session["clientes"];
                 grvClientes.DataBind();
             }
         

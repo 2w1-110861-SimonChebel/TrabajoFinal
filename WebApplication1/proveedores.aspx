@@ -25,7 +25,7 @@
 
             <asp:GridView ID="grvProveedores" runat="server" Height="277px" Width="85%" CssClass="gridView gridViewHeader" OnRowCommand="grvProveedores_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
                 <Columns>
-                    <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" Visible="false" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" Visible="true" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divNombre" style="padding-top: 10px;">
                                 <b><%#Eval("nombre")%></b>

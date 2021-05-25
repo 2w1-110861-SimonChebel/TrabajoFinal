@@ -35,6 +35,32 @@ namespace Easy_Stock.AccesoDatos
 
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros))
                 {
+
+                    string sqlInventario = "SP_EliminarProductoInventario @cantidadProductos,@idProducto";
+                    List<SqlParameter> paramInventario = new List<SqlParameter>();
+                    foreach (var item in oVentaCliente.factura.detallesFactura)
+                    {
+                        paramInventario.AddRange(
+
+                            new SqlParameter[] {
+                                 new SqlParameter("@cantidadProductos",item.cantidad),
+                                 new SqlParameter("@idProducto",item.producto.idProducto)
+                            }
+
+                        );
+
+                        try
+                        {
+                            SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sqlInventario, paramInventario.ToArray());
+                        }
+                        catch (Exception ex)
+                        {
+                            return false;
+                            throw ex;
+                        }
+                    }
+
+
                     int idFactura = obtenerUltimoNroFactura();
                     string sql = "INSERT INTO Detalles_Facturas (nroFactura,cantidad,idProducto,iva, subTotal,precio) ";
                     sql += "VALUES (@nroFactura,@cantidad,@idProducto,@iva,@subTotal,@precio) ";
@@ -266,12 +292,13 @@ namespace Easy_Stock.AccesoDatos
                                      {
                                          idCliente = dr.IsDBNull(5) ? default(int) : dr.GetInt32(5),
                                          nombre = dr.IsDBNull(6) ? default(string) : dr.GetString(6),
-                                         apellido = dr.IsDBNull(7) ? default(string) : dr.GetString(7),                                      
+                                         apellido = dr.IsDBNull(7) ? default(string) : dr.GetString(7),
                                          dni = dr.IsDBNull(8) ? default(string) : dr.GetString(8),
                                          cuit = dr.IsDBNull(9) ? default(string) : dr.GetString(9),
                                          direccion = dr.IsDBNull(10) ? default(string) : dr.GetString(10),
                                          razonSocial = dr.IsDBNull(11) ? default(string) : dr.GetString(11),
-                                         deuda = new DeudaCliente { 
+                                         deuda = new DeudaCliente
+                                         {
                                              idDeudaCliente = dr.IsDBNull(17) ? default(int) : dr.GetInt32(17),
                                              monto = dr.IsDBNull(18) ? default(decimal) : dr.GetDecimal(18)
                                          }
@@ -283,7 +310,8 @@ namespace Easy_Stock.AccesoDatos
                                          nombre = dr.IsDBNull(13) ? default(string) : dr.GetString(13),
                                          apellido = dr.IsDBNull(14) ? default(string) : dr.GetString(14)
                                      },
-                                     factura = new Factura { 
+                                     factura = new Factura
+                                     {
                                          nroFactura = dr.IsDBNull(15) ? default(int) : dr.GetInt32(15),
                                          total = dr.IsDBNull(16) ? default(decimal) : dr.GetDecimal(16)
                                      }
@@ -329,7 +357,8 @@ namespace Easy_Stock.AccesoDatos
                 {
                     if (dr.HasRows)
                     {
-                        while(dr.Read()){
+                        while (dr.Read())
+                        {
                             lstDetalle.Add(new DetalleFactura
                             {
                                 idDetalle = dr.IsDBNull(6) ? default(int) : dr.GetInt32(6),
@@ -354,7 +383,7 @@ namespace Easy_Stock.AccesoDatos
                                 detallesFactura = lstDetalle
 
                             };
-                         }
+                        }
                     }
                 }
 

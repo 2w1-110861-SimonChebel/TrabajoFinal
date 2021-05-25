@@ -292,6 +292,8 @@ namespace Easy_Stock
                 return;
             }
 
+            Session["clientes"] = null;
+
         }
 
         private void limpiarCampos()

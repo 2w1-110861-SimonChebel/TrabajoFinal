@@ -17,18 +17,19 @@ namespace Easy_Stock
         protected void Page_Load(object sender, EventArgs e)
         {
             string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
-            Session["tipoTranActual"] = Session["tipoTranActual"] != null ?(TipoTransaccion) Session["tipoTranActual"] : AdGeneral.obtenerTiposTransacciones(Convert.ToInt32(Request.QueryString["tipoTransaccion"])).First();
+            Session["tipoTranActual"] = Session["tipoTranActual"] != null ? (TipoTransaccion)Session["tipoTranActual"] : AdGeneral.obtenerTiposTransacciones(Convert.ToInt32(Request.QueryString["tipoTransaccion"])).First();
             if (!IsPostBack)
             {
                 divMensaje.Visible = false;
-                lstProductos = AdProducto.obtenerProductos();
-                grvProductos.DataSource = lstProductos;
+                if(Session["productos"]==null) Session["productos"] = AdProducto.obtenerProductos();
+                grvProductos.DataSource = Session["productos"];
                 grvProductos.DataBind();
                 if (!string.IsNullOrEmpty(accion) && accion.Equals("carrito"))
                 {
                     grvProductos.Columns[14].Visible = false;
                     grvProductos.Columns[15].Visible = true;
-                    if (Session["carrito"] != null) {
+                    if (Session["carrito"] != null)
+                    {
                         grvCarrito.DataSource = ((Carrito)Session["carrito"]).productos;
                         grvCarrito.DataBind();
                     }
@@ -45,10 +46,10 @@ namespace Easy_Stock
 
         protected void btnEditarProducto_Click(object sender, EventArgs e)
         {
-            
+
         }
 
-        protected void btnBuscarProducto_Click(object sender, EventArgs e) 
+        protected void btnBuscarProducto_Click(object sender, EventArgs e)
         {
             string nombre = txtBuscarProducto.Text;
             lstProductos = AdProducto.obtenerProductos(nombre);
@@ -59,7 +60,7 @@ namespace Easy_Stock
                 grvProductos.DataBind();
                 divMensaje.Visible = false;
             }
-            else 
+            else
             {
                 divMensaje.Visible = true;
                 grvProductos.DataSource = null;
@@ -68,7 +69,7 @@ namespace Easy_Stock
         }
         protected void btnEliminarProducto_Click(object sender, EventArgs e)
         {
-         
+
         }
         protected void grvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -76,12 +77,12 @@ namespace Easy_Stock
             int idProducto = Convert.ToInt32(argumentos[0]);
             int fila = Convert.ToInt32(argumentos[1]);
             if (e.CommandName.Equals("editar"))
-            {              
-                Response.Redirect("editar_producto.aspx?id=" + idProducto.ToString() +"&accion="+e.CommandName);
-            }
-            if(e.CommandName.Equals("eliminar"))
             {
-                if(AdProducto.eliminarProductoPorId(idProducto))
+                Response.Redirect("editar_producto.aspx?id=" + idProducto.ToString() + "&accion=" + e.CommandName);
+            }
+            if (e.CommandName.Equals("eliminar"))
+            {
+                if (AdProducto.eliminarProductoPorId(idProducto))
                 {
                     divMensaje.Visible = true;
                     divMensaje.InnerText = "Producto eliminado correctamente";
@@ -89,18 +90,18 @@ namespace Easy_Stock
                     Response.Redirect("productos.aspx");
                 }
                 else
-                {                  
+                {
                     divMensaje.InnerText = "Hubo un error al eliminar el producto";
                     divMensaje.Style["class"] = "alert alert-danger";
                     Response.Redirect("productos.aspx");
                 }
-           
+
             }
             if (e.CommandName.Equals("agregarCarrito"))
             {
 
                 TextBox txtCant = (grvProductos.Rows[fila].Cells[15].FindControl("txtCantidadProducto") as TextBox);
-                int cantidad = (txtCant != null && !string.IsNullOrEmpty(txtCant.Text))? Convert.ToInt32(txtCant.Text):0;
+                int cantidad = (txtCant != null && !string.IsNullOrEmpty(txtCant.Text)) ? Convert.ToInt32(txtCant.Text) : 0;
                 if (cantidad < 1) return;
                 else
                 {
@@ -109,19 +110,19 @@ namespace Easy_Stock
                     grvCarrito.DataSource = null;
                     grvCarrito.DataBind();
                     divTotal.Visible = true;
-                    Producto oProducto = lstProductos!=null && lstProductos.Count>0 ? buscarProductoLocal(idProducto): AdProducto.obtenerProductoPorId(idProducto);
+                    Producto oProducto = lstProductos != null && lstProductos.Count > 0 ? buscarProductoLocal(idProducto) : AdProducto.obtenerProductoPorId(idProducto);
                     oProducto.cantidad = cantidad;
                     oCarrito.agregarProducto(oProducto);
                     Session["carrito"] = oCarrito;
-                    hTotal.InnerText = string.Format("{0} {1}","Total: $", oCarrito.calcularTotalProductos().ToString());
+                    hTotal.InnerText = string.Format("{0} {1}", "Total: $", oCarrito.calcularTotalProductos().ToString());
                     (grvProductos.Rows[fila].Cells[15].FindControl("txtCantidadProducto") as TextBox).BackColor = Color.Beige;
                     grvCarrito.DataSource = oCarrito.productos;
                     grvCarrito.DataBind();
                 }
-                
+
 
             }
-                           
+
         }
         private Producto buscarProductoLocal(int idProducto)
         {
@@ -134,7 +135,7 @@ namespace Easy_Stock
 
         protected void btnAgregarProductoCarrito_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void btnQuitarProductoCarrito_Click(object sender, EventArgs e)
@@ -172,5 +173,6 @@ namespace Easy_Stock
         {
             Response.Redirect("cliente_carrito.aspx");
         }
+
     }
 }

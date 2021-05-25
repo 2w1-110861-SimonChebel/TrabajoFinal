@@ -3,6 +3,7 @@ using Easy_Stock.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -111,6 +112,36 @@ namespace Easy_Stock
         {
 
         }
+
+        protected void rbDevolucionParcial_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow fila in grvDetalleVenta.Rows)
+            {
+                _ = (grvDetalleVenta.Rows[fila.RowIndex].Cells[4].FindControl("chkSeleccion") as CheckBox).Checked=false;
+                _ = (grvDetalleVenta.Rows[fila.RowIndex].Cells[4].FindControl("chkSeleccion") as CheckBox).Enabled = true;
+            }
+        }
+
+        protected void rbDevolucionTotal_CheckedChanged(object sender, EventArgs e)
+        {
+            decimal total = 0;
+            foreach (GridViewRow fila in grvDetalleVenta.Rows)
+            {
+                _ = (grvDetalleVenta.Rows[fila.RowIndex].Cells[4].FindControl("chkSeleccion") as CheckBox).Checked = true;
+                _ = (grvDetalleVenta.Rows[fila.RowIndex].Cells[4].FindControl("chkSeleccion") as CheckBox).Enabled = false;
+                //html precio = (WebControl)grvDetalleVenta.Rows[fila.RowIndex].Cells[3].FindControl("divPrecio");
+                //string cio = obtenerValorNumerico(precio.ToString());
+                //total += Convert.ToDecimal( grvDetalleVenta.Rows[fila.RowIndex].Cells[3].FindControl("divPrecio"));
+            }
+            //hTotal.InnerText = "Total a devolver: $" + total;
+        }
+
+        private string obtenerValorNumerico(string cadena)
+        {
+            string resultado = Regex.Replace(cadena, "<.*?>", string.Empty);
+            return resultado;
+        }
+
 
     }
 }

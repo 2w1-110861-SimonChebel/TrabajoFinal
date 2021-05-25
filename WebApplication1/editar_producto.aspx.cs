@@ -123,8 +123,8 @@ namespace Easy_Stock
                     hMensaje.InnerText = "Complete todos los campos";
                     return;
                 }
-               
 
+                Session["productos"] = null;
             }
             catch (Exception ex)
             {
