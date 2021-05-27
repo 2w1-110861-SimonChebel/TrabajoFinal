@@ -44,7 +44,7 @@
 
                 <div class="row" id="divTotal" runat="server" visible="false" style="padding: 5px">
                     <div class="col-12">
-                        <h4 id="hTotal" runat="server">Total: $</h4>
+                        <h4 id="hTotal" runat="server">Total: $<%=Session["carrito"]!= null ? ((Carrito)Session["carrito"]).calcularTotalProductos().ToString() : "0.0" %></h4>
                     </div>
                 </div>
                 <asp:GridView ID="grvCarrito" runat="server" Height="150px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvCarrito_SelectedIndexChanged" OnRowCommand="grvCarrito_RowCommand" AutoGenerateColumns="False">

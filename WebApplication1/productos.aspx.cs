@@ -110,13 +110,17 @@ namespace Easy_Stock
                     grvCarrito.DataSource = null;
                     grvCarrito.DataBind();
                     divTotal.Visible = true;
-                    Producto oProducto = lstProductos != null && lstProductos.Count > 0 ? buscarProductoLocal(idProducto) : AdProducto.obtenerProductoPorId(idProducto);
+                    Producto oProducto = lstProductos != null && lstProductos.Count > 0 ? new List<Producto> { buscarProductoLocal(idProducto) }.First() : AdProducto.obtenerProductoPorId(idProducto,false/*, cantidad*/).First();
                     oProducto.cantidad = cantidad;
+                    //foreach (var item in lstProd)
+                    //{
+                    //    item.cantidad = lstProd.Count / lstProd.Count;
+                    //    oCarrito.agregarProducto(item);
+                    //}
                     oCarrito.agregarProducto(oProducto);
                     Session["carrito"] = oCarrito;
-                    hTotal.InnerText = string.Format("{0} {1}", "Total: $", oCarrito.calcularTotalProductos().ToString());
                     (grvProductos.Rows[fila].Cells[15].FindControl("txtCantidadProducto") as TextBox).BackColor = Color.Beige;
-                    grvCarrito.DataSource = oCarrito.productos;
+                    grvCarrito.DataSource = oCarrito.productos; /*oCarrito.mostrarProductosCarrito();*/
                     grvCarrito.DataBind();
                 }
 
@@ -153,6 +157,8 @@ namespace Easy_Stock
                 Carrito auxCarrito = (Carrito)Session["carrito"];
                 auxCarrito.removerProducto(id);
                 Session["carrito"] = auxCarrito.productos.Count < 1 ? null : auxCarrito;
+                grvCarrito.DataSource = Session["carrito"] != null? ((Carrito)Session["carrito"]).productos : null;
+                grvCarrito.DataBind();            
             }
         }
 

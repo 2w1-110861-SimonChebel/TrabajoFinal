@@ -43,12 +43,46 @@ namespace Easy_Stock.Entidades
         {
             foreach (var prod in productos)
             {
-                if (prod.idProducto == producto.idProducto) { 
+                if (prod.idProducto == producto.idProducto)
+                {
                     prod.cantidad += producto.cantidad;
                     return;
                 }
             }
             this.productos.Add(producto);
+        }
+
+        public List<Producto> mostrarProductosCarrito()
+        {
+            List<Producto> lst = new List<Producto>();
+            Producto oProducto = new Producto();
+            int cont = 0;
+            for(int i= 0;i< productos.Count; i++)
+            {
+                Producto prod = productos[i];
+                if (cont == 0) { oProducto = prod; lst.Add(oProducto); cont++; }
+                else
+                {
+                    if (prod.idProducto == oProducto.idProducto)
+                    {
+                       oProducto.cantidad += prod.cantidad;
+                       lst.Add(oProducto);
+                    }
+                    else {
+                        if (!lst.Exists(p => p.idProducto == prod.idProducto))
+                        {
+                            oProducto = prod;
+                            lst.Add(oProducto);
+                            cont++;
+                        }
+                    }
+                
+                }
+           
+            }
+
+            return lst;
+
         }
 
         public decimal calculcarSubTotalProducto(int idProducto)

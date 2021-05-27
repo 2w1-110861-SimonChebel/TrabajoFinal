@@ -41,5 +41,18 @@ namespace Easy_Stock.Entidades
             vendedor = 2,
             invitado = 3
         }
+
+        public enum estadoProducto { 
+            disponible = 1,
+            noDisponible =2,
+            devuelto = 3,
+            defectuoso = 4
+        }
+
+        public enum tipoDevolucionDineroCliente
+        {
+            montoDevueltoAcliente =1,
+            creditoAfavorDeCliente = 2
+        }
     }
 }

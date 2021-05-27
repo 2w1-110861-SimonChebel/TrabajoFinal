@@ -23,6 +23,7 @@ namespace Easy_Stock.Entidades
         public DateTime fechaVenc { get; set; } = DateTime.Today;
         public DateTime fechaElab { get; set; } = DateTime.Today;
         public DateTime fechaIngreso { get; set; } = DateTime.Today;
+        public string codigoUnico { get; set; } = string.Empty;
         public int cantidad { get; set; } = 0;//solo se usa para el carrito
         public decimal subTotal { get; set; } = 0;//solo se usa para el carrito
 

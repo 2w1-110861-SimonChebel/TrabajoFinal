@@ -18,7 +18,7 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
-                txtTipoTran.Text = ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion;
+                txtTipoTran.Text = Session["tipoTranActual"] != null ? ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion: "Undefined";
                 this.oClienteCarrito = (Cliente)Session["clienteCarrito"];
                 Carrito aux = (Carrito)Session["carrito"];
                 grvProductos.DataSource = ((Carrito)Session["carrito"]).productos;
@@ -136,6 +136,8 @@ namespace Easy_Stock
                     Session["carrito"] = null;
                     Session["clienteCarrito"] = null;
                     Session["tipoTranActual"] = null;
+                    Session["productos"] = null;
+                    Session["clientes"] = null;
                     Response.Redirect("home.aspx?transaction=ok");
                 }
                 else

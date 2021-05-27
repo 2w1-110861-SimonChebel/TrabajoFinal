@@ -23,8 +23,14 @@ namespace Easy_Stock
                     divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                     hMensaje.InnerText = "La transacción se realizó correctamente";
                 }
+                if ((Request.QueryString["devolucion"] != null && Request.QueryString["devolucion"].Equals("ok")))
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "Devolución realizada correctamente";
+                }
                 lstTransacciones = AdTransaccion.obtenerTransacciones(true);
-                lstProductos = AdProducto.obtenerProductos("",true);
+                lstProductos = AdProducto.obtenerProductos("", true);
             }
         }
     }

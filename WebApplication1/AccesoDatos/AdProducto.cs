@@ -22,13 +22,10 @@ namespace Easy_Stock.AccesoDatos
             try
             {
                 //sbSql = new StringBuilder("INSERT INTO Productos(idMarca,nombre,precioVenta,precioCosto,descripcion,idCategoria,idProveedor,idDeposito,stockMinimo,stockMaximo,cantidadRestante)");
-                sbSql = new StringBuilder("INSERT INTO Productos(codigo,idMarca,nombre,precioVenta,precioCosto,descripcion,idCategoria,idProveedor,stockMinimo,stockMaximo,cantidadRestante,fechaVenc,fechaElab,habilitado"+(tieneDeposito?",idDeposito":string.Empty) +", fechaIngreso)");
-                sbSql.Append(" VALUES(@codigo,@idMarca,@nombre,@precioVenta,@precioCosto,@descripcion,@idCategoria,@idProveedor,@stockMinimo,@stockMaximo,@cantidad,@fechaVenc,@fechaElab,@habilitado" + (tieneDeposito? ",@idDeposito":string.Empty) + ",@fechaIngreso )");
-
-                if (tieneDeposito)
-                {
-
-                    SqlParameter[] parametros = {
+                //sbSql = new StringBuilder("INSERT INTO Productos(codigo,idMarca,nombre,precioVenta,precioCosto,descripcion,idCategoria,idProveedor,stockMinimo,stockMaximo,cantidadRestante,fechaVenc,fechaElab,habilitado" + (tieneDeposito ? ",idDeposito" : string.Empty) + ", fechaIngreso)");
+                //sbSql.Append(" VALUES(@codigo,@idMarca,@nombre,@precioVenta,@precioCosto,@descripcion,@idCategoria,@idProveedor,@stockMinimo,@stockMaximo,@cantidad,@fechaVenc,@fechaElab,@habilitado" + (tieneDeposito ? ",@idDeposito" : string.Empty) + ",@fechaIngreso )");
+                sbSql = new StringBuilder("SP_AgregarProducto");
+                SqlParameter[] parametros = {
                     new SqlParameter("@codigo", oProducto.codigo),
                     new SqlParameter("@idMarca", oProducto.marca.idMarca),
                     new SqlParameter("@nombre", oProducto.nombre),
@@ -37,52 +34,21 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@descripcion", oProducto.descripcion),
                     new SqlParameter("@idCategoria", oProducto.categoria.idCategoria),
                     new SqlParameter("@idProveedor", oProducto.proveedor.idProveedor),
-                    new SqlParameter("@idDeposito", oProducto.deposito.idDeposito),
+                    tieneDeposito? new SqlParameter("@idDeposito", oProducto.deposito.idDeposito) : null,
                     new SqlParameter("@stockMinimo", oProducto.stockMinimo),
                     new SqlParameter("@stockMaximo", oProducto.stockMaximo),
                     new SqlParameter("@cantidad", oProducto.cantidadRestante),
                     new SqlParameter("@fechaVenc", oProducto.fechaVenc),
                     new SqlParameter("@fechaElab", oProducto.fechaElab),
                     new SqlParameter("@habilitado",1),
-                    new SqlParameter("@fechaIngreso",DateTime.Now)
-                    };
-                  
-                }
-                else
-                {
-                    SqlParameter[] parametros = {
-                    new SqlParameter("@codigo", oProducto.codigo),
-                    new SqlParameter("@idMarca", oProducto.marca.idMarca),
-                    new SqlParameter("@nombre", oProducto.nombre),
-                    new SqlParameter("@precioVenta", oProducto.precioVenta),
-                    new SqlParameter("@precioCosto", oProducto.precioCosto),
-                    new SqlParameter("@descripcion", oProducto.descripcion),
-                    new SqlParameter("@idCategoria", oProducto.categoria.idCategoria),
-                    new SqlParameter("@idProveedor", oProducto.proveedor.idProveedor),
-                    new SqlParameter("@stockMinimo", oProducto.stockMinimo),
-                    new SqlParameter("@stockMaximo", oProducto.stockMaximo),
-                    new SqlParameter("@cantidad", oProducto.cantidadRestante),
-                    new SqlParameter("@fechaVenc", oProducto.fechaVenc),
-                    new SqlParameter("@fechaElab", oProducto.fechaElab),
-                    new SqlParameter("@habilitado",1),
-                    new SqlParameter("@fechaIngreso",DateTime.Now)
-                    };
+                    new SqlParameter("@fechaIngreso",DateTime.Now),
+                    new SqlParameter("@idEstado",(int)Tipo.estadoProducto.disponible)
+                };
 
-                    SqlParameter[] auxParam = new SqlParameter[] {
-                        new SqlParameter("@codigo",oProducto.codigo)
-                    };
-                    for (int i = 0; i < oProducto.cantidadRestante; i++)
-                    {
-                        string auxSql = "INSERT INTO Inventario (codigoProducto) VALUES(@codigo)";
-                        SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, auxSql, auxParam);
-                    }
+               SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros);
 
+                //SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
 
-                    SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
-                }
-
-
-                
             }
             catch (Exception ex)
             {
@@ -161,15 +127,17 @@ namespace Easy_Stock.AccesoDatos
         }
 
 
-        public static List<Producto> obtenerProductos(string nombre = "",bool vencimiento=false)
+        public static List<Producto> obtenerProductos(string nombre = "", bool vencimiento = false, bool esInventario = false)
         {
             sbSql = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab, p.codigo, p.fechaIngreso ");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab, p.codigo, p.fechaIngreso, p.cantidadRestante ");
+                if (esInventario) sbSql.Append(" ,inv.idInventario,inv.codigo");
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
+                if (esInventario) sbSql.Append(" JOIN Inventario inv  ON inv.idProducto = p.idProducto");
                 if (!string.IsNullOrEmpty(nombre) && !vencimiento) sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre LIKE '%", nombre, "%' AND p.habilitado=1"));
                 if (string.IsNullOrEmpty(nombre) && vencimiento) sbSql.Append(" WHERE DATEDIFF(DAY,GETDATE(),p.fechaVenc) <= 7");
 
@@ -209,7 +177,9 @@ namespace Easy_Stock.AccesoDatos
                                 fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14),
                                 fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15),
                                 codigo = dr.IsDBNull(16) ? default(string) : dr.GetString(16),
-                                fechaIngreso = dr.IsDBNull(17) ? default(DateTime) : dr.GetDateTime(17)
+                                fechaIngreso = dr.IsDBNull(17) ? default(DateTime) : dr.GetDateTime(17),
+                                cantidad = dr.IsDBNull(18) ? default : dr.GetInt32(18),
+                                codigoUnico = esInventario ? string.Format("{0}{1}{2}", dr.IsDBNull(19) ? dr.GetString(19) : default, "-", dr.GetString(16)) : string.Empty
 
                             });
                         }
@@ -225,57 +195,67 @@ namespace Easy_Stock.AccesoDatos
 
         }
 
-        public static Producto obtenerProductoPorId(int idProducto)
+        public static List<Producto> obtenerProductoPorId(int idProducto, bool esInventario = false, int cantidad = 0)
         {
             sbSql = null;
             try
             {
-                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab,p.codigo,p.fechaIngreso ");
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.precioVenta,p.precioCosto, p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',pr.idProveedor, pr.nombre 'Proveedor', p.cantidadRestante,p.fechaVenc,p.fechaElab,p.codigo,p.fechaIngreso, p.cantidadRestante ");
+                if (esInventario) sbSql.Append(" ,inv.idInventario,inv.codigo");
                 sbSql.Append(" FROM Productos p JOIN Marcas m ON p.idMarca = m.idMarca");
                 sbSql.Append(" JOIN Categorias c ON p.idCategoria = c.idCategoria");
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
+                if (esInventario) sbSql.Append(" JOIN Inventario inv ON inv.idProducto = p.idProducto");
                 sbSql.Append(" WHERE p.idProducto = @idProducto");
 
                 SqlParameter parametro = new SqlParameter("@idProducto", idProducto);
 
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), parametro))
                 {
-                    Producto oProducto = null;
+                    List<Producto> lstProductos = null;
+                    //Producto oProducto = null;
                     if (dr.HasRows)
                     {
-                        dr.Read();
-                        oProducto = new Producto
+                        int contador = 0;
+                        lstProductos = new List<Producto>();
+                        while (dr.Read() && contador == 0 ? contador <= cantidad : contador < cantidad)
                         {
-                            idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
-                            nombre = dr.IsDBNull(1) ? default(string) : dr.GetString(1),
-                            descripcion = dr.IsDBNull(2) ? default(string) : dr.GetString(2),
-                            marca = new Marca
+                            lstProductos.Add(new Producto
                             {
-                                idMarca = dr.IsDBNull(3) ? default(int) : dr.GetInt32(3),
-                                marca = dr.IsDBNull(4) ? default(string) : dr.GetString(4)
-                            },
-                            precioVenta = dr.IsDBNull(5) ? default(decimal) : dr.GetDecimal(5),
-                            precioCosto = dr.IsDBNull(6) ? default(decimal) : dr.GetDecimal(6),
-                            stockMinimo = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7),
-                            stockMaximo = dr.IsDBNull(8) ? default(int) : dr.GetInt32(8),
-                            categoria = new Categoria
-                            {
-                                idCategoria = dr.IsDBNull(9) ? default(int) : dr.GetInt32(9),
-                                nombre = dr.IsDBNull(10) ? default(string) : dr.GetString(10)
-                            },
-                            proveedor = new Proveedor
-                            {
-                                idProveedor = dr.IsDBNull(11) ? default(int) : dr.GetInt32(11),
-                                nombre = dr.IsDBNull(12) ? default(string) : dr.GetString(12)
-                            },
-                            cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
-                            fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14),
-                            fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15),
-                            codigo = dr.IsDBNull(16) ? default(string) : dr.GetString(16),
-                            fechaIngreso = dr.IsDBNull(17) ? default(DateTime) : dr.GetDateTime(17)
-                        };
+                                idProducto = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
+                                nombre = dr.IsDBNull(1) ? default(string) : dr.GetString(1),
+                                descripcion = dr.IsDBNull(2) ? default(string) : dr.GetString(2),
+                                marca = new Marca
+                                {
+                                    idMarca = dr.IsDBNull(3) ? default(int) : dr.GetInt32(3),
+                                    marca = dr.IsDBNull(4) ? default(string) : dr.GetString(4)
+                                },
+                                precioVenta = dr.IsDBNull(5) ? default(decimal) : dr.GetDecimal(5),
+                                precioCosto = dr.IsDBNull(6) ? default(decimal) : dr.GetDecimal(6),
+                                stockMinimo = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7),
+                                stockMaximo = dr.IsDBNull(8) ? default(int) : dr.GetInt32(8),
+                                categoria = new Categoria
+                                {
+                                    idCategoria = dr.IsDBNull(9) ? default(int) : dr.GetInt32(9),
+                                    nombre = dr.IsDBNull(10) ? default(string) : dr.GetString(10)
+                                },
+                                proveedor = new Proveedor
+                                {
+                                    idProveedor = dr.IsDBNull(11) ? default(int) : dr.GetInt32(11),
+                                    nombre = dr.IsDBNull(12) ? default(string) : dr.GetString(12)
+                                },
+                                cantidadRestante = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
+                                fechaVenc = dr.IsDBNull(14) ? default(DateTime) : dr.GetDateTime(14),
+                                fechaElab = dr.IsDBNull(15) ? default(DateTime) : dr.GetDateTime(15),
+                                codigo = dr.IsDBNull(16) ? default(string) : dr.GetString(16),
+                                fechaIngreso = dr.IsDBNull(17) ? default(DateTime) : dr.GetDateTime(17),
+                                cantidad = dr.IsDBNull(18) ? default : dr.GetInt32(18),
+                                codigoUnico = esInventario ? string.Format("{0}{1}{2}", dr.IsDBNull(19) ? default : dr.GetInt32(19), "-", dr.GetString(16)) : string.Empty
+                            }); ;
+                            contador++;
+                        }
                     }
-                    return oProducto;
+                    return lstProductos;
                 }
             }
             catch (Exception ex)

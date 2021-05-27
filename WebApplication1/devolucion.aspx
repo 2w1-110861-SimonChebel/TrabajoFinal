@@ -52,7 +52,7 @@
 
     <div class="col-xs-12 col-md-10 col-xl-10 table table-responsive">
 
-        <asp:GridView ID="grvVentas" runat="server" Height="150px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="grvVentas_SelectedIndexChanged" OnRowCommand="grvVentas_RowCommand" AutoGenerateColumns="False">
+        <asp:GridView ID="grvVentas" runat="server" Height="150px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="chkSeleccion_CheckedChanged" OnRowCommand="grvVentas_RowCommand" AutoGenerateColumns="False">
             <Columns>
 
                 <asp:TemplateField HeaderText="N° de venta" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
@@ -79,10 +79,10 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                <asp:TemplateField HeaderText="Nombre o razón social" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                <asp:TemplateField HeaderText="Cliente" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divNombreCliente" style="padding-top: 10px;">
-                            <b><%#(int)Eval("cliente.tipoCliente.idTipoCliente")==(int) Tipo.tipoCliente.persona? Eval("cliente.nombre") : Eval("cliente.razonSocial") %></b>
+                            <b><%#(int)Eval("cliente.tipoCliente.idTipoCliente")==(int) Tipo.tipoCliente.persona? string.Format("{0} {1}", Eval("cliente.nombre"),Eval("cliente.apellido")) : Eval("cliente.razonSocial") %></b>
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
@@ -150,6 +150,14 @@
             <Columns>
 
 
+                <asp:TemplateField HeaderText="Codigo Único" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <ItemTemplate>
+                        <div id="divIdTransaccion" style="padding-top: 10px;">
+                            <b><%#Eval("producto.codigoUnico")%></b>
+                        </div>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
                 <asp:TemplateField HeaderText="Codigo producto" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divIdTransaccion" style="padding-top: 10px;">
@@ -168,7 +176,7 @@
 
                 <asp:TemplateField HeaderText="Cantidad" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
-                        <div id="divNombreCliente" style="padding-top: 10px;">
+                        <div id="divCantidad" style="padding-top: 10px;">
                             <b><%#Eval("cantidad") %></b>
                         </div>
                     </ItemTemplate>
@@ -195,8 +203,10 @@
                 <asp:TemplateField HeaderText="Seleccionar  " HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divSeleccion" class="form-group" style="padding-top: 10px;">
-                            <asp:CheckBox ID="chkSeleccion" runat="server" />
+                            <asp:CheckBox ID="chkSeleccion" runat="server" AutoPostBack="true" Enabled ="false" OnCheckedChanged="chkSeleccion_CheckedChanged" Visible="false" />
                         </div>
+                        <b>
+                        <asp:LinkButton runat="server" ID="btnSeleccionar" type="button" class="btn btn-success" Enabled="true" Text="Agregar" CommandArgument='<%#Eval("producto.codigoUnico")+","+ ((GridViewRow)Container).RowIndex.ToString()%>' CommandName="seleccionar" OnClick="btnSeleccionar_Click"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -210,9 +220,9 @@
         </div>
         <%if (rbDevolucionParcial.Checked)
             { %>
-        <div class="col-3" style="padding-top:1%">
-            <asp:Button ID="btnSeleccionarProductos" runat="server" Text="Confirmar seleccionados" class="btn btn-dark" />
-        </div>
+       <%-- <div class="col-3" style="padding-top:1%">
+            <asp:Button ID="btnSeleccionarProductos" runat="server" Text="Confirmar seleccionados" class="btn btn-dark" OnClick="btnSeleccionarProductos_Click"/>
+        </div>--%>
         <%} %>
     </div>
 
@@ -238,7 +248,7 @@
             <asp:TextBox type="text" TextMode="MultiLine" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" PlaceHolder="Observaciones(*)" MaxLength="150"> </asp:TextBox>
         </div>
         <div class="form-col-xs-12 col-2">
-            <asp:Button ID="btnFinalizar" runat="server" Text="Finalizar" class="btn btn-success" />
+            <asp:Button ID="btnFinalizar" runat="server" Text="Finalizar" class="btn btn-success" OnClick="btnFinalizar_Click" />
         </div>
 
     </div>

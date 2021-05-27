@@ -22,7 +22,7 @@ namespace Easy_Stock
                 if (Request.QueryString["id"] != null && Request.QueryString["accion"].Equals("editar"))
                 {
                     this.idProducto = Convert.ToInt32(Request.QueryString["id"]);
-                    Producto oProducto = AdProducto.obtenerProductoPorId(idProducto);
+                    Producto oProducto = AdProducto.obtenerProductoPorId(idProducto).First();
 
                     if (oProducto != null)
                     {

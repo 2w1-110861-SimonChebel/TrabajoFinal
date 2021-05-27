@@ -14,6 +14,55 @@ namespace Easy_Stock.AccesoDatos
         static StringBuilder sbSql = null;
         private static readonly string cadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings["conexion"].ConnectionString.ToString();
 
+
+
+        public static bool DevolverProductos(Factura oFactura, int idCliente = 0,decimal montoDevuelto = 0,int idTransaccion=0, DateTime fecha = default, int idTipoDevolcion = 0,int idTipoTransaccion= 0, int idUsuario=0)
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SP_DevolverProducto");
+                foreach (var item in oFactura.detallesFactura)
+                {
+                    SqlParameter[] parametros = {
+                    new SqlParameter("@idProducto", item.producto.idProducto),
+                    new SqlParameter("@idInventario", item.producto.codigoUnico.Split('-')[0]),
+                    new SqlParameter("@codigo", item.producto.codigo),
+                    new SqlParameter("@cantidadProducto",item.producto.cantidad),
+                   // oVentaCliente.proveedor!= null && oVentaCliente.proveedor.idProveedor > 0 ?new SqlParameter("@idProveedor", oVentaCliente.proveedor.idProveedor) : null,
+                    new SqlParameter("@idEstado", (int)Tipo.estadoProducto.devuelto),
+                    new SqlParameter("@idCliente", idCliente),
+                    new SqlParameter("@montoDevuelto", montoDevuelto),
+                    new SqlParameter("@idTransaccion", idTransaccion),
+                    new SqlParameter("@fecha", fecha),
+                    new SqlParameter("@tipoDevolucion", idTipoDevolcion),
+                    new SqlParameter("@idTipoTransaccion", idTipoTransaccion),
+                    new SqlParameter("@idUsuario", idUsuario)
+
+                    };
+
+                    try
+                    {
+                        SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros);
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
+                        throw ex;
+                    }
+                }
+              
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+
+            return true;
+        }
+
+
         public static bool RegistrarVenta(VentaCliente oVentaCliente)
         {
             sbSql = null;
@@ -26,6 +75,7 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@desc", oVentaCliente.factura.observaciones),
                     new SqlParameter("@idCliente", oVentaCliente.factura.cliente.idCliente),
                     new SqlParameter("@idEmpresa", oVentaCliente.factura.empresa.idEmpresa),
+                    oVentaCliente.proveedor!= null && oVentaCliente.proveedor.idProveedor > 0 ?new SqlParameter("@idProveedor", oVentaCliente.proveedor.idProveedor) : null,
                     new SqlParameter("@descuento", oVentaCliente.descuento),
                     new SqlParameter("@total", oVentaCliente.total),
                     new SqlParameter("@idFormaPago", oVentaCliente.formaPago.idFormaPago),
@@ -36,58 +86,39 @@ namespace Easy_Stock.AccesoDatos
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros))
                 {
 
-                    string sqlInventario = "SP_EliminarProductoInventario @cantidadProductos,@idProducto";
-                    List<SqlParameter> paramInventario = new List<SqlParameter>();
-                    foreach (var item in oVentaCliente.factura.detallesFactura)
-                    {
-                        paramInventario.AddRange(
-
-                            new SqlParameter[] {
-                                 new SqlParameter("@cantidadProductos",item.cantidad),
-                                 new SqlParameter("@idProducto",item.producto.idProducto)
-                            }
-
-                        );
-
-                        try
-                        {
-                            SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sqlInventario, paramInventario.ToArray());
-                        }
-                        catch (Exception ex)
-                        {
-                            return false;
-                            throw ex;
-                        }
-                    }
-
 
                     int idFactura = obtenerUltimoNroFactura();
-                    string sql = "INSERT INTO Detalles_Facturas (nroFactura,cantidad,idProducto,iva, subTotal,precio) ";
-                    sql += "VALUES (@nroFactura,@cantidad,@idProducto,@iva,@subTotal,@precio) ";
-                    sql += " UPDATE Productos set cantidadRestante = @cantActualizada WHERE idProducto=@idProducto ";
+                    string sql = "SP_InsertarDetalle_QuitarDeInventario";       
                     for (int i = 0; i < oVentaCliente.factura.detallesFactura.Count; i++)
                     {
                         var item = oVentaCliente.factura.detallesFactura[i];
-                        SqlParameter[] paramDetalle =  {
-                            new SqlParameter("@nroFactura", idFactura),
-                            new SqlParameter("@cantidad", item.cantidad),
+                     
+
+                        for (int e = 0; e < item.cantidad; e++)
+                        {
+                            SqlParameter[] paramDetalle =  {
+                            new SqlParameter("@nroFact", idFactura),
+                            new SqlParameter("@cantidadProducto", item.cantidad),
                             new SqlParameter("@idProducto", item.producto.idProducto),
                             new SqlParameter("@iva", 0),
                             new SqlParameter("@subTotal", item.producto.calcularSubTotal()),
                             new SqlParameter("@precio", item.precio),
-                            new SqlParameter("@cantActualizada", (item.producto.cantidadRestante-item.cantidad)),
+                            new SqlParameter("@cantActualizada", (--item.producto.cantidadRestante)),
+                            new SqlParameter("@codigoProducto", (item.producto.codigo)),
+                            new SqlParameter("@idEstado",(int)Tipo.estadoProducto.noDisponible)
 
-                        };
-
-                        try
-                        {
-                            SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sql, paramDetalle);
+                             };
+                            try
+                            {
+                                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sql, paramDetalle);
+                            }
+                            catch (Exception ex)
+                            {
+                                return false;
+                                throw ex;
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            return false;
-                            throw ex;
-                        }
+                    
 
                     }
                 }
@@ -120,8 +151,8 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" JOIN Usuarios u ON t.idUsuario = u.idUsuario");
                 if (idVenta > 0 || oCliente != null || oUsuario != null || !string.IsNullOrEmpty(fecha))
                 {
-                    sbSql.Append(" WHERE ");
-                    if (idVenta > 0) sbSql.Append("idTransaccion = @idTran ");
+                    sbSql.Append(" WHERE t.devuelto=0 AND ");
+                    if (idVenta > 0) sbSql.Append(" idTransaccion = @idTran ");
                     if (oCliente != null)
                     {
                         if (idVenta > 0) sbSql.Append(" AND(c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'");
@@ -232,7 +263,7 @@ namespace Easy_Stock.AccesoDatos
             {
                 sbSql = new StringBuilder("SELECT t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion, ");
                 sbSql.Append(" c.idCliente,c.nombre,c.apellido,c.dni,c.cuit,c.direccion, c.razonSocial,");
-                sbSql.Append(" u.idUsuario,u.nombre,u.apellido, f.nroFactura,f.total, dc.idDeuda,dc.monto ");
+                sbSql.Append(" u.idUsuario,u.nombre,u.apellido, f.nroFactura,f.total, dc.idDeuda,dc.monto,dc.montoAfavor ");
                 sbSql.Append(" FROM Transacciones t ");
                 sbSql.Append(" JOIN Clientes c on T.idCliente = C.idCliente");
                 sbSql.Append(" JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente");
@@ -242,8 +273,8 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" JOIN Deudas_clientes dc ON dc.idCliente = c.idCliente");
                 if (idVenta > 0 || oCliente != null || oUsuario != null || !string.IsNullOrEmpty(fecha))
                 {
-                    sbSql.Append(" WHERE ");
-                    if (idVenta > 0) sbSql.Append("t.idTransaccion = @idTran ");
+                    sbSql.Append(" WHERE t.devuelto=0 AND ");
+                    if (idVenta > 0) sbSql.Append(" t.idTransaccion = @idTran ");
                     if (oCliente != null)
                     {
                         if (idVenta > 0) sbSql.Append(" AND(c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'");
@@ -300,7 +331,8 @@ namespace Easy_Stock.AccesoDatos
                                          deuda = new DeudaCliente
                                          {
                                              idDeudaCliente = dr.IsDBNull(17) ? default(int) : dr.GetInt32(17),
-                                             monto = dr.IsDBNull(18) ? default(decimal) : dr.GetDecimal(18)
+                                             monto = dr.IsDBNull(18) ? default(decimal) : dr.GetDecimal(18),
+                                             montoAfavor = dr.IsDBNull(19) ? default(decimal) : dr.GetDecimal(19)
                                          }
                                      },
 
@@ -341,10 +373,12 @@ namespace Easy_Stock.AccesoDatos
             SqlParameter[] param = null;
             try
             {
-                sbSql = new StringBuilder("SELECT f.nroFactura,f.fecha, f.total,p.idProducto, p.codigo,p.nombre,df.idDetalle,df.cantidad,df.subTotal,df.precio, p.cantidadRestante,p.stockMinimo,p.stockMaximo ");
+                sbSql = new StringBuilder("SELECT f.nroFactura,f.fecha, f.total,p.idProducto, p.codigo,p.nombre,df.idDetalle,df.cantidad,df.subTotal,df.precio, p.cantidadRestante,p.stockMinimo,p.stockMaximo, inv.idInventario, p.precioCosto,p.precioVenta, c.idCliente ");
                 sbSql.Append(" FROM Facturas f join Detalles_Facturas DF on f.nroFactura = df.nroFactura ");
                 sbSql.Append(" JOIN Productos p on p.idProducto = df.idProducto ");
                 sbSql.Append(" JOIN Transacciones t on f.idTransaccion = t.idTransaccion");
+                sbSql.Append(" JOIN Inventario inv on inv.idInventario = df.idInventario");
+                sbSql.Append(" JOIN Clientes c  on c.idCliente = f.idCliente");
                 sbSql.Append(" where f.idTransaccion = @idTransaccion ORDER BY f.nroFactura");
                 if (idTransaccion > 0)
                 {
@@ -362,7 +396,7 @@ namespace Easy_Stock.AccesoDatos
                             lstDetalle.Add(new DetalleFactura
                             {
                                 idDetalle = dr.IsDBNull(6) ? default(int) : dr.GetInt32(6),
-                                cantidad = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7),
+                                cantidad = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7) / dr.GetInt32(7),
                                 subTotal = dr.IsDBNull(8) ? default(decimal) : dr.GetDecimal(8),
                                 precio = dr.IsDBNull(9) ? default(decimal) : dr.GetDecimal(9),
                                 producto = new Producto
@@ -373,6 +407,9 @@ namespace Easy_Stock.AccesoDatos
                                     cantidadRestante = dr.IsDBNull(10) ? default(int) : dr.GetInt32(10),
                                     stockMinimo = dr.IsDBNull(11) ? default(int) : dr.GetInt32(11),
                                     stockMaximo = dr.IsDBNull(12) ? default(int) : dr.GetInt32(12),
+                                    codigoUnico = string.Format("{0}{1}{2}",dr.IsDBNull(13) ? default(string) : dr.GetInt32(13).ToString(),"-",dr.GetString(4)),
+                                    precioCosto = dr.IsDBNull(14) ? default(decimal) : dr.GetDecimal(14),
+                                    precioVenta = dr.IsDBNull(15) ? default(decimal) : dr.GetDecimal(15)
                                 }
                             });
                             factura = new Factura
@@ -380,9 +417,13 @@ namespace Easy_Stock.AccesoDatos
                                 nroFactura = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
                                 fecha = dr.IsDBNull(1) ? default(DateTime) : dr.GetDateTime(1),
                                 total = dr.IsDBNull(2) ? default(decimal) : dr.GetDecimal(2),
-                                detallesFactura = lstDetalle
+                                detallesFactura = lstDetalle,
+                                cliente = new Cliente { 
+                                    idCliente = dr.IsDBNull(16) ? default(int) : dr.GetInt32(16)
+                                }
 
                             };
+                            
                         }
                     }
                 }
@@ -395,7 +436,6 @@ namespace Easy_Stock.AccesoDatos
             }
             return factura;
         }
-
 
         private static int obtenerUltimoNroFactura()
         {
