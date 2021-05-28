@@ -29,9 +29,10 @@ namespace Easy_Stock
                         txtCodigo.Text = oProducto.codigo;
                         txtNombreProducto.Text = oProducto.nombre;
                         txtCantidad.Text = oProducto.cantidadRestante.ToString();
+                        txtCantidad.Enabled = false;
                         cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
-                        txtPrecioVenta.Text = oProducto.precioVenta.ToString();
-                        txtPrecioCosto.Text = oProducto.precioCosto.ToString();
+                        txtPrecioVenta.Text =  oProducto.precioVenta.ToString().Replace(",", ".");
+                        txtPrecioCosto.Text = oProducto.precioCosto.ToString().Replace(",",".");
                         cboCategorias.SelectedValue = oProducto.categoria.idCategoria.ToString();
                         cboProveedores.SelectedValue = oProducto.proveedor.idProveedor.ToString();
                         cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();

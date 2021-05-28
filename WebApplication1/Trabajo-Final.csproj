@@ -109,6 +109,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Assets\ES_Logo.png" />
+    <Content Include="cambio.aspx" />
     <Content Include="clientes.aspx" />
     <Content Include="cliente_carrito.aspx" />
     <Content Include="Contact.aspx" />
@@ -288,6 +289,13 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="cambio.aspx.cs">
+      <DependentUpon>cambio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="cambio.aspx.designer.cs">
+      <DependentUpon>cambio.aspx</DependentUpon>
+    </Compile>
     <Compile Include="clientes.aspx.cs">
       <DependentUpon>clientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

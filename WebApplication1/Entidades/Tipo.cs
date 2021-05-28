@@ -46,7 +46,8 @@ namespace Easy_Stock.Entidades
             disponible = 1,
             noDisponible =2,
             devuelto = 3,
-            defectuoso = 4
+            defectuoso = 4,
+            cambio = 5
         }
 
         public enum tipoDevolucionDineroCliente
@@ -54,5 +55,6 @@ namespace Easy_Stock.Entidades
             montoDevueltoAcliente =1,
             creditoAfavorDeCliente = 2
         }
+
     }
 }

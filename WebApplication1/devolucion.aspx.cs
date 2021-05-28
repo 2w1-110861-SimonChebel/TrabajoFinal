@@ -17,6 +17,7 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
+                Session["accion"] = Request.QueryString["accion"];
                 if (!string.IsNullOrEmpty(Request.QueryString["idTran"]) && (!string.IsNullOrEmpty(Request.QueryString["idCli"])))
                 {
                     grvDetalleVenta.DataSource = Session["facturaVentaDevolucion"] != null ? ((Factura)Session["facturaVentaDevolucion"]).listaProductosIndividuales() : null;
@@ -66,6 +67,7 @@ namespace Easy_Stock
                 divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
                 hMensaje.InnerText = "Debe completar al menos un (1) filtro";
             }
+            return;
         }
 
         protected void grvVentas_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,13 +77,14 @@ namespace Easy_Stock
 
         protected void grvVentas_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            string accion = Request.QueryString["accion"].ToString();
             string[] arg = e.CommandArgument.ToString().Split(',');
             int idTransaccion = Convert.ToInt32(arg[0]);
             int idCliente = Convert.ToInt32(arg[1]);
             Factura oFactura = AdTransaccion.obtenerFacturas(idTransaccion);
             Session["facturaVentaDevolucion"] = oFactura;
             Session["idTransaccionDevolucion"] = idTransaccion;
-            Response.Redirect("devolucion.aspx?idTran=" + idTransaccion + "&idCli=" + idCliente);
+            Response.Redirect("devolucion.aspx?idTran=" + idTransaccion + "&idCli=" + idCliente+"&accion="+accion);
             //grvDetalleVenta.DataSource = oFactura != null ? oFactura.detallesFactura : null;
             //grvDetalleVenta.DataBind();
         }
@@ -114,11 +117,17 @@ namespace Easy_Stock
 
         protected void grvDetalleVenta_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            int auxCantidad = 0;
+            decimal total = 0;
+            string auxAccion = Session["accion"].ToString();
+
+            if (auxAccion.Equals("cambio")) auxCantidad = Session["cantidad"] != null ? Convert.ToInt32(Session["cantidad"]) : 0;
+
             if (divMensaje.Visible) divMensaje.Visible = false;
             string[] argumentos = e.CommandArgument.ToString().Split(',');
             string codigoUnico = argumentos[0];
             int fila = Convert.ToInt32(argumentos[1]);
-            decimal total = Session["total"] != null && !rbDevolucionTotal.Checked ? ((decimal)Session["total"]) : 0;
+            if(auxAccion.Equals("devolucion")) total = Session["total"] != null && !rbDevolucionTotal.Checked ? ((decimal)Session["total"]) : 0;
             List<Producto> lstProductosDevolver = Session["productosDevolver"] == null ? new List<Producto>() : (List<Producto>)Session["productosDevolver"];
             foreach (var item in ((Factura)Session["facturaVentaDevolucion"]).detallesFactura)
             {
@@ -128,7 +137,11 @@ namespace Easy_Stock
                     {
                         lstProductosDevolver.Remove(item.producto);
                         total -= item.precio;
-                        hTotal.InnerText = "Total a devolver: $" + total;
+                        auxCantidad--;
+
+                        if (auxAccion.Equals("devolucion"))  hTotal.InnerText = "Total a devolver: $" + total;
+                        else hCantidad.InnerText = "Cantidad de productos a devolver: " +auxCantidad;
+
                         Session["productosDevolver"] = lstProductosDevolver;
                         (grvDetalleVenta.Rows[fila].Cells[5].FindControl("chkSeleccion") as CheckBox).Checked = false;
                         (grvDetalleVenta.Rows[fila].Cells[5].FindControl("chkSeleccion") as CheckBox).Visible = false;
@@ -139,8 +152,10 @@ namespace Easy_Stock
                     }
                     else {
                         lstProductosDevolver.Add(item.producto);
-                        total += item.precio;
-                        hTotal.InnerText = "Total a devolver: $" + total;
+                        if (auxAccion.Equals("devolucion")) total += item.precio;
+                        else auxCantidad++;
+                        if (auxAccion.Equals("devolucion")) hTotal.InnerText = "Total a devolver: $" + total;
+                        else hCantidad.InnerText = "Cantidad de productos a devolver: " + auxCantidad;
                         Session["productosDevolver"] = lstProductosDevolver;
 
                         (grvDetalleVenta.Rows[fila].Cells[5].FindControl("chkSeleccion") as CheckBox).Checked = true;
@@ -153,6 +168,7 @@ namespace Easy_Stock
                 }
             }
             Session["total"] = total;
+            Session["cantidad"] = auxCantidad;
 
         }
 
@@ -160,6 +176,7 @@ namespace Easy_Stock
         {
             divMensaje.Visible = false;
             Session["total"] = null;
+            Session["cantidad"] = null;
             Session["productosDevolver"] = null;
             foreach (GridViewRow fila in grvDetalleVenta.Rows)
             {
@@ -174,7 +191,8 @@ namespace Easy_Stock
                 }
 
             }
-            hTotal.InnerText = "Total a devolver: $0,0";
+            if (Session["accion"].Equals("devolucion")) hTotal.InnerText = "Total a devolver: $0,0";
+            else hCantidad.InnerText = "Cantidad de productos a devolver: 0";
         }
 
         protected void rbDevolucionTotal_CheckedChanged(object sender, EventArgs e)
@@ -182,9 +200,11 @@ namespace Easy_Stock
             divMensaje.Visible = false;
             Session["totalDevolver"] = null;
             decimal total = 0;
+            int cantidad = Session["cantidad"]!= null ? Convert.ToInt32(Session["cantidad"]):0;
             foreach (DetalleFactura df in ((Factura)Session["facturaVentaDevolucion"]).detallesFactura)
             {
                 total += df.producto.calcularSubTotal();
+                cantidad++;
             }
 
             foreach (GridViewRow fila in grvDetalleVenta.Rows)
@@ -197,8 +217,16 @@ namespace Easy_Stock
                 (grvDetalleVenta.Rows[fila.RowIndex].Cells[5].FindControl("btnSeleccionar") as LinkButton).Text = "Seleccionado";
                 (grvDetalleVenta.Rows[fila.RowIndex].Cells[5].FindControl("btnSeleccionar") as LinkButton).Enabled = false;
             }
-            hTotal.InnerText = "Total a devolver: $" + total;
-            Session["total"] = total;
+            if (Session["accion"].Equals("devolucion"))
+            {
+                hTotal.InnerText = "Total a devolver: $" + total;
+                Session["total"] = total;
+            }
+            else {
+                hCantidad.InnerText = "Cantidad de productos a devolver: " + cantidad;
+                Session["cantidad"] = cantidad;
+            }
+           
 
         }
 
@@ -297,6 +325,8 @@ namespace Easy_Stock
             Session["idTransaccionDevolucion"] = null;
             Session["productosDevolver"] = null;
             Session["total"] = null;
+            Session["cantidad"] = null;
+            string dev = Session["accion"].Equals("devolucion") ? "devolucion" : "cambio";
             Response.Redirect("home.aspx?devolucion=ok");
         }
 

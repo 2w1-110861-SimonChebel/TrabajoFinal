@@ -231,7 +231,7 @@
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
                                 <b>
-                                    <asp:Button runat="server" ID="btnEditarProducto" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idProducto") %>' CommandName="editar" OnClick="btnEditarProducto_Click" /></b>
+                                    <asp:Button runat="server" ID="btnEditarProducto" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idProducto")+","+ ((GridViewRow)Container).RowIndex.ToString()%>' CommandName="editar" OnClick="btnEditarProducto_Click" /></b>
                                 <b>
                                     <asp:Button runat="server" ID="btnEliminarProducto" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idProducto") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste producto? Esta acción no se puede deshacer')) return false;" OnClick="btnEliminarProducto_Click"></asp:Button></b>
                             </div>

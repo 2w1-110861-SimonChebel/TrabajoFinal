@@ -96,14 +96,15 @@ namespace Easy_Stock.AccesoDatos
 
                         for (int e = 0; e < item.cantidad; e++)
                         {
+                            int aux = item.producto.cantidad - 1 - e;
                             SqlParameter[] paramDetalle =  {
                             new SqlParameter("@nroFact", idFactura),
-                            new SqlParameter("@cantidadProducto", item.cantidad),
+                            new SqlParameter("@cantidadProducto", item.cantidad/item.cantidad),
                             new SqlParameter("@idProducto", item.producto.idProducto),
                             new SqlParameter("@iva", 0),
                             new SqlParameter("@subTotal", item.producto.calcularSubTotal()),
                             new SqlParameter("@precio", item.precio),
-                            new SqlParameter("@cantActualizada", (--item.producto.cantidadRestante)),
+                            new SqlParameter("@cantActualizada", aux),
                             new SqlParameter("@codigoProducto", (item.producto.codigo)),
                             new SqlParameter("@idEstado",(int)Tipo.estadoProducto.noDisponible)
 
@@ -291,12 +292,12 @@ namespace Easy_Stock.AccesoDatos
                         else sbSql.Append(" t.fecha = @fecha");
                     }
                     param = new SqlParameter[] {
-                    new SqlParameter("@nombreCliente",oCliente!= null ? oCliente.nombre:string.Empty),
-                    new SqlParameter("@apellidoCliente",oCliente!= null ?oCliente.apellido:string.Empty),
-                    new SqlParameter("@razonSocial",oCliente!= null? oCliente.razonSocial:string.Empty),
-                    new SqlParameter("@idUsuario",oUsuario!=null?oUsuario.idUsuario:0),
-                    new SqlParameter("@fecha",fecha),
-                    new SqlParameter("@idTran",idVenta)
+                    oCliente != null ?new SqlParameter("@nombreCliente",oCliente!= null ? oCliente.nombre:string.Empty):null,
+                    oCliente != null ? new SqlParameter("@apellidoCliente",oCliente!= null ?oCliente.apellido:string.Empty):null,
+                    oCliente != null ? new SqlParameter("@razonSocial",oCliente!= null? oCliente.razonSocial:string.Empty):null,
+                    oUsuario!=null? new SqlParameter("@idUsuario",oUsuario!=null?oUsuario.idUsuario:0):null,
+                    fecha!= default ? new SqlParameter("@fecha",fecha):null,
+                    idVenta > 0? new SqlParameter("@idTran",idVenta):null
                     };
                 }
 

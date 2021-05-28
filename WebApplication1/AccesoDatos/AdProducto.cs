@@ -86,7 +86,7 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@stockMinimo", oProducto.stockMinimo),
                     new SqlParameter("@stockMaximo", oProducto.stockMaximo),
                     new SqlParameter ("@idDeposito", oProducto.deposito.idDeposito ),
-                    new SqlParameter("@cantidad", oProducto.cantidadRestante),
+                    //new SqlParameter("@cantidad", oProducto.cantidadRestante),
                     new SqlParameter("@fechaVenc", oProducto.fechaVenc),
                     new SqlParameter("@fechaElab", oProducto.fechaElab),
                     new SqlParameter("@fechaIngreso", oProducto.fechaIngreso)
@@ -108,7 +108,7 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@idProveedor", oProducto.proveedor.idProveedor),
                     new SqlParameter("@stockMinimo", oProducto.stockMinimo),
                     new SqlParameter("@stockMaximo", oProducto.stockMaximo),
-                    new SqlParameter("@cantidad", oProducto.cantidadRestante),
+                    //new SqlParameter("@cantidad", oProducto.cantidadRestante),
                     new SqlParameter("@fechaVenc", oProducto.fechaVenc),
                     new SqlParameter("@fechaElab", oProducto.fechaElab),
                     new SqlParameter("@fechaIngreso", oProducto.fechaIngreso)

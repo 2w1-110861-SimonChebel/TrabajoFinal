@@ -131,13 +131,13 @@
         <div class="row" style="padding-left: 4%">
             <div class="form-group col-12">
                 <asp:RadioButton ID="rbDevolucionParcial" runat="server" GroupName="rdbDev" AutoPostBack="true" OnCheckedChanged="rbDevolucionParcial_CheckedChanged" />
-                <label for="rbDevolucionParcial" class="control-label">Devolución parcial</label>
+                <label for="rbDevolucionParcial" class="control-label"><%=Request.QueryString["accion"].Equals("devolucion") ? "Devolución parcial" : "Cambio parcial"%></label>
             </div>
         </div>
         <div class="row" style="padding-left: 4%">
             <div class="form-group col-12">
                 <asp:RadioButton ID="rbDevolucionTotal" runat="server" GroupName="rdbDev" AutoPostBack="true" OnCheckedChanged="rbDevolucionTotal_CheckedChanged" />
-                <label for="rbDevolucionTotal" class="control-label">Devolución completa</label>
+                <label for="rbDevolucionTotal" class="control-label"><%=Request.QueryString["accion"].Equals("devolucion") ? "Devolución total" : "Cambio completo"%></label>
             </div>
         </div>
     </div>
@@ -190,7 +190,7 @@
                     </ItemTemplate>
                 </asp:TemplateField>
 
-                 <asp:TemplateField HeaderText="idProd" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="false">
+                <asp:TemplateField HeaderText="idProd" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="false">
                     <ItemTemplate>
                         <div id="dividProd" style="padding-top: 10px;">
                             <b><%#Eval("producto.idProducto") %></b>
@@ -203,10 +203,10 @@
                 <asp:TemplateField HeaderText="Seleccionar  " HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divSeleccion" class="form-group" style="padding-top: 10px;">
-                            <asp:CheckBox ID="chkSeleccion" runat="server" AutoPostBack="true" Enabled ="false" OnCheckedChanged="chkSeleccion_CheckedChanged" Visible="false" />
+                            <asp:CheckBox ID="chkSeleccion" runat="server" AutoPostBack="true" Enabled="false" OnCheckedChanged="chkSeleccion_CheckedChanged" Visible="false" />
                         </div>
                         <b>
-                        <asp:LinkButton runat="server" ID="btnSeleccionar" type="button" class="btn btn-success" Enabled="true" Text="Agregar" CommandArgument='<%#Eval("producto.codigoUnico")+","+ ((GridViewRow)Container).RowIndex.ToString()%>' CommandName="seleccionar" OnClick="btnSeleccionar_Click"></asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="btnSeleccionar" type="button" class="btn btn-success" Enabled="true" Text="Agregar" CommandArgument='<%#Eval("producto.codigoUnico")+","+ ((GridViewRow)Container).RowIndex.ToString()%>' CommandName="seleccionar" OnClick="btnSeleccionar_Click"></asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>
 
@@ -214,17 +214,37 @@
         </asp:GridView>
     </div>
 
+
+
+    <%
+        if (Request.QueryString["accion"].Equals("devolucion"))
+        {
+    %>
     <div class="row col-12">
-        <div class="col-3" style="display: flex; justify-items: right; padding: 2%">
+        <div class="col-4" style="display: flex; justify-items: right; padding: 2%">
             <h5 id="hTotal" runat="server">Total a devolver: $0.0</h5>
         </div>
-        <%if (rbDevolucionParcial.Checked)
-            { %>
-       <%-- <div class="col-3" style="padding-top:1%">
-            <asp:Button ID="btnSeleccionarProductos" runat="server" Text="Confirmar seleccionados" class="btn btn-dark" OnClick="btnSeleccionarProductos_Click"/>
-        </div>--%>
-        <%} %>
+
     </div>
+    <%
+        }
+        else
+        {%>
+
+    <div class="row col-12">
+        <div class="col-4" style="display: flex; justify-items: right; padding: 2%">
+            <h5 id="hCantidad" runat="server">Cantidad de productos a devolver: 0</h5>
+        </div>
+
+    </div>
+    <%
+        } %>
+
+    <%
+        if (Request.QueryString["accion"].Equals("devolucion"))
+        {
+    %>
+
 
     <div class="row" style="padding-left: 5%">
         <h6>Forma de devolución</h6>
@@ -252,5 +272,11 @@
         </div>
 
     </div>
+
+
+    <%} %>
+
+
+
     <%} %>
 </asp:Content>
