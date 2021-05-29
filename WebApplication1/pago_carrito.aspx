@@ -133,7 +133,7 @@
 
             <div class="form-group">
                 <label for="cboFormaPago" class="control-label">Forma de pago</label>
-                <asp:DropDownList class="form-control" ID="cboFormaPago" name="cboFormaPago" runat="server">
+                <asp:DropDownList class="form-control" ID="cboFormaPago" name="cboFormaPago" runat="server" AutoPostBack="true" OnSelectedIndexChanged="cboFormaPago_SelectedIndexChanged">
                     <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
                 </asp:DropDownList>
             </div>
@@ -145,7 +145,9 @@
                 </asp:DropDownList>
             </div>
 
-
+            <h6 id="hTotalSinRecargo" runat="server">Total sin recargo: $0,0</h6>
+            <h6 id="hRecargo" runat="server">Recargo: $0,0</h6>
+            <h6 id="hIva" runat="server"> IVA: 21%</h6>
             <h4 id="hTotal" runat="server"></h4>
             <div class="row" style="padding: 5px">
                 <div style="padding: 5px">

@@ -140,6 +140,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
+                     <asp:TemplateField HeaderText="Dinero a favor" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <ItemTemplate>
+                            <div id="divMontoAfavor" style="padding-top: 10px;">
+                                <b><%# string.Format("{0}{1}","$", Eval("deuda.montoAfavor"))%></b>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">

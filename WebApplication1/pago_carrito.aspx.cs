@@ -22,6 +22,9 @@ namespace Easy_Stock
                 this.oClienteCarrito = (Cliente)Session["clienteCarrito"];
                 Carrito aux = (Carrito)Session["carrito"];
                 grvProductos.DataSource = ((Carrito)Session["carrito"]).productos;
+                decimal totalSinRecargo = aux.calcularTotalProductos();
+                totalSinRecargo += totalSinRecargo * Convert.ToDecimal(0.21); //IVA
+                decimal totalConRecargo = Session["totalConRecargo"] != null ? (decimal)Session["totalConRecargo"] : totalSinRecargo;
                 grvProductos.DataBind();
                 this.oUsuario = (Usuario)Session["usuario"];
                 txtCliente.Text = string.Format("{0} {1}", oClienteCarrito.tipoCliente.idTipoCliente == 1 ? this.oClienteCarrito.nombre : oClienteCarrito.razonSocial, oClienteCarrito.tipoCliente.idTipoCliente == 1 ? this.oClienteCarrito.apellido : string.Empty);
@@ -30,7 +33,10 @@ namespace Easy_Stock
                 txtBarrio.Text = oClienteCarrito.barrio;
                 txtLocalidad.Text = oClienteCarrito.localidad.localidad;
                 txtProvincia.Text = oClienteCarrito.provincia.provincia;
-                hTotal.InnerText = string.Format("{0} {1}", "Total: $", aux.calcularTotalProductos());
+                Session["totalSinRecargo"] = totalSinRecargo;
+                Session["totalConRecargo"] =
+                hTotalSinRecargo.InnerText = string.Format("{0} {1}", "Total sin recargo: $", totalSinRecargo);
+                hTotal.InnerText = string.Format("{0} {1}", "Total: $", totalConRecargo);
                 cargarCombos();
             }
 
@@ -101,7 +107,7 @@ namespace Easy_Stock
                     descripcion = string.Empty,
                     proveedor = null,
                     descuento = 0,
-                    total = aux.calcularTotalProductos(),
+                    total = (Decimal)Session["totalConRecargo"]  /*aux.calcularTotalProductos()*/,
                     formaPago = new FormaPago
                     {
                         idFormaPago = Convert.ToInt32(valuesFormaPago[0]),
@@ -126,7 +132,7 @@ namespace Easy_Stock
                             idTipoFactura = Convert.ToInt32(cboTipoFactura.SelectedValue),
                             tipoFactura = cboTipoFactura.SelectedItem.Text
                         },
-                        iva = 0
+                        iva = 21
                     },
 
 
@@ -138,6 +144,8 @@ namespace Easy_Stock
                     Session["tipoTranActual"] = null;
                     Session["productos"] = null;
                     Session["clientes"] = null;
+                    Session["totalSinRecargo"] = null;
+                    Session["totalConRecargo"] = null;
                     Response.Redirect("home.aspx?transaction=ok");
                 }
                 else
@@ -167,6 +175,21 @@ namespace Easy_Stock
         protected void grvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
+        }
+
+        protected void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            decimal total = ((Carrito)Session["carrito"]).calcularTotalProductos();
+            int porcentajeRecargo = Convert.ToInt32(cboFormaPago.SelectedValue.Split(',')[1]);
+            total += total * Convert.ToDecimal(0.21);
+            decimal recargo = total * porcentajeRecargo / 100;
+            decimal totalConRecargo = (total += recargo);
+            hRecargo.InnerText = string.Format("{0} {1}", "Recargo: $", recargo);
+            hTotalSinRecargo.InnerText = string.Format("{0} {1}", "Total sin recargo: $", total);
+            hTotal.InnerText = string.Format("{0} {1}", "Total: $", totalConRecargo);
+
+            Session["totalSinRecargo"] = total;
+            Session["totalConRecargo"] = totalConRecargo;
         }
     }
 }

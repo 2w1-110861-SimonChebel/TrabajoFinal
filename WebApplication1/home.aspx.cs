@@ -2,10 +2,8 @@
 using Easy_Stock.Entidades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+
 
 namespace Easy_Stock
 {
@@ -29,6 +27,13 @@ namespace Easy_Stock
                     divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                     hMensaje.InnerText = "Devolución realizada correctamente";
                 }
+                if ((Request.QueryString["cambio"] != null && Request.QueryString["cambio"].Equals("ok")))
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "Cambio realizado correctamente";
+                }
+
                 lstTransacciones = AdTransaccion.obtenerTransacciones(true);
                 lstProductos = AdProducto.obtenerProductos("", true);
             }

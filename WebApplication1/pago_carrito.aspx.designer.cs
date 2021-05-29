@@ -177,6 +177,33 @@ namespace Easy_Stock
         protected global::System.Web.UI.WebControls.DropDownList cboTipoFactura;
 
         /// <summary>
+        /// hTotalSinRecargo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hTotalSinRecargo;
+
+        /// <summary>
+        /// hRecargo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hRecargo;
+
+        /// <summary>
+        /// hIva control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hIva;
+
+        /// <summary>
         /// hTotal control.
         /// </summary>
         /// <remarks>

@@ -199,6 +199,7 @@ namespace Easy_Stock
         {
             divMensaje.Visible = false;
             Session["totalDevolver"] = null;
+            Session["cantidad"] = null;
             decimal total = 0;
             int cantidad = Session["cantidad"]!= null ? Convert.ToInt32(Session["cantidad"]):0;
             foreach (DetalleFactura df in ((Factura)Session["facturaVentaDevolucion"]).detallesFactura)
@@ -267,59 +268,98 @@ namespace Easy_Stock
                 hMensaje.InnerText = "Debe seleccionar uno o más productos a devolver.";
             }
             else {
-
-                int idTransaccion = (int)Session["idTransaccionDevolucion"];
-                decimal montoDevolver = rbCreditoAfavor.Checked ? (decimal)Session["total"] : 0;
-                int tipoDevolucion = rbCreditoAfavor.Checked ? (int)Tipo.tipoDevolucionDineroCliente.creditoAfavorDeCliente : rbDevolverDinero.Checked ? (int)Tipo.tipoDevolucionDineroCliente.montoDevueltoAcliente : 0;
-                int tipoTransaccion = (int)Tipo.tipoTransaccion.devolucionDeCliente;
-                DateTime fecha = DateTime.Now;
-                int idCliente = ((Factura)Session["facturaVentaDevolucion"]).cliente.idCliente; /*Request.QueryString["idClie"] != null ? Convert.ToInt32(Request.QueryString["idClie"]) : (int)Session["idClienteDevolucion"];*/
-                if (rbDevolucionTotal.Checked)
+                if (Validar.ValidarCamposVacios(new WebControl[] { txtObservaciones }))
                 {
-                    Factura oFactura = (Factura)Session["facturaVentaDevolucion"];
-                    if (AdTransaccion.DevolverProductos(oFactura, 0, montoDevolver, idTransaccion, fecha, tipoDevolucion, tipoTransaccion, ((Usuario)Session["usuario"]).idUsuario))
+                    string accion = Session["accion"].ToString();
+                    int idTransaccion = (int)Session["idTransaccionDevolucion"];
+                    decimal montoDevolver = rbCreditoAfavor.Checked ? (decimal)Session["total"] : 0;
+                    int tipoDevolucion = rbCreditoAfavor.Checked ? (int)Tipo.tipoDevolucionDineroCliente.creditoAfavorDeCliente : rbDevolverDinero.Checked ? (int)Tipo.tipoDevolucionDineroCliente.montoDevueltoAcliente : 0;
+                    int tipoTransaccion = accion.Equals("devolucion")? (int)Tipo.tipoTransaccion.devolucionDeCliente : (int)Tipo.tipoTransaccion.cambioProductoDeCliente;
+                    DateTime fecha = DateTime.Now;
+                    string observaciones = txtObservaciones.Text;
+                    int idCliente = ((Factura)Session["facturaVentaDevolucion"]).cliente.idCliente; /*Request.QueryString["idClie"] != null ? Convert.ToInt32(Request.QueryString["idClie"]) : (int)Session["idClienteDevolucion"];*/
+                    if (rbDevolucionTotal.Checked)
                     {
-                        LimpiarForm();
-                    }
-                    else
-                    {
-                        MostrarMensajeError();
-                    }
-                }
-                if (rbDevolucionParcial.Checked)
-                {
-                    List<Producto> lstProd = (List<Producto>)Session["productosDevolver"];
-                    List<DetalleFactura> lstDetalleAux = new List<DetalleFactura>();
-
-                    foreach (var producto in lstProd)
-                    {
-                        foreach (var item in ((Factura)Session["facturaVentaDevolucion"]).detallesFactura)
+                        Factura oFactura = (Factura)Session["facturaVentaDevolucion"];
+                        if (accion.Equals("devolucion"))
                         {
-                            if (producto.codigoUnico == item.producto.codigoUnico)
+                            if (AdTransaccion.DevolverProductos(oFactura, idCliente, montoDevolver, idTransaccion, fecha, tipoDevolucion, tipoTransaccion, ((Usuario)Session["usuario"]).idUsuario, observaciones))
                             {
-                                DetalleFactura aux = new DetalleFactura();
-                                aux = item;
-                                aux.producto = producto;
-                                lstDetalleAux.Add(aux);
+                                LimpiarForm(accion);
                             }
-
+                            else
+                            {
+                                MostrarMensajeError();
+                            }
+                        }
+                        if (accion.Equals("cambio")) 
+                        {
+                            if (AdTransaccion.CambiarProductos(oFactura, idCliente, idTransaccion, fecha, tipoTransaccion, ((Usuario)Session["usuario"]).idUsuario, observaciones))
+                            {
+                                LimpiarForm(accion);
+                            }
+                            else
+                            {
+                                MostrarMensajeError();
+                            }
                         }
                     }
-                   
-                    if (AdTransaccion.DevolverProductos(new Factura { detallesFactura = lstDetalleAux }, idCliente, montoDevolver, idTransaccion, fecha, tipoDevolucion, tipoTransaccion, ((Usuario)Session["usuario"]).idUsuario))
+                    if (rbDevolucionParcial.Checked)
                     {
-                        LimpiarForm();
-                    }
-                    else {
-                        MostrarMensajeError();
-                    }
+                        List<Producto> lstProd = (List<Producto>)Session["productosDevolver"];
+                        List<DetalleFactura> lstDetalleAux = new List<DetalleFactura>();
 
+                        foreach (var producto in lstProd)
+                        {
+                            foreach (var item in ((Factura)Session["facturaVentaDevolucion"]).detallesFactura)
+                            {
+                                if (producto.codigoUnico == item.producto.codigoUnico)
+                                {
+                                    DetalleFactura aux = new DetalleFactura();
+                                    aux = item;
+                                    aux.producto = producto;
+                                    lstDetalleAux.Add(aux);
+                                }
+
+                            }
+                        }
+
+                        if (accion.Equals("devolucion")) 
+                        {
+                            if (AdTransaccion.DevolverProductos(new Factura { detallesFactura = lstDetalleAux }, idCliente, montoDevolver, idTransaccion, fecha, tipoDevolucion, tipoTransaccion, ((Usuario)Session["usuario"]).idUsuario, observaciones))
+                            {
+                                LimpiarForm(accion);
+                            }
+                            else
+                            {
+                                MostrarMensajeError();
+                            }
+                        }
+                        if (accion.Equals("cambio"))
+                        {
+                            if (AdTransaccion.CambiarProductos(new Factura { detallesFactura = lstDetalleAux }, idCliente, idTransaccion, fecha, tipoTransaccion, ((Usuario)Session["usuario"]).idUsuario, observaciones))
+                            {
+                                LimpiarForm(accion);
+                            }
+                            else
+                            {
+                                MostrarMensajeError();
+                            }
+                        }
+
+                     
+
+                    }
                 }
+                else {
+                    MostrarMensajeCmapos();
+                }
+               
             }
 
         }
 
-        private void LimpiarForm()
+        private void LimpiarForm(string accion)
         {
             Session["facturaVentaDevolucion"] = null;
             Session["idTransaccionDevolucion"] = null;
@@ -327,7 +367,8 @@ namespace Easy_Stock
             Session["total"] = null;
             Session["cantidad"] = null;
             string dev = Session["accion"].Equals("devolucion") ? "devolucion" : "cambio";
-            Response.Redirect("home.aspx?devolucion=ok");
+            if (accion.Equals("devolucion")) Response.Redirect("home.aspx?devolucion=ok");
+            else { Response.Redirect("home.aspx?cambio=ok"); }
         }
 
         private void MostrarMensajeError()
@@ -335,6 +376,12 @@ namespace Easy_Stock
             divMensaje.Visible = true;
             divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
             hMensaje.InnerText = "Hubo un error al realizar la acción. Intente nuevamente";
+        }
+        private void MostrarMensajeCmapos()
+        {
+            divMensaje.Visible = true;
+            divMensaje.Attributes["class"] = Bootstrap.alertWarningDismissable;
+            hMensaje.InnerText = "Por favor ingrese observaciones.";
         }
     }
 }

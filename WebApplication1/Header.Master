@@ -24,7 +24,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <a class="navbar-brand" href="home.aspx">EasyStock</a>
+                    <img src="~/Assets/ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <a class="navbar-brand" src=~/images/insignia.jpg href="home.aspx">EasyStock</a>
                     <%-- <a class="navbar-brand" href="#">
                         <img src="//Assets\ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                      EasyStock

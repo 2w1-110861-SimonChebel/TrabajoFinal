@@ -232,11 +232,12 @@
         {%>
 
     <div class="row col-12">
-        <div class="col-4" style="display: flex; justify-items: right; padding: 2%">
+        <div class="col-6" style="display: flex; justify-items: right; padding: 2%">
             <h5 id="hCantidad" runat="server">Cantidad de productos a devolver: 0</h5>
         </div>
 
     </div>
+
     <%
         } %>
 
@@ -262,21 +263,21 @@
             <label for="rbDevolverDinero" class="control-label">2) Devolución del valor del pago</label>
         </div>
     </div>
-    <div class="row col-xs-12" style="padding-left: 4%">
+
+
+
+    <%} %>
+
+        <div class="row col-xs-12" style="padding-left: 4%">
         <div class="form-group col-xs-12 col-10">
             <%--<label for="txtObservaciones" class="control-label">Observaciones (*)</label>--%>
-            <asp:TextBox type="text" TextMode="MultiLine" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" PlaceHolder="Observaciones(*)" MaxLength="150"> </asp:TextBox>
+            <asp:TextBox type="text" TextMode="MultiLine" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" PlaceHolder="Observaciones(*)" MaxLength="200"> </asp:TextBox>
         </div>
         <div class="form-col-xs-12 col-2">
             <asp:Button ID="btnFinalizar" runat="server" Text="Finalizar" class="btn btn-success" OnClick="btnFinalizar_Click" />
         </div>
 
     </div>
-
-
-    <%} %>
-
-
 
     <%} %>
 </asp:Content>

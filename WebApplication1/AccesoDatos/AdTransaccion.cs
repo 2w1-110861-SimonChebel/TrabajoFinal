@@ -16,14 +16,16 @@ namespace Easy_Stock.AccesoDatos
 
 
 
-        public static bool DevolverProductos(Factura oFactura, int idCliente = 0,decimal montoDevuelto = 0,int idTransaccion=0, DateTime fecha = default, int idTipoDevolcion = 0,int idTipoTransaccion= 0, int idUsuario=0)
+        public static bool DevolverProductos(Factura oFactura, int idCliente = 0,decimal montoDevuelto = 0,int idTransaccion=0, DateTime fecha = default, int idTipoDevolcion = 0,int idTipoTransaccion= 0, int idUsuario=0, string observaciones="")
         {
             sbSql = null;
             try
             {
+                int cont = 0;
                 sbSql = new StringBuilder("SP_DevolverProducto");
                 foreach (var item in oFactura.detallesFactura)
                 {
+                    
                     SqlParameter[] parametros = {
                     new SqlParameter("@idProducto", item.producto.idProducto),
                     new SqlParameter("@idInventario", item.producto.codigoUnico.Split('-')[0]),
@@ -37,10 +39,11 @@ namespace Easy_Stock.AccesoDatos
                     new SqlParameter("@fecha", fecha),
                     new SqlParameter("@tipoDevolucion", idTipoDevolcion),
                     new SqlParameter("@idTipoTransaccion", idTipoTransaccion),
-                    new SqlParameter("@idUsuario", idUsuario)
-
+                    new SqlParameter("@idUsuario", idUsuario),
+                    new SqlParameter("@descripcion", observaciones),
+                    new SqlParameter("@esPrimeraVez", cont==0? 1:0)
                     };
-
+                    cont++;
                     try
                     {
                         SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros);
@@ -52,6 +55,54 @@ namespace Easy_Stock.AccesoDatos
                     }
                 }
               
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+
+            return true;
+        }
+
+
+        public static bool CambiarProductos(Factura oFactura, int idCliente = 0, int idTransaccion = 0, DateTime fecha = default, int idTipoTransaccion = 0, int idUsuario = 0, string observaciones = "")
+        {
+            sbSql = null;
+            try
+            {
+                int cont = 0;
+                sbSql = new StringBuilder("SP_CambiarProducto");
+                foreach (var item in oFactura.detallesFactura)
+                {
+
+                    SqlParameter[] parametros = {
+                    new SqlParameter("@idProducto", item.producto.idProducto),
+                    new SqlParameter("@idInventario", item.producto.codigoUnico.Split('-')[0]),
+                    new SqlParameter("@codigo", item.producto.codigo),
+                    new SqlParameter("@cantidadProducto",item.producto.cantidad),
+                   // oVentaCliente.proveedor!= null && oVentaCliente.proveedor.idProveedor > 0 ?new SqlParameter("@idProveedor", oVentaCliente.proveedor.idProveedor) : null,
+                    new SqlParameter("@idEstado", (int)Tipo.estadoProducto.cambio),
+                    new SqlParameter("@idCliente", idCliente),
+                    new SqlParameter("@idTransaccion", idTransaccion),
+                    new SqlParameter("@fecha", fecha),
+                    new SqlParameter("@idTipoTransaccion", idTipoTransaccion),
+                    new SqlParameter("@idUsuario", idUsuario),
+                    new SqlParameter("@descripcion", observaciones),
+                    new SqlParameter("@esPrimeraVez", cont==0? 1:0)
+                    };
+                    cont++;
+                    try
+                    {
+                        SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros);
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
+                        throw ex;
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -96,7 +147,7 @@ namespace Easy_Stock.AccesoDatos
 
                         for (int e = 0; e < item.cantidad; e++)
                         {
-                            int aux = item.producto.cantidad - 1 - e;
+                            int aux = item.producto.cantidadRestante - 1 - e;
                             SqlParameter[] paramDetalle =  {
                             new SqlParameter("@nroFact", idFactura),
                             new SqlParameter("@cantidadProducto", item.cantidad/item.cantidad),

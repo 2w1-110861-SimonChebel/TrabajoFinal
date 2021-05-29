@@ -103,7 +103,7 @@ namespace Easy_Stock.AccesoDatos
 
                 if (tipoCli == 1) //cliente tipo persona
                 {
-                    sbSql = new StringBuilder("SELECT c.idCliente,c.telefono,c.email,c.direccion,c.codigoPostal,c.fechaNacimiento,c.nombre,c.apellido,c.dni,c.barrio,tc.idTipoCliente, tc.tipoCliente,l.idLocalidad,l.localidad, p.idProvincia,p.provincia,dc.idDeuda,dc.monto, s.idSexo,s.sexo,c.habilitado ");
+                    sbSql = new StringBuilder("SELECT c.idCliente,c.telefono,c.email,c.direccion,c.codigoPostal,c.fechaNacimiento,c.nombre,c.apellido,c.dni,c.barrio,tc.idTipoCliente, tc.tipoCliente,l.idLocalidad,l.localidad, p.idProvincia,p.provincia,dc.idDeuda,dc.monto, s.idSexo,s.sexo,c.habilitado, dc.montoAfavor ");
 
                     sbSql.Append(" FROM clientes c JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente ");
                     sbSql.Append(" JOIN Localidades l  ON l.idLocalidad = c.idLocalidad");
@@ -168,7 +168,8 @@ namespace Easy_Stock.AccesoDatos
                             oCliente.deuda = new DeudaCliente
                             {
                                 idDeudaCliente = dr.IsDBNull(16) ? default(int) : dr.GetInt32(16),
-                                monto = dr.IsDBNull(17) ? default(decimal) : dr.GetDecimal(17)
+                                monto = dr.IsDBNull(17) ? default(decimal) : dr.GetDecimal(17),
+                                montoAfavor= dr.IsDBNull(21) ? default(decimal) : dr.GetDecimal(21)
                             };
                             oCliente.sexo = new Sexo
                             {
@@ -202,6 +203,7 @@ namespace Easy_Stock.AccesoDatos
                             {
                                 idDeudaCliente = dr.IsDBNull(13) ? default(int) : dr.GetInt32(13),
                                 monto = dr.IsDBNull(14) ? default(decimal) : dr.GetDecimal(14),
+                                montoAfavor = dr.IsDBNull(19) ? default(decimal) : dr.GetDecimal(19)
                             };
                             oCliente.tipoEmpresa = new TipoEmpresa
                             {
@@ -230,7 +232,7 @@ namespace Easy_Stock.AccesoDatos
             try
             {
 
-                sbSql = new StringBuilder("SELECT c.idCliente,c.telefono,c.email,c.direccion,c.codigoPostal,c.fechaNacimiento,c.nombre,c.apellido,c.dni,c.razonSocial,c.barrio,tc.idTipoCliente, tc.tipoCliente,l.idLocalidad,l.localidad, p.idProvincia,p.provincia,dc.idDeuda,dc.monto, s.idSexo,s.sexo,te.idTipoEmpresa,te.tipoEmpresa,c.cuit,c.habilitado ");
+                sbSql = new StringBuilder("SELECT c.idCliente,c.telefono,c.email,c.direccion,c.codigoPostal,c.fechaNacimiento,c.nombre,c.apellido,c.dni,c.razonSocial,c.barrio,tc.idTipoCliente, tc.tipoCliente,l.idLocalidad,l.localidad, p.idProvincia,p.provincia,dc.idDeuda,dc.monto, s.idSexo,s.sexo,te.idTipoEmpresa,te.tipoEmpresa,c.cuit,c.habilitado, dc.montoAfavor ");
 
                 sbSql.Append(" FROM clientes c JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente ");
                 sbSql.Append(" JOIN Localidades l  ON l.idLocalidad = c.idLocalidad");
@@ -295,6 +297,7 @@ namespace Easy_Stock.AccesoDatos
                                 {
                                     idDeudaCliente = dr.IsDBNull(17) ? default(int) : dr.GetInt32(17),
                                     monto = dr.IsDBNull(18) ? default(decimal) : dr.GetDecimal(18),
+                                    montoAfavor = dr.IsDBNull(25) ? default(decimal) : dr.GetDecimal(25)
                                 },
                                 sexo = new Sexo
                                 {
