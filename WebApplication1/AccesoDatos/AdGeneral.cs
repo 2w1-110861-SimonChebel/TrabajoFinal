@@ -15,19 +15,40 @@ namespace Easy_Stock.AccesoDatos
         private static readonly string cadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings["conexion"].ConnectionString.ToString();
 
 
-        //public static List<Usuario> obtenerUsuarios()
-        //{
-        //    sbSql = null;
-        //    try
-        //    {
-        //        sbSql = new StringBuilder("SELECT u.idUsuario,u.nombre,u.apellido, tu.idTipoUsuario,tu.tipoUsuario ");
-        //    }
-        //    catch (Exception ex)
-        //    {
 
-        //        throw ex;
-        //    }
-        //}
+
+        public static List<Usuario> obtenerUsuarios()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT idUsuario,nombre,apellido FROM Usuarios ORDER BY nombre, apellido");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    List<Usuario> lstUsuarios = null;
+                    if (dr.HasRows)
+                    {
+                        lstUsuarios = new List<Usuario>();
+                        while (dr.Read())
+                        {
+                            lstUsuarios.Add(new Usuario
+                            {
+                                idUsuario = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                nombre = dr.IsDBNull(1) ? "N/d" : dr.GetString(1),
+                                apellido = dr.IsDBNull(2) ? "N/d" : dr.GetString(2)
+                            });
+                        }
+                    }
+                    return lstUsuarios;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+        }
 
         public static List<Localidad> obtenerLocalidades()
         {

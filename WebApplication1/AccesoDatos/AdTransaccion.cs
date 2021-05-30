@@ -306,7 +306,150 @@ namespace Easy_Stock.AccesoDatos
             return lstTransacciones;
         }
 
-        public static List<VentaCliente> obtenerVentasCliente(int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fecha = "")
+        public static List<Transaccion> obtenerMovimientos(int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fechaInicio = "", string fechaFin ="", Proveedor oProveedor=null)
+        {
+            sbSql = null;
+            List<Transaccion> lstTransacciones = null;
+            SqlParameter[] param = { };
+            try
+            {
+                
+                sbSql = new StringBuilder("SELECT t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion, ");
+                sbSql.Append(" c.idCliente,c.nombre,c.apellido,c.dni,c.cuit,c.direccion,c.barrio,lo.idLocalidad,lo.localidad,p.idProvincia,p.provincia,pr.idProveedor, pr.nombre, c.razonSocial, tc.idTipoCliente,tc.tipoCliente, u.idUsuario,u.nombre,u.apellido  ");
+                sbSql.Append(" FROM Transacciones t ");
+                sbSql.Append(" JOIN Clientes c on T.idCliente = C.idCliente");
+                sbSql.Append(" JOIN Localidades lo ON c.idLocalidad = lo.idLocalidad");
+                sbSql.Append(" JOIN Provincias p ON c.idProvincia = p.idProvincia");
+                sbSql.Append(" JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente");
+                sbSql.Append(" JOIN Tipos_Transacciones tt ON t.idTipoTransaccion = tt.idTipoTransaccion");
+                sbSql.Append(" LEFT JOIN Proveedores pr ON t.idProveedor = pr.idProveedor");
+                sbSql.Append(" JOIN Usuarios u ON t.idUsuario = u.idUsuario");
+                if (idVenta > 0 || oCliente != null || oUsuario != null || !string.IsNullOrEmpty(fechaFin) || !string.IsNullOrEmpty(fechaInicio))
+                {
+                    sbSql.Append(" WHERE ");
+                    if (idVenta > 0) sbSql.Append(" idTransaccion = @idTran ");
+                    if (oCliente != null)
+                    {
+                        if (idVenta > 0) sbSql.Append(" AND(c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'");
+                        else sbSql.Append(" (c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'");
+                    }
+                    if (oUsuario != null)
+                    {
+                        if (oCliente != null) sbSql.Append(" AND u.idUsuario = @idUsuario");
+                        else sbSql.Append(" u.idUsuario=@idUsuario");
+                    }
+                    if (!string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
+                    {
+                        if (oUsuario != null) sbSql.Append(" AND fecha BETEWEEN @fechaInicio AND @fechaFin");
+                        else sbSql.Append(" fecha BETEWEEN @fechaInicio AND @fechaFin");
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(fechaInicio) && string.IsNullOrEmpty(fechaFin))
+                        {
+                            if (oUsuario != null) sbSql.Append(" AND fecha >= @fechaInicio");
+                            else sbSql.Append(" fecha >= @fechaInicio");
+                        }
+                        if (string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
+                        {
+                            if (oUsuario != null) sbSql.Append(" AND fecha <= @fechaFin");
+                            else sbSql.Append(" fecha <= @fechaFin");
+                        }
+                   
+                    }
+
+                    if (oUsuario != null)
+                    {
+                        if (fechaFin =="" && fechaInicio == "" ) sbSql.Append(" AND idProveedor = @idProveedor");
+                        else sbSql.Append(" idProveedor=@idProveedor");
+                    }
+
+                    param = new SqlParameter[] {
+                    new SqlParameter("@nombreCliente",oCliente!= null ? oCliente.nombre:string.Empty),
+                    new SqlParameter("@apellidoCliente",oCliente!= null ?oCliente.apellido:string.Empty),
+                    new SqlParameter("@razonSocial",oCliente!= null? oCliente.razonSocial:string.Empty),
+                    new SqlParameter("@idUsuario",oUsuario!=null?oUsuario.idUsuario:0),
+                    new SqlParameter("@fechaInicio",fechaInicio),
+                    new SqlParameter("@fechaInicio",fechaFin),
+                    new SqlParameter("@idTran",idVenta),
+                    new SqlParameter("idProveedores",oProveedor!= null ? oProveedor.idProveedor: 0)
+                    };
+                }
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), param))
+                {
+                    if (dr.HasRows)
+                    {
+                        lstTransacciones = new List<Transaccion>();
+                        while (dr.Read())
+                        {
+
+                            lstTransacciones.Add(
+                                 new Transaccion
+                                 {
+                                     idTransaccion = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
+                                     tipoTransaccion = new TipoTransaccion
+                                     {
+                                         idTipoTransaccion = dr.IsDBNull(1) ? default(int) : dr.GetInt32(1),
+                                         tipoTransaccion = dr.IsDBNull(2) ? default(string) : dr.GetString(2)
+                                     },
+                                     fecha = dr.IsDBNull(3) ? default(DateTime) : dr.GetDateTime(3),
+                                     descripcion = dr.IsDBNull(4) ? string.Empty : dr.GetString(4),
+                                     cliente = new Cliente
+                                     {
+                                         idCliente = dr.IsDBNull(5) ? default(int) : dr.GetInt32(5),
+                                         nombre = dr.IsDBNull(6) ? default(string) : dr.GetString(6),
+                                         apellido = dr.IsDBNull(7) ? default(string) : dr.GetString(7),
+                                         razonSocial = dr.IsDBNull(18) ? default(string) : dr.GetString(18),
+                                         dni = dr.IsDBNull(8) ? default(string) : dr.GetString(8),
+                                         cuit = dr.IsDBNull(9) ? default(string) : dr.GetString(9),
+                                         direccion = dr.IsDBNull(10) ? default(string) : dr.GetString(10),
+                                         barrio = dr.IsDBNull(11) ? default(string) : dr.GetString(11),
+                                         localidad = new Localidad
+                                         {
+                                             idLocalidad = dr.IsDBNull(12) ? default(int) : dr.GetInt32(12),
+                                             localidad = dr.IsDBNull(13) ? default(string) : dr.GetString(13)
+                                         },
+                                         provincia = new Provincia
+                                         {
+                                             idProvincia = dr.IsDBNull(14) ? default(int) : dr.GetInt32(14),
+                                             provincia = dr.IsDBNull(15) ? default(string) : dr.GetString(15)
+                                         },
+                                         tipoCliente = new TipoCliente
+                                         {
+                                             idTipoCliente = dr.IsDBNull(19) ? default(int) : dr.GetInt32(19),
+                                             tipoCliente = dr.IsDBNull(20) ? default(string) : dr.GetString(20)
+                                         }
+                                     },
+                                     proveedor = new Proveedor
+                                     {
+                                         idProveedor = dr.IsDBNull(16) ? 0 : dr.GetInt32(16),
+                                         nombre = dr.IsDBNull(17) ? default(string) : dr.GetString(17)
+                                     },
+                                     usuario = new Usuario
+                                     {
+                                         idUsuario = dr.IsDBNull(21) ? default(int) : dr.GetInt32(21),
+                                         nombre = dr.IsDBNull(22) ? default(string) : dr.GetString(22),
+                                         apellido = dr.IsDBNull(23) ? default(string) : dr.GetString(23)
+                                     }
+
+                                 }
+                         );
+
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+            return lstTransacciones;
+        }
+
+        public static List<VentaCliente> obtenerVentasCliente(int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fechaInicio = "", string fechaFin ="", int idTipoTransaccion=0)
         {
             sbSql = null;
             List<VentaCliente> lstVentas = null;
@@ -323,7 +466,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" JOIN Facturas f ON f.idTransaccion = t.idTransaccion");
                 sbSql.Append(" JOIN Usuarios u ON t.idUsuario = u.idUsuario");
                 sbSql.Append(" JOIN Deudas_clientes dc ON dc.idCliente = c.idCliente");
-                if (idVenta > 0 || oCliente != null || oUsuario != null || !string.IsNullOrEmpty(fecha))
+                if (idVenta > 0 || oCliente != null || oUsuario != null || !string.IsNullOrEmpty(fechaInicio) || !string.IsNullOrEmpty(fechaFin) || idTipoTransaccion > 0)
                 {
                     sbSql.Append(" WHERE t.devuelto=0 AND ");
                     if (idVenta > 0) sbSql.Append(" t.idTransaccion = @idTran ");
@@ -337,18 +480,42 @@ namespace Easy_Stock.AccesoDatos
                         if (oCliente != null) sbSql.Append(" AND u.idUsuario = @idUsuario");
                         else sbSql.Append(" u.idUsuario=@idUsuario");
                     }
-                    if (!string.IsNullOrEmpty(fecha))
+                    if (!string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
                     {
-                        if (oUsuario != null) sbSql.Append(" AND fecha = @fecha");
-                        else sbSql.Append(" t.fecha = @fecha");
+                        if (oUsuario != null) sbSql.Append(" AND t.fecha BETEWEEN @fechaInicio AND @fechaFin");
+                        else sbSql.Append(" fecha BETEWEEN @fechaInicio AND @fechaFin");
                     }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(fechaInicio) && string.IsNullOrEmpty(fechaFin))
+                        {
+                            if (oUsuario != null) sbSql.Append(" AND t.fecha >= @fechaInicio");
+                            else sbSql.Append(" t.fecha >= @fechaInicio");
+                        }
+                        if (string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
+                        {
+                            if (oUsuario != null) sbSql.Append(" AND t.fecha <= @fechaFin");
+                            else sbSql.Append(" t.fecha <= @fechaFin");
+                        }
+
+                    }
+                    if (idTipoTransaccion > 0) 
+                    {
+                        if (!string.IsNullOrEmpty(fechaInicio) || !string.IsNullOrEmpty(fechaFin))
+                        {
+                            sbSql.Append(" AND t.idTipoTransaccion=@idTipoTransaccion");
+                        }
+                        else { sbSql.Append(" t.idTipoTransaccion=@idTipoTransaccion"); }
+                    }
+                        
                     param = new SqlParameter[] {
-                    oCliente != null ?new SqlParameter("@nombreCliente",oCliente!= null ? oCliente.nombre:string.Empty):null,
-                    oCliente != null ? new SqlParameter("@apellidoCliente",oCliente!= null ?oCliente.apellido:string.Empty):null,
-                    oCliente != null ? new SqlParameter("@razonSocial",oCliente!= null? oCliente.razonSocial:string.Empty):null,
-                    oUsuario!=null? new SqlParameter("@idUsuario",oUsuario!=null?oUsuario.idUsuario:0):null,
-                    fecha!= default ? new SqlParameter("@fecha",fecha):null,
-                    idVenta > 0? new SqlParameter("@idTran",idVenta):null
+                    new SqlParameter("@nombreCliente",oCliente!= null ? oCliente.nombre:string.Empty),
+                    new SqlParameter("@apellidoCliente",oCliente!= null ?oCliente.apellido:string.Empty),
+                    new SqlParameter("@razonSocial",oCliente!= null? oCliente.razonSocial:string.Empty),
+                    new SqlParameter("@idUsuario",oUsuario!=null?oUsuario.idUsuario:0),
+                    new SqlParameter("@fechaInicio",fechaInicio),
+                    new SqlParameter("@idTran",idVenta>0 ? idVenta: 0),
+                    new SqlParameter("@idTipoTransaccion",idTipoTransaccion)
                     };
                 }
 

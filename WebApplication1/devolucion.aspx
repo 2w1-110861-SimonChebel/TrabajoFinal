@@ -13,17 +13,17 @@
         { %>
     <div class="col-12">
         <div class="row col-12">
-            <div class="form-group col-4">
+            <div class="form-group col-xs-12 col-md-10 col-lg-4">
                 <label for="txtNroCompra" class="control-label">Por N° de venta</label>
                 <asp:TextBox type="number" class="form-control" ID="txtNroVenta" PlaceHolder="N° de venta" name="txtNroVenta" runat="server" MaxLength="50"> </asp:TextBox>
             </div>
-            <div class="form-group col-4">
+            <div class="form-group col-xs-12 col-md-10 col-lg-4">
                 <label for="txtCliente" class="control-label">Por cliente</label>
                 <asp:TextBox type="text" class="form-control" ID="txtCliente" PlaceHolder="Nombre o razón social" name="txtCliente" runat="server" MaxLength="50"> </asp:TextBox>
             </div>
 
 
-            <div class="form-group col-4">
+            <div class="form-group col-xs-12 col-md-10 col-lg-4">
                 <label for="cboUsuario" class="control-label">Usuario</label>
                 <asp:DropDownList class="form-control" ID="cboUsuario" name="cboUsuario" runat="server">
                     <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="row col-12">
-            <div class="form-group col-4">
+            <div class="form-group col-xs-12 col-md-10 col-lg-4">
                 <label for="dtpFecha" class="control-label">Por fecha</label>
                 <asp:TextBox type="date" class="form-control" ID="dtpFecha" name="dtpFecha" runat="server"></asp:TextBox>
             </div>

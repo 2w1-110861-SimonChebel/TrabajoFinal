@@ -31,7 +31,13 @@ namespace Easy_Stock.Entidades
 
         public Cliente()
         {
-            
+            idCliente = 0;
+            tipoCliente = new TipoCliente();
+            localidad = new Localidad();
+            provincia = new Provincia();
+            deuda = new DeudaCliente();
+            tipoEmpresa = new TipoEmpresa();
+            sexo = new Sexo();
         }
 
 
