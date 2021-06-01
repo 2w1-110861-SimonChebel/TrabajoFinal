@@ -9,16 +9,6 @@ namespace Easy_Stock.Entidades
     public static class Tipo
     {
 
-        public static List<int> tiposDevolucion { get; } = new List<int> {
-            (int)tipoTransaccion.devolucionDeCliente,
-            (int)tipoTransaccion.devolucionAproveedor
-        };
-
-        public static List<int> tiposCambio { get; } = new List<int> {
-            (int)tipoTransaccion.cambioProductoAproveedor,
-            (int)tipoTransaccion.cambioProductoDeCliente
-        };
-
         public enum tipoCliente
         {
             persona = 1,
@@ -65,6 +55,18 @@ namespace Easy_Stock.Entidades
             montoDevueltoAcliente =1,
             creditoAfavorDeCliente = 2
         }
+
+
+        public static List<int> tiposDevolucion { get; } = new List<int> {
+            (int)tipoTransaccion.devolucionDeCliente,
+            (int)tipoTransaccion.devolucionAproveedor
+        };
+
+        public static List<int> tiposCambio { get; } = new List<int> {
+            (int)tipoTransaccion.cambioProductoAproveedor,
+            (int)tipoTransaccion.cambioProductoDeCliente
+        };
+
 
     }
 }
