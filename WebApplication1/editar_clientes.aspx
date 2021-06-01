@@ -118,7 +118,7 @@
         { %>
     <div id="divBotones" class="form-group col-xl-6 col-md-6" runat="server">
         <div class="form-group" style="display: flex; justify-content: center">
-            <asp:Button ID="btnAgregarCliente" Text="Agregar cliente" type="button" class="btn btn-primary" runat="server" OnClick="btnAgregarCliente_Click" />
+            <asp:Button ID="btnAgregarCliente" Text="Agregar cliente" type="button" class="btn btn-primary" runat="server" OnClientClick="return preguntarGuardar();" OnClick="btnAgregarCliente_Click" />
         </div>
 
         <div class="form-group" style="display: flex; justify-content: center">

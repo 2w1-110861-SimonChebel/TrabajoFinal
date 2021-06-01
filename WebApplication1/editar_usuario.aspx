@@ -44,7 +44,7 @@
             </div>
 
             <div class="form-group" style="display: flex;padding-left:10px"">
-                <asp:Button ID="btnRegistrar" Text="Registrar" type="button" class="btn btn-success" runat="server" OnClick="btnRegistrar_Click" />
+                <asp:Button ID="btnRegistrar" Text="Registrar" type="button" class="btn btn-success" runat="server" OnClientClick="return preguntarGuardar();" OnClick="btnRegistrar_Click" />
             </div>
         </div>
 

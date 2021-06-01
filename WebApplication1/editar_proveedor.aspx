@@ -56,7 +56,7 @@
         </div>
 
         <div class="form-group" style="display: flex; justify-content: center">
-            <asp:Button ID="btnAgregarProveedor" Text="Agregar proveedor" type="button" class="btn btn-primary" runat="server" OnClick="btnAgregarProveedor_Click" />
+            <asp:Button ID="btnAgregarProveedor" Text="Agregar proveedor" type="button" class="btn btn-primary" runat="server" OnClientClick="return preguntarGuardar();" OnClick="btnAgregarProveedor_Click" />
         </div>
 
         <div class="form-group" style="display: flex; justify-content: center">

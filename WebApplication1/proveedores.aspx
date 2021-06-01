@@ -102,9 +102,9 @@
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
                                 <b>
-                                    <asp:Button runat="server" ID="btnEditarProveedor" type="button" class="btn btn-info" CommandArgument='<%#Eval("idProveedor")%>' CommandName="editar" Text="Editar" /></b>
+                                    <asp:Button runat="server" ID="btnEditarProveedor" type="button" class="btn btn-info" CommandArgument='<%#Eval("idProveedor")%>'  CommandName="editar" Text="Editar" /></b>
                                 <b>
-                                    <asp:Button runat="server" ID="btnEliminarProveedor" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idProveedor") %>' CommandName="eliminar" Text="Eliminar"></asp:Button></b>
+                                    <asp:Button runat="server" ID="btnEliminarProveedor" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idProveedor") %>' OnClientClick="preguntarEliminarRegistro();" CommandName="eliminar" Text="Eliminar"></asp:Button></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

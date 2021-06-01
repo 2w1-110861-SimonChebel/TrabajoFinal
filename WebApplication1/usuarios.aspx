@@ -71,7 +71,7 @@
                                 <b>
                                     <asp:Button runat="server" ID="btnEditarUsuario" type="button" class="btn btn-info" CommandArgument='<%#Eval("idUsuario")%>' CommandName="editar" Text="Editar" /></b>
                                 <b>
-                                    <asp:Button runat="server" ID="btnEliminarUsuario" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idUsuario") %>' CommandName="eliminar" Text="Eliminar"></asp:Button></b>
+                                    <asp:Button runat="server" ID="btnEliminarUsuario" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idUsuario") %>' OnClientClick="preguntarEliminarRegistro();" CommandName="eliminar" Text="Eliminar"></asp:Button></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

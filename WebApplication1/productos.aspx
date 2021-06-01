@@ -2,6 +2,11 @@
 
 <%@ Import Namespace="Easy_Stock.Entidades" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        function preguntar() {
+            return confirm("¿Descartar y volver al menú principal");
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -34,7 +39,7 @@
                                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     Carrito
                                 </button>
-                                <asp:LinkButton ID="btnDescartar" Text="Descartar" type="button" class="btn btn-warning" CommandName="descartar" runat="server" OnClick="btnDescartar_Click"></asp:LinkButton>
+                                <asp:LinkButton ID="btnDescartar" Text="Descartar" type="button" class="btn btn-warning" CommandName="descartar" runat="server" OnClientClick="return preguntar();" OnClick="btnDescartar_Click"></asp:LinkButton>
                                 <asp:LinkButton ID="btnContinuar" Text="Continuar" type="button" class="btn btn-success" runat="server" OnClick="btnContinuar_Click"></asp:LinkButton>
 
                             </h5>
@@ -233,7 +238,7 @@
                                 <b>
                                     <asp:Button runat="server" ID="btnEditarProducto" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idProducto")+","+ ((GridViewRow)Container).RowIndex.ToString()%>' CommandName="editar" OnClick="btnEditarProducto_Click" /></b>
                                 <b>
-                                    <asp:Button runat="server" ID="btnEliminarProducto" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idProducto") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste producto? Esta acción no se puede deshacer')) return false;" OnClick="btnEliminarProducto_Click"></asp:Button></b>
+                                    <asp:Button runat="server" ID="btnEliminarProducto" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idProducto")+","+ ((GridViewRow)Container).RowIndex.ToString()%>' CommandName="eliminar" Text="Eliminar" OnClientClick="preguntarEliminarRegistro();" OnClick="btnEliminarProducto_Click"></asp:Button></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

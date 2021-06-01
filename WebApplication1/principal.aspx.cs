@@ -37,6 +37,7 @@ namespace Easy_Stock
             else
             {
                 divAlertaDatosIncorrectos.Visible = true;
+                divAlertaDatosIncorrectos.Attributes["class"] = Bootstrap.alertDangerDismissable;
                 hMensaje.InnerText = "El usuario y/o contraseña son incorrectos";
             }
 

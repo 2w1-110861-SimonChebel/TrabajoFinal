@@ -1,6 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Header.Master" AutoEventWireup="true" CodeBehind="pago_carrito.aspx.cs" Inherits="Easy_Stock.pago_carrito" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <script type="text/javascript">
+        function preguntar()
+        {
+            return confirm("¿Desea cancelar y volver al menú principal");
+        }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -154,7 +161,7 @@
                     <asp:Button ID="btnConfirmar" Text="Confirmar" type="button" class="btn btn-primary btn-lg" runat="server" OnClick="btnConfirmar_Click" />
                 </div>
                 <div style="padding: 5px">
-                    <asp:Button ID="btnCancelar" Text="Cancelar y volver" type="button" class="btn btn-danger btn-lg" runat="server" OnClick="btnCancelar_Click" />
+                    <asp:Button ID="btnCancelar" Text="Cancelar y volver" type="button" class="btn btn-danger btn-lg" runat="server" OnClientClick="return preguntar();" OnClick="btnCancelar_Click" />
                 </div>
             </div>
             <div>

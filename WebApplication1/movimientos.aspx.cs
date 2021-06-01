@@ -15,14 +15,15 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
+                hTitulo.InnerText = string.Format("{0}{1} {2}","Movimientos (",AdTransaccion.CantidadTotalTransaccion()," en total)");
                 divMensaje.Visible = false;
-                List<Transaccion> lstTransacciones = AdTransaccion.obtenerMovimientos(0,null,null,DateTime.Now.AddDays(-30).ToString("yyyy/MM/dd").Replace("/","-"));
+               // List<Transaccion> lstTransacciones = AdTransaccion.obtenerMovimientos(0,null,null,DateTime.Now.AddDays(-30).ToString("yyyy/MM/dd").Replace("/","-"));
                 CargarCombos();
-                if (lstTransacciones != null)
-                {
-                    grvTransacciones.DataSource = lstTransacciones;
-                    grvTransacciones.DataBind();
-                }
+                //if (lstTransacciones != null)
+                //{
+                //    grvTransacciones.DataSource = lstTransacciones;
+                //    grvTransacciones.DataBind();
+                //}
             }
         }
 
@@ -33,6 +34,10 @@ namespace Easy_Stock
 
         protected void grvTransacciones_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            string[] arguments = e.CommandArgument.ToString().Split(',');
+            int idTran = Convert.ToInt32(arguments[0]);
+            int idTipoTran = Convert.ToInt32(arguments[1]);
+            Response.Redirect("detalle_movimientos.aspx?id=" + idTran + "&idTipo=" + idTipoTran);
 
         }
 
@@ -68,16 +73,27 @@ namespace Easy_Stock
                     switch (tipoTran)
                     {
                         case (int)Tipo.tipoTransaccion.ventaCliente:
-                            List<VentaCliente> lstVentas = AdTransaccion.obtenerVentasCliente(idTransaccion,cli,usu,fechaInicio,fechaFin,tipoTran);
+                            List<VentaCliente> lstVentas = AdTransaccion.obtenerVentasCliente(idTransaccion,cli,usu,fechaInicio,fechaFin,tipoTran, true);
                             grvTransacciones.DataSource = lstVentas;
                             grvTransacciones.DataBind();
                             if (lstVentas == null) MostrarMensajeNoEcontrados();
-                            break;        
+                            break;
+                        case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
+                            List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion,cli,usu,fechaInicio,fechaFin, pro, tipoTran);
+                            grvTransacciones.DataSource = lstMov;
+                            grvTransacciones.DataBind();
+                            if (lstMov == null) MostrarMensajeNoEcontrados();
+                            break;
+
                     }
                 }
                 else 
-                { 
-
+                {
+                    List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
+                    grvTransacciones.DataSource = lstMov;
+                    grvTransacciones.DataBind();
+                    if (lstMov == null) MostrarMensajeNoEcontrados();
+           
                 }
                 //List<>
                 //if (lstVentas != null)
@@ -157,19 +173,26 @@ namespace Easy_Stock
             {
                 case (int)Tipo.tipoTransaccion.ventaCliente:
                     cboProveedor.SelectedValue = "0";
-                    cboProveedor.Enabled = false;
+                    //cboProveedor.Enabled = false;
+                    cboProveedor.Attributes["disabled"] = "true";
+                    break;
+                case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
+                    cboProveedor.SelectedValue = "0";
+                    //cboProveedor.Enabled = false;
+                    cboProveedor.Attributes["disabled"] = "true";
+                    break;
+                case (int)Tipo.tipoTransaccion.devolucionDeCliente:
+                    cboProveedor.SelectedValue = "0";
+                    //cboProveedor.Enabled = false;
+                    cboProveedor.Attributes["disabled"] = "true";
                     break;
 
                 default:
-                    cboProveedor.Enabled = true;
+                    //cboProveedor.Enabled = true;
+                    cboProveedor.Attributes.Remove("disabled");
                     break;
             }
         }
 
-        private void DesactivarCombo(string nombreCombo)
-        {
-            ((DropDownList)Page.FindControl(nombreCombo)).Enabled = false; ;
-            
-        }
     }
 }

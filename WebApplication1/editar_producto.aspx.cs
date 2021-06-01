@@ -31,8 +31,8 @@ namespace Easy_Stock
                         txtCantidad.Text = oProducto.cantidadRestante.ToString();
                         txtCantidad.Enabled = false;
                         cboMarcas.SelectedValue = oProducto.marca.idMarca.ToString();
-                        txtPrecioVenta.Text =  oProducto.precioVenta.ToString().Replace(",", ".");
-                        txtPrecioCosto.Text = oProducto.precioCosto.ToString().Replace(",",".");
+                        txtPrecioVenta.Text = oProducto.precioVenta.ToString().Replace(",", ".");
+                        txtPrecioCosto.Text = oProducto.precioCosto.ToString().Replace(",", ".");
                         cboCategorias.SelectedValue = oProducto.categoria.idCategoria.ToString();
                         cboProveedores.SelectedValue = oProducto.proveedor.idProveedor.ToString();
                         cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
@@ -54,49 +54,55 @@ namespace Easy_Stock
         protected void btnAgregarProducto_Click(Object sender, EventArgs e)
         {
 
-            try
+
+            accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
+
+            if (validarCamposVacios())
             {
-                accion = (string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"].ToString());
-                Producto oProducto = new Producto
+
+
+                try
                 {
-                    idProducto = Convert.ToInt32(Request.QueryString["id"]),
-                    codigo = txtCodigo.Text.ToUpper(),
-                    nombre = txtNombreProducto.Text,
-                    marca = new Marca { idMarca = Convert.ToInt32(cboMarcas.SelectedValue) },
-                    precioVenta = decimal.Parse(txtPrecioVenta.Text.Replace(".",",")),
-                    precioCosto = decimal.Parse(txtPrecioCosto.Text.Replace(".",",")),
-                    descripcion = txtDescripcion.Text,
-                    categoria = new Categoria { idCategoria = Convert.ToInt32(cboCategorias.SelectedValue) },
-                    proveedor = new Proveedor { idProveedor = Convert.ToInt32(cboProveedores.SelectedValue) },
-                    deposito = (cboCategorias.SelectedValue != "0") ? new Deposito
+                    Producto oProducto = new Producto
                     {
-                        idDeposito = Convert.ToInt32(cboDepositos.SelectedValue)
-                    } : null,
-                    stockMinimo = Convert.ToInt32(txtStockMinimo.Text),
-                    stockMaximo = Convert.ToInt32(txtStockMaximo.Text),
-                    cantidadRestante = Convert.ToInt32(txtCantidad.Text),
-                    fechaVenc = Convert.ToDateTime(dtpFechaVenc.Text),
-                    fechaElab = Convert.ToDateTime(dtpFechaElab.Text),
-                    fechaIngreso = accion.Equals("editar") ? Convert.ToDateTime(dtpFechaIngreso.Text): DateTime.Now
-                };
-                if (validarCamposVacios())
-                {
+                        idProducto = Convert.ToInt32(Request.QueryString["id"]),
+                        codigo = txtCodigo.Text.ToUpper(),
+                        nombre = txtNombreProducto.Text,
+                        marca = new Marca { idMarca = Convert.ToInt32(cboMarcas.SelectedValue) },
+                        precioVenta = decimal.Parse(txtPrecioVenta.Text.Replace(".", ",")),
+                        precioCosto = decimal.Parse(txtPrecioCosto.Text.Replace(".", ",")),
+                        descripcion = txtDescripcion.Text,
+                        categoria = new Categoria { idCategoria = Convert.ToInt32(cboCategorias.SelectedValue) },
+                        proveedor = new Proveedor { idProveedor = Convert.ToInt32(cboProveedores.SelectedValue) },
+                        deposito = (cboCategorias.SelectedValue != "0") ? new Deposito
+                        {
+                            idDeposito = Convert.ToInt32(cboDepositos.SelectedValue)
+                        } : null,
+                        stockMinimo = Convert.ToInt32(txtStockMinimo.Text),
+                        stockMaximo = Convert.ToInt32(txtStockMaximo.Text),
+                        cantidadRestante = Convert.ToInt32(txtCantidad.Text),
+                        fechaVenc = Convert.ToDateTime(dtpFechaVenc.Text),
+                        fechaElab = Convert.ToDateTime(dtpFechaElab.Text),
+                        fechaIngreso = accion.Equals("editar") ? Convert.ToDateTime(dtpFechaIngreso.Text) : DateTime.Now
+                    };
+
                     if (accion.Equals("editar"))
                     {
                         if (AdProducto.actualizarProducto(oProducto))
                         {
-                            divMensaje.Visible= true;
+                            divMensaje.Visible = true;
                             divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                             hMensaje.InnerText = "Cambios guardados correctamente";
                             reestablecerColores();
                             LimpiarCampos();
                         }
-                        else {
-                            divMensaje.Visible= true;
+                        else
+                        {
+                            divMensaje.Visible = true;
                             divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
                             hMensaje.InnerText = "Hubo un error al actualizar el producto. Intente nuevamente.";
                         }
-                        
+
                     }
                     else
                     {
@@ -108,34 +114,39 @@ namespace Easy_Stock
                             reestablecerColores();
                             LimpiarCampos();
                         }
-                        else {
+                        else
+                        {
                             divMensaje.Visible = true;
                             divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                             hMensaje.InnerText = "Producto cargado correctamente";
                         }
-                       
 
-                        
                     }
+
+                    Session["productos"] = null;
                 }
-                else {
-                    divMensaje.Visible = true;
+                catch (Exception ex)
+                {
+                    divErrorCargaProducto.Style["display"] = "inherit";
                     divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
-                    hMensaje.InnerText = "Complete todos los campos";
+                    hMensaje.InnerText = "Hubo un error al guardar los cambios. Verifique los campos";
                     return;
+                    //Response.Redirect("editar_producto.aspx?response=false");
+                    throw ex;
                 }
 
-                Session["productos"] = null;
+
+
+
             }
-            catch (Exception ex)
+            else
             {
-                divErrorCargaProducto.Style["display"] = "inherit";
+                divMensaje.Visible = true;
                 divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
-                hMensaje.InnerText = "Hubo un error al guardar los cambios. Verifique los campos";
+                hMensaje.InnerText = "Complete todos los campos";
                 return;
-                //Response.Redirect("editar_producto.aspx?response=false");
-                throw ex;
             }
+
 
         }
 

@@ -168,7 +168,7 @@ namespace Easy_Stock
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
-        /// TxtDireccion control.
+        /// txtDireccion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -177,7 +177,7 @@ namespace Easy_Stock
         protected global::System.Web.UI.WebControls.TextBox txtDireccion;
 
         /// <summary>
-        /// TxtBarrio control.
+        /// txtBarrio control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -204,7 +204,7 @@ namespace Easy_Stock
         protected global::System.Web.UI.WebControls.DropDownList cboProvincias;
 
         /// <summary>
-        /// TxtCodigoPostal control.
+        /// txtCodigoPostal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

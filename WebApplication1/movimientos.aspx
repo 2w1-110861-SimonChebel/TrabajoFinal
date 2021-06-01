@@ -9,7 +9,7 @@
     <div class="row alert alert-info" id="divTitulo" runat="server">
         <div class="col-12">
             <div class="col-6">
-                <h4>Movimientos</h4>
+                <h4 id="hTitulo" runat="server">Movimientos</h4>
             </div>
           <%--  <div class="col-12">
                 <h6>(por defecto últimos 30 dias)</h6>

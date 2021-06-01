@@ -98,7 +98,7 @@
                                 <b>
                                     <asp:Button runat="server" ID="btnEditarDeposito" type="button" class="btn btn-info" Text="Editar" CommandArgument='<%#Eval("idSucursal")%>' CommandName="editar" /></b>
                                 <b>
-                                    <asp:Button runat="server" ID="btnEliminarDeposito" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idSucursal") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="if (!Confirm('¿Desea ELIMINAR éste deposito? Esta acción no se puede deshacer')) return false;"></asp:Button></b>
+                                    <asp:Button runat="server" ID="btnEliminarDeposito" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idSucursal") %>' CommandName="eliminar" Text="Eliminar" OnClientClick="preguntarEliminarRegistro();"></asp:Button></b>
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>

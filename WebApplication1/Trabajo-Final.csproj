@@ -121,6 +121,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="depositos.aspx" />
+    <Content Include="detalle_movimientos.aspx" />
     <Content Include="devolucion.aspx" />
     <Content Include="editar_clientes.aspx" />
     <Content Include="editar_deposito.aspx" />
@@ -323,6 +324,13 @@
     <Compile Include="depositos.aspx.designer.cs">
       <DependentUpon>depositos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="detalle_movimientos.aspx.cs">
+      <DependentUpon>detalle_movimientos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="detalle_movimientos.aspx.designer.cs">
+      <DependentUpon>detalle_movimientos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="devolucion.aspx.cs">
       <DependentUpon>devolucion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -366,6 +374,8 @@
       <DependentUpon>editar_usuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Bootstrap.cs" />
+    <Compile Include="Entidades\CambioProducto.cs" />
+    <Compile Include="Entidades\CambioProductoCliente.cs" />
     <Compile Include="Entidades\Carrito.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Cliente.cs" />
