@@ -15,6 +15,15 @@ namespace Easy_Stock
     {
 
         /// <summary>
+        /// hTitulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hTitulo;
+
+        /// <summary>
         /// hNroTran control.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace Easy_Stock
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hFecha;
+
+        /// <summary>
+        /// hObservaciones control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hObservaciones;
 
         /// <summary>
         /// hCliente control.
@@ -85,5 +103,23 @@ namespace Easy_Stock
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hTotal;
+
+        /// <summary>
+        /// hProductosRecibidos control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hProductosRecibidos;
+
+        /// <summary>
+        /// hProductosEntregados control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hProductosEntregados;
     }
 }

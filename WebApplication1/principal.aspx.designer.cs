@@ -15,13 +15,13 @@ namespace Easy_Stock
     {
 
         /// <summary>
-        /// frmLogin control.
+        /// frmPrincipal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm frmLogin;
+        protected global::System.Web.UI.HtmlControls.HtmlForm frmPrincipal;
 
         /// <summary>
         /// divAlertaDatosIncorrectos control.
@@ -40,6 +40,24 @@ namespace Easy_Stock
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hMensaje;
+
+        /// <summary>
+        /// div1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div1;
+
+        /// <summary>
+        /// h1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h1;
 
         /// <summary>
         /// txtEmail control.

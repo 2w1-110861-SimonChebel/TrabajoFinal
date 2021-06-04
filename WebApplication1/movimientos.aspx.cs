@@ -84,15 +84,24 @@ namespace Easy_Stock
                             grvTransacciones.DataBind();
                             if (lstMov == null) MostrarMensajeNoEcontrados();
                             break;
+                        case (int)Tipo.tipoTransaccion.devolucionDeCliente:
+                            List<Transaccion> lstDev = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
+                            grvTransacciones.DataSource = lstDev;
+                            grvTransacciones.DataBind();
+                            if (lstDev == null) MostrarMensajeNoEcontrados();
+                            break;
+                        default:
+                            //List<Transaccion> lstTran = AdTransaccion.
+                            break;
 
                     }
                 }
                 else 
                 {
-                    List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
-                    grvTransacciones.DataSource = lstMov;
-                    grvTransacciones.DataBind();
-                    if (lstMov == null) MostrarMensajeNoEcontrados();
+                    //List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
+                    //grvTransacciones.DataSource = lstMov;
+                    //grvTransacciones.DataBind();
+                    //if (lstMov == null) MostrarMensajeNoEcontrados();
            
                 }
                 //List<>

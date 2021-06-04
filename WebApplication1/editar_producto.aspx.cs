@@ -135,9 +135,6 @@ namespace Easy_Stock
                     throw ex;
                 }
 
-
-
-
             }
             else
             {
@@ -146,7 +143,6 @@ namespace Easy_Stock
                 hMensaje.InnerText = "Complete todos los campos";
                 return;
             }
-
 
         }
 
@@ -243,7 +239,6 @@ namespace Easy_Stock
             }
 
         }
-
         public void LimpiarCampos()
         {
             txtCodigo.Text = string.Empty;

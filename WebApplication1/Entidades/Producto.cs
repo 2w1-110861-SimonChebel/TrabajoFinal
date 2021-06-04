@@ -26,6 +26,7 @@ namespace Easy_Stock.Entidades
         public string codigoUnico { get; set; } = string.Empty;
         public int cantidad { get; set; } = 0;//solo se usa para el carrito
         public decimal subTotal { get; set; } = 0;//solo se usa para el carrito
+        public EstadoProducto estadoProducto { get; set; } = null;
 
         public Producto() {
             idProducto = 0;
@@ -44,6 +45,7 @@ namespace Easy_Stock.Entidades
             fechaVenc = DateTime.Today;
             fechaElab = DateTime.Today;
             fechaIngreso = DateTime.Today;
+            estadoProducto = new EstadoProducto();
         }
 
         public decimal calcularSubTotal()

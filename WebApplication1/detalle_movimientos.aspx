@@ -1,10 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Header.Master" AutoEventWireup="true" CodeBehind="detalle_movimientos.aspx.cs" Inherits="Easy_Stock.detalle_movimientos" %>
 
+<%@ Import Namespace="Easy_Stock.Entidades" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <div id="divTitulo">
+        <h4 id="hTitulo" runat="server">Detalle de transacción</h4>
+    </div>
 
     <div class="row col-md-12 col-xs-12">
         <div class="col-md-12 col-xs-12">
@@ -20,6 +24,10 @@
                         <h6 id="hFecha" runat="server">Fecha: </h6>
                     </div>
                     <div class="row">
+                        <h6 id="hObservaciones" runat="server">Observaciones: </h6>
+                    </div>
+
+                    <div class="row">
                         <h6 id="hCliente" runat="server">Cliente: </h6>
                     </div>
                     <div class="row">
@@ -31,7 +39,12 @@
             </div>
         </div>
 
-        <div class="row col-12" style="padding:10px">
+
+        <%if (idTipoTran > 0 && idTipoTran == (int)Tipo.tipoTransaccion.ventaCliente)
+            {%>
+
+
+        <div class="row col-12" style="padding: 10px">
             <div class="col-12">
                 <h4 id="hTituloDetalle">Listado de productos</h4>
             </div>
@@ -70,15 +83,100 @@
                     %>
                 </tbody>
             </table>
-            <div class="row alert alert-primary" style="float: right; padding-left: 1%">
-                <div class="col-12">
-                    <h5 id="hTotalSinIva" runat="server">Total sin IVA: $<%=(oVenta.factura.total.ToString().Substring(0,6))%></h5>
-                    <h5 id="hIva" runat="server">IVA: $<%=(oVenta.factura.total*Convert.ToDecimal(0.21)).ToString().Substring(0,7)%></h5>
-                    <h3 id="hTotal" runat="server">Total: $<%=oVenta.factura.total.ToString().Replace(".",",")%></h3>
-                </div>
-            </div>
+
 
         </div>
+
+        <div class="row alert alert-primary" style="float: right; padding-left: 1%">
+            <div class="col-12">
+                <h5 id="hTotalSinIva" runat="server">Total sin IVA: $<%=(oVenta.factura.total.ToString().Substring(0,6))%></h5>
+                <h5 id="hIva" runat="server">IVA: $<%=(oVenta.factura.total*Convert.ToDecimal(0.21)).ToString().Substring(0,7)%></h5>
+                <h3 id="hTotal" runat="server">Total: $<%=oVenta.factura.total.ToString().Replace(".",",")%></h3>
+            </div>
+        </div>
+
+
+        <%}
+            else
+            { %>
+
+
+        <div class="col-md-12 col-xs-12" style="padding-top: 20px">
+            <div class="row col-12">
+                <h5 id="hProductosRecibidos" runat="server">Productos devueltos </h5>
+            </div>
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Codigo Único</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio unitario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                        if (oCambio != null)
+                        {
+                            foreach (var item in oCambio.productosRecibidos)
+                            {
+
+                    %>
+                    <tr>
+                         <th scope="row"><%=item.codigoUnico%></th>
+                        <td><%=item.nombre%></td>
+                        <td><%=string.Format("{0}{1}","$ ", item.precioVenta)%></td>
+                    </tr>
+                    <%
+                            }
+                        }
+                        else hMensMov.Visible = true;
+                    %>
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <%if (oCambio.productosEntregados != null && oCambio.productosEntregados.Count > 0)
+                {%>
+        <div class="col-md-12 col-xs-12" style="padding-top: 20px">
+            <div class="row col-12">
+                <h5 id="hProductosEntregados" runat="server">Productos entregados </h5>
+            </div>
+                <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Codigo Único</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Precio unitario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                if (oCambio != null)
+                {
+                    foreach (var item in oCambio.productosEntregados)
+                    {
+
+                    %>
+                    <tr>
+                        <th scope="row"><%=item.codigoUnico%></th>
+                        <td><%=item.nombre%></td>
+                        <td><%=string.Format("{0}{1}", "$ ", item.precioVenta)%></td>
+                    </tr>
+                    <%
+                    }
+                }
+                else hMensMov.Visible = true;
+                    %>
+                </tbody>
+            </table>
+
+
+        </div>
+        <%} %>
+
+        <%} %>
     </div>
 
 

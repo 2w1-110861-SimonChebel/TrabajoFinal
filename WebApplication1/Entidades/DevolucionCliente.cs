@@ -5,11 +5,13 @@ using System.Web;
 
 namespace Easy_Stock.Entidades
 {
-    public class DevolucionCliente
+    public class Devolucion : Transaccion
     {
-        public int idDevolucion { get; set; } = 0;
+        //public int idDevolucion { get; set; } = 0;
         VentaCliente ventaCliente { get; set; } = null;
-        public DevolucionCliente()
+
+       
+        public Devolucion() : base()
         {
             ventaCliente = new VentaCliente();
         }

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -71,6 +73,7 @@ namespace Easy_Stock
                     Text = lstTipoFactura[i].tipoFactura,
                     Value = lstTipoFactura[i].idTipoFactura.ToString()
                 };
+                cboTipoFactura.Items.Add(li);
             }
         }
 
@@ -85,7 +88,7 @@ namespace Easy_Stock
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
 
-            if (cboFormaPago.SelectedValue != "0" || cboTipoFactura.SelectedValue !="0")
+            if (cboFormaPago.SelectedValue != "0" && cboTipoFactura.SelectedValue !="0")
             {
                 string[] valuesFormaPago = cboFormaPago.SelectedValue.Split(',');
                 Carrito aux = (Carrito)Session["carrito"];
@@ -139,6 +142,11 @@ namespace Easy_Stock
                 };
                 if (AdTransaccion.RegistrarVenta(oVenta))
                 {
+                    oClienteCarrito = (Cliente)Session["clienteCarrito"];
+                    Usuario auxUsuario = (Usuario)Session["usuario"];
+                    SmtpClient smtp = new SmtpClient();
+                    Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoClientePorVentaCliente, oVenta, oClienteCarrito, auxUsuario, HtmlBody.BodyClientePorVentaCliente.Replace("@cliente", oClienteCarrito.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oClienteCarrito.nombre : oClienteCarrito.razonSocial));
+                    Envio.EnviarMail(smtp, "easystockar@gmail.com", ((Cliente)Session["clienteCarrito"]).email, "stock123*", HtmlBody.AsuntoUsuarioPorVentaCliente, oVenta, ((Cliente)Session["clienteCarrito"]), (Usuario)Session["usuario"], HtmlBody.BodyUsuarioPorVentaCliente.Replace("@usuario", auxUsuario.nombre));
                     Session["carrito"] = null;
                     Session["clienteCarrito"] = null;
                     Session["tipoTranActual"] = null;
@@ -155,8 +163,8 @@ namespace Easy_Stock
                 }
             }
             else {
-                if(cboFormaPago.SelectedValue =="0") cboFormaPago.BorderColor = Color.Red;
-                if (cboTipoFactura.SelectedValue == "0")  cboTipoFactura.BorderColor = Color.Red;
+                if (cboFormaPago.SelectedValue == "0") cboFormaPago.BorderColor = Color.Red; else cboFormaPago.BorderColor = Color.Gray;
+                if (cboTipoFactura.SelectedValue == "0") cboTipoFactura.BorderColor = Color.Red; else cboTipoFactura.BorderColor = Color.Gray;
             }
 
         }

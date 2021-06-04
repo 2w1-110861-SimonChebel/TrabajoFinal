@@ -11,29 +11,47 @@ namespace Easy_Stock
 {
     public partial class detalle_movimientos : System.Web.UI.Page
     {
-        protected Transaccion oTransaccion;
+        protected CambioProducto oCambio;
+        protected Devolucion oDevolucion;
         protected VentaCliente oVenta;
+        protected int idTran;
+        protected int idTipoTran;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                int idTran = Convert.ToInt32(Request.QueryString["id"]);
-                int idTipoTran = Convert.ToInt32(Request.QueryString["idTipo"]);
+                idTran = Request.QueryString["id"] != null ? Convert.ToInt32(Request.QueryString["id"]): 0;
+                idTipoTran = Request.QueryString["idTipo"]!=null? Convert.ToInt32(Request.QueryString["idTipo"]): 0;
 
                 switch (idTipoTran)
                 {
                     case (int)Tipo.tipoTransaccion.ventaCliente:
                         oVenta = AdTransaccion.obtenerDetalleVentaCliente(idTran, idTipoTran).First();
                         oVenta.factura.detallesFactura = AgruparDetallePorProducto(oVenta.factura.detallesFactura);
-                        hNroTran.InnerText = string.Format("{0}{1}",hNroTran.InnerText,oVenta.idTransaccion);
-                        hFecha.InnerText = string.Format("{0}{1}",hFecha.InnerText,oVenta.fecha.ToString());
-                        hCliente.InnerText = oVenta.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ?
-                            string.Format("{0}{1} {2}", hCliente.InnerText, oVenta.cliente.nombre, oVenta.cliente.apellido) :
-                            string.Format("{0}{1}", hCliente.InnerText, oVenta.cliente.razonSocial);
-                        hOperador.InnerText = string.Format("{0}{1} {2}",hOperador.InnerText, oVenta.usuario.nombre,oVenta.usuario.apellido);
+                        MostrarInfoCabecera(oVenta);
+                        //hNroTran.InnerText = string.Format("{0}{1}",hNroTran.InnerText,oVenta.idTransaccion);
+                        //hFecha.InnerText = string.Format("{0}{1}",hFecha.InnerText,oVenta.fecha.ToString());
+                        //hObservaciones.InnerText = string.Format("{0}{1}",hObservaciones.InnerText, oVenta.descripcion);
+                        //hCliente.InnerText = oVenta.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ?
+                        //    string.Format("{0}{1} {2}", hCliente.InnerText, oVenta.cliente.nombre, oVenta.cliente.apellido) :
+                        //    string.Format("{0}{1}", hCliente.InnerText, oVenta.cliente.razonSocial);
+                        //hOperador.InnerText = string.Format("{0}{1} {2}",hOperador.InnerText, oVenta.usuario.nombre,oVenta.usuario.apellido);
                         break;
                     case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
+                        oCambio = AdTransaccion.obtenerDetalleCambioProducto(idTran,idTipoTran);
+                        MostrarInfoCabecera(oCambio);
+                        //hNroTran.InnerText = string.Format("{0}{1}", hNroTran.InnerText, oCambio.idTransaccion);
+                        //hFecha.InnerText = string.Format("{0}{1}", hFecha.InnerText, oCambio.fecha.ToString());
+                        //hObservaciones.InnerText = string.Format("{0}{1}", hObservaciones.InnerText, oCambio.descripcion);
+                        //hCliente.InnerText = oCambio.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ?
+                        //    string.Format("{0}{1} {2}", hCliente.InnerText, oCambio.cliente.nombre, oCambio.cliente.apellido) :
+                        //    string.Format("{0}{1}", hCliente.InnerText, oCambio.cliente.razonSocial);
+                        //hOperador.InnerText = string.Format("{0}{1} {2}", hOperador.InnerText, oCambio.usuario.nombre, oCambio.usuario.apellido);
 
+                        break;
+                    case (int)Tipo.tipoTransaccion.devolucionDeCliente:
+                        oCambio = AdTransaccion.obtenerDetalleCambioProducto(idTran, idTipoTran);
+                        MostrarInfoCabecera(oCambio);
                         break;
                     default:
                         break;
@@ -59,18 +77,28 @@ namespace Easy_Stock
                     lstResultado.Add(auxDetalle);
                 }
             }
-            //lstResultado = (from detalle in lstResultado
-            //                group detalle by new {detalle.producto,detalle.precio,detalle.subTotal,detalle.cantidad} into d
-            //                select new DetalleFactura()
-            //                { 
-            //                    producto = d.Key.producto,
-            //                    precio = d.Key.precio,
-            //                    subTotal = d.Key.subTotal,
-            //                    cantidad = d.Key.cantidad  
-
-            //                }).ToList();
             
             return lstResultado; 
+        }
+
+        private void MostrarInfoCabecera(Transaccion oTran)
+        {
+            hNroTran.InnerText = string.Format("{0}{1}", hNroTran.InnerText, oTran.idTransaccion);
+            hFecha.InnerText = string.Format("{0}{1}", hFecha.InnerText, oTran.fecha.ToString());
+            hObservaciones.InnerText = string.Format("{0}{1}", hObservaciones.InnerText, oTran.descripcion);
+            hCliente.InnerText = oTran.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ?
+                string.Format("{0}{1} {2}", hCliente.InnerText, oTran.cliente.nombre, oTran.cliente.apellido) :
+                string.Format("{0}{1}", hCliente.InnerText, oTran.cliente.razonSocial);
+            hOperador.InnerText = string.Format("{0}{1} {2}", hOperador.InnerText, oTran.usuario.nombre, oTran.usuario.apellido);
+
+            if (oTran.tipoTransaccion.idTipoTransaccion == (int)Tipo.tipoTransaccion.cambioProductoDeCliente ||
+               oTran.tipoTransaccion.idTipoTransaccion == (int)Tipo.tipoTransaccion.cambioProductoAproveedor ||
+               oTran.tipoTransaccion.idTipoTransaccion == (int)Tipo.tipoTransaccion.devolucionDeCliente
+            ) 
+            {
+                hProductosEntregados.InnerText = string.Format("{0}{1}{2}{3}", hProductosEntregados.InnerText,"(", ((CambioProducto)oTran).productosEntregados.Count().ToString(),")");
+                hProductosRecibidos.InnerText = string.Format("{0}{1}{2}{3}", hProductosRecibidos.InnerText,"(", ((CambioProducto)oTran).productosRecibidos.Count().ToString(),")");
+            }
         }
     }
 }

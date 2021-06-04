@@ -384,8 +384,11 @@
     <Compile Include="Entidades\DeudaCliente.cs" />
     <Compile Include="Entidades\DevolucionCliente.cs" />
     <Compile Include="Entidades\Empresa.cs" />
+    <Compile Include="Entidades\Envio.cs" />
+    <Compile Include="Entidades\EstadoProducto.cs" />
     <Compile Include="Entidades\Factura.cs" />
     <Compile Include="Entidades\FormaPago.cs" />
+    <Compile Include="Entidades\HtmlBody.cs" />
     <Compile Include="Entidades\Inventario.cs" />
     <Compile Include="Entidades\Localidad.cs" />
     <Compile Include="Entidades\Lote.cs" />
