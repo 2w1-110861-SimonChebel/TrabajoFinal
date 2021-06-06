@@ -76,7 +76,31 @@ namespace Easy_Stock.Entidades
             this.query.comando = sb.ToString();
         }
 
-        public void FiltrarTotalesPorMes(ref List<Barra> barras)
+        public void CambiarQueryPorAnio(int anio=0)
+        {
+            StringBuilder sb;
+
+            if (anio > 0 && !anio.Equals(DateTime.Today.Year))
+            {
+                sb = new StringBuilder(" select f.nroFactura, SUM(f.total),f.fecha FROM Facturas f");
+                sb.Append(" where  YEAR (f.FECHA) = @anio  ");
+                sb.Append(" GROUP BY f.nroFactura,f.fecha ORDER BY f.fecha ASC ");
+                this.query.parametros = new SqlParameter[] {
+                    new SqlParameter("@anio", anio)
+                };
+            }
+            else
+            {
+
+                sb = new StringBuilder(" select f.nroFactura, SUM(f.total),f.fecha FROM Facturas f");
+                sb.Append(" where  YEAR (f.FECHA) = YEAR (GETDATE())  ");
+                sb.Append(" GROUP BY f.nroFactura,f.fecha ORDER BY f.fecha ASC ");
+            }
+
+            this.query.comando = sb.ToString();
+        }
+
+        public void FiltrarTotalesPorMes(ref List<Barra> barras, int anio=0)
         {
             decimal totalPorMes = 0;
             int mesIterando = 0;
@@ -85,12 +109,13 @@ namespace Easy_Stock.Entidades
             foreach (var item in this.facturas)
             {
 
-                if (cont > 0) fechaAnterior = this.facturas[cont - 1].fecha;
+                if (cont > 0) { fechaAnterior = this.facturas[cont - 1].fecha; }
                 cont++;
+                //if(item.fecha.Month != fechaAnterior.Month) mesIterando = item.fecha.Month; ;
                 if (mesIterando == 0) mesIterando = item.fecha.Month;
                 if (mesIterando != 0 && item.fecha.Month == mesIterando && cont < this.facturas.Count)
                 {
-                    totalPorMes += item.total;
+                    totalPorMes += item.total;                 
                 }
                 else
                 {
@@ -102,8 +127,10 @@ namespace Easy_Stock.Entidades
                     mesIterando = 0;
                     fechaAnterior = default;
                 }
-
+               
             }
+            
+            //if (anio>0) barras = barras.Where(b => b.fecha.Year == anio).ToList();
 
             //lstFacturas.OrderBy(f => f.fecha.Month == DateTime.Today.Month);
         }

@@ -13,6 +13,7 @@ namespace Easy_Stock
     {
         protected List<Barra> barrasMes = new List<Barra>();
         protected List<Barra> barrasDias = new List<Barra>();
+        protected List<Barra> barrasAnios = new List<Barra>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -22,10 +23,13 @@ namespace Easy_Stock
                 oReporte = AdReporte.ObtenerTotalFacturado(oReporte);
                 hTotal.InnerText = string.Format("{0} {1}", "Total facturado a la fecha: $", ((ReTotalFacturado)oReporte).CalcularTotalFacturado());
                 CargarGraficos();
+                Util.CargarComboYears(ref cboAnios);
             }
             else {
                 crtFacturacionPorMes.Series["Series"].Points.DataBindXY((List<string>)Session["auxMeses"], (List<Decimal>)Session["totalBarrasPorMes"]);
                 crtFacturacionPorDia.Series["Series"].Points.DataBindXY(new string[] { (string)Session["fechaDia"] }, (List<Decimal>)Session["totalBarrasPorDia"]);
+                crtFacturacionAnio.Series["Series"].Points.DataBindXY((List<string>)Session["auxMesesAnio"], (List<Decimal>)Session["totalBarrasPorMesAnio"]);
+
             }
         }
 
@@ -33,6 +37,7 @@ namespace Easy_Stock
         {
             CargarGraficoMes();
             CargarGraficoPorFecha();
+            CargarGraficoAnio();
 
         }
 
@@ -56,6 +61,31 @@ namespace Easy_Stock
             Session["auxMeses"] = auxMeses;
         }
 
+        private void CargarGraficoAnio(int anio = 0)
+        {
+            Reporte oReporte = new ReTotalFacturado();
+            ((ReTotalFacturado)oReporte).CambiarQueryPorAnio(anio);
+            oReporte = AdReporte.ObtenerTotalFacturadoGrafico(oReporte);
+            if (oReporte != null)
+            {
+                divMensajeNoEcontradoAnio.Visible = false;
+                ((ReTotalFacturado)oReporte).FiltrarTotalesPorMes(ref barrasAnios, anio);
+
+                List<string> auxMesesAnios = new List<string>();
+                foreach (var barra in this.barrasAnios)
+                {
+                    auxMesesAnios.Add(barra.DevolverNombreMes());
+                }
+                Session["totalBarrasPorMesAnio"] = TotalBarras(barrasAnios);
+                Session["auxMesesAnio"] = auxMesesAnios;
+
+                crtFacturacionAnio.Series["Series"].Points.DataBindXY(auxMesesAnios, (List<Decimal>)Session["totalBarrasPorMesAnio"]);
+            }
+            else {
+                MostrarMensajeNoEncontrado((int)Tipo.tipoMensajeNoEncontradoGraficos.noEncontradorPorAnios);
+            }
+    
+        }
         private void CargarGraficoPorFecha(DateTime fecha =default)
         {
             Reporte oReporte = new ReTotalFacturado();
@@ -107,6 +137,11 @@ namespace Easy_Stock
             CargarGraficoMes(cantidadMesesAnteriores);
         }
 
+        protected void cboAnios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int anio = Convert.ToInt32(((DropDownList)sender).SelectedValue);
+            CargarGraficoAnio(anio);
+        }
 
         private void MostrarMensajeNoEncontrado(int tipoMensajeAmostrar)
         {
@@ -117,6 +152,9 @@ namespace Easy_Stock
                     break;
                 case (int)Tipo.tipoMensajeNoEncontradoGraficos.noEncontradoPorMeses:
                     divNoEncontradoMes.Visible = true;
+                    break;
+                case (int)Tipo.tipoMensajeNoEncontradoGraficos.noEncontradorPorAnios:
+                    divMensajeNoEcontradoAnio.Visible = true;
                     break;
                 default:
                     break;

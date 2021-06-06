@@ -416,6 +416,7 @@
     <Compile Include="Entidades\TipoUsuario.cs" />
     <Compile Include="Entidades\Transaccion.cs" />
     <Compile Include="Entidades\Usuario.cs" />
+    <Compile Include="Entidades\Util.cs" />
     <Compile Include="Entidades\Validar.cs" />
     <Compile Include="Entidades\VentaCliente.cs" />
     <Compile Include="estadisticas.aspx.cs">

@@ -42,10 +42,10 @@
                     <h5>Total facturado por dia</h5>
                 </div>
 
-                
-            <div class="col-12 alert alert-warning" id="divMensajeNoEncontradoFecha" runat="server" visible="false">
-                <h6 id="hMensajeNoEncontradoFecha" runat="server">No se encontraron resultados para la fecha especificada</h6>
-            </div>
+
+                <div class="col-12 alert alert-warning" id="divMensajeNoEncontradoFecha" runat="server" visible="false">
+                    <h6 id="hMensajeNoEncontradoFecha" runat="server">No se encontraron resultados para la fecha especificada</h6>
+                </div>
 
                 <div id="div1" runat="server" class="col-12">
                     <asp:Chart ID="crtFacturacionPorDia" runat="server" Width="380px">
@@ -76,16 +76,6 @@
                         <asp:ListItem Value="1">Mes actual</asp:ListItem>
                         <asp:ListItem Value="3">Ultimos 3 meses</asp:ListItem>
                         <asp:ListItem Value="6">Ultimos 6 meses</asp:ListItem>
-               <%--         <asp:ListItem Value="4">Abril</asp:ListItem>
-                        <asp:ListItem Value="5">Mayo</asp:ListItem>
-                        <asp:ListItem Value="6">Junio</asp:ListItem>
-                        <asp:ListItem Value="7">Julio</asp:ListItem>
-                        <asp:ListItem Value="8">Agosto</asp:ListItem>
-                        <asp:ListItem Value="9">Septiembre</asp:ListItem>
-                        <asp:ListItem Value="10">Octubre</asp:ListItem>
-                        <asp:ListItem Value="11">Noviembre</asp:ListItem>
-                        <asp:ListItem Value="12">Diciembre</asp:ListItem>
-                        <asp:ListItem Value="13">- Todos -</asp:ListItem>--%>
                     </asp:DropDownList>
                 </div>
                 <div div="divTiempoPorDefecto" class="col-12 alert alert-secondary" runat="server" style="padding-left: 2%">
@@ -123,10 +113,46 @@
 
 
     </div>
-
-
     <!-------------------------------------------------------->
+    <div class="row col-12">
 
+        <div class="row col-12" style="padding-left: 4%">
+
+            <div class="form-group col-12">
+                <label for="cboAnios" class="control-label">Rango de años</label>
+                <asp:DropDownList class="form-control" ID="cboAnios" name="cboAnios" runat="server" AutoPostBack="true" OnSelectedIndexChanged="cboAnios_SelectedIndexChanged">
+                    <asp:ListItem Value="0">- Año actual -</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+            <div div="divTiempoPorDefecto" class="col-12 alert alert-secondary" runat="server" style="padding-left: 2%">
+                <h6 id="h2" runat="server">Año actual por defecto</h6>
+            </div>
+
+        </div>
+
+         <div class="col-12 alert alert-warning" id="divMensajeNoEcontradoAnio" runat="server" visible="false">
+                <h6 id="hMensajeNoEcontradoAnio" runat="server">No se encontraron resultados para el año especificado</h6>
+            </div>
+
+        <div id="divChartAnios" runat="server" class="col-12">
+
+            <div class="row col-12" style="padding-left: 2%">
+                <h5>Total facturado por año</h5>
+            </div>
+
+
+            <asp:Chart ID="crtFacturacionAnio" runat="server" Width="400px">
+                <Series>
+                    <asp:Series Name="Series">
+                    </asp:Series>
+                </Series>
+                <ChartAreas>
+                    <asp:ChartArea Name="ChartArea">
+                    </asp:ChartArea>
+                </ChartAreas>
+            </asp:Chart>
+        </div>
+    </div>
 
 
 
