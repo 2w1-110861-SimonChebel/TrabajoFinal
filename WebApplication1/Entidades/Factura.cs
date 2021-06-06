@@ -52,10 +52,10 @@ namespace Easy_Stock.Entidades
                     lstResultado.Add(
                         new DetalleFactura
                         {
-                          idDetalle = detalle.idDetalle,
-                          cantidad = auxProducto.cantidad,
-                          precio = detalle.precio,
-                          producto = auxProducto                         
+                            idDetalle = detalle.idDetalle,
+                            cantidad = auxProducto.cantidad,
+                            precio = detalle.precio,
+                            producto = auxProducto
                         }
                     );
                 }
@@ -63,6 +63,16 @@ namespace Easy_Stock.Entidades
             }
             lstResultado.OrderBy(r => r.producto.idProducto);
             return lstResultado;
+        }
+
+        public decimal CalcularIvaSobreTotal(decimal porcIva)
+        {
+            return this.total * Convert.ToDecimal(porcIva);
+        }
+
+        public decimal ObtenerTotalConIva(decimal porcIva=0)
+        {
+            return this.total + this.CalcularIvaSobreTotal(porcIva);
         }
 
     }

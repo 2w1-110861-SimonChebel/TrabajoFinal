@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace Easy_Stock.AccesoDatos
 {
@@ -947,8 +946,8 @@ namespace Easy_Stock.AccesoDatos
 
         private static int obtenerUltimoNroFactura()
         {
-            int nro = 0;
-            StringBuilder sql = new StringBuilder("SELECT MAX(nroFactura) FROM Facturas");
+            decimal nro = 0;
+            StringBuilder sql = new StringBuilder("SELECT IDENT_CURRENT('Facturas')");
             try
             {
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sql.ToString()))
@@ -956,7 +955,7 @@ namespace Easy_Stock.AccesoDatos
                     if (dr.HasRows)
                     {
                         dr.Read();
-                        nro = dr.IsDBNull(0) ? 0 : dr.GetInt32(0);
+                        nro = dr.IsDBNull(0) ? 0 : dr.GetDecimal(0);
                     }
                 }
             }
@@ -965,7 +964,7 @@ namespace Easy_Stock.AccesoDatos
                 return 0;
                 throw ex;
             }
-            return nro;
+            return Convert.ToInt32(nro);
         }
     }
 }

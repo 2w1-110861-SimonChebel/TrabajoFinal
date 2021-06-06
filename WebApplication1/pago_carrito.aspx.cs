@@ -146,7 +146,7 @@ namespace Easy_Stock
                     Usuario auxUsuario = (Usuario)Session["usuario"];
                     SmtpClient smtp = new SmtpClient();
                     Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoClientePorVentaCliente, oVenta, oClienteCarrito, auxUsuario, HtmlBody.BodyClientePorVentaCliente.Replace("@cliente", oClienteCarrito.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oClienteCarrito.nombre : oClienteCarrito.razonSocial));
-                    Envio.EnviarMail(smtp, "easystockar@gmail.com", ((Cliente)Session["clienteCarrito"]).email, "stock123*", HtmlBody.AsuntoUsuarioPorVentaCliente, oVenta, ((Cliente)Session["clienteCarrito"]), (Usuario)Session["usuario"], HtmlBody.BodyUsuarioPorVentaCliente.Replace("@usuario", auxUsuario.nombre));
+                    Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoUsuarioPorVentaCliente, oVenta, oClienteCarrito, auxUsuario, HtmlBody.BodyUsuarioPorVentaCliente.Replace("@usuario", auxUsuario.nombre));
                     Session["carrito"] = null;
                     Session["clienteCarrito"] = null;
                     Session["tipoTranActual"] = null;

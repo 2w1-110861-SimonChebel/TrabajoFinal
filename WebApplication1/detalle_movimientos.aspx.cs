@@ -29,30 +29,18 @@ namespace Easy_Stock
                         oVenta = AdTransaccion.obtenerDetalleVentaCliente(idTran, idTipoTran).First();
                         oVenta.factura.detallesFactura = AgruparDetallePorProducto(oVenta.factura.detallesFactura);
                         MostrarInfoCabecera(oVenta);
-                        //hNroTran.InnerText = string.Format("{0}{1}",hNroTran.InnerText,oVenta.idTransaccion);
-                        //hFecha.InnerText = string.Format("{0}{1}",hFecha.InnerText,oVenta.fecha.ToString());
-                        //hObservaciones.InnerText = string.Format("{0}{1}",hObservaciones.InnerText, oVenta.descripcion);
-                        //hCliente.InnerText = oVenta.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ?
-                        //    string.Format("{0}{1} {2}", hCliente.InnerText, oVenta.cliente.nombre, oVenta.cliente.apellido) :
-                        //    string.Format("{0}{1}", hCliente.InnerText, oVenta.cliente.razonSocial);
-                        //hOperador.InnerText = string.Format("{0}{1} {2}",hOperador.InnerText, oVenta.usuario.nombre,oVenta.usuario.apellido);
                         break;
+
                     case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
                         oCambio = AdTransaccion.obtenerDetalleCambioProducto(idTran,idTipoTran);
-                        MostrarInfoCabecera(oCambio);
-                        //hNroTran.InnerText = string.Format("{0}{1}", hNroTran.InnerText, oCambio.idTransaccion);
-                        //hFecha.InnerText = string.Format("{0}{1}", hFecha.InnerText, oCambio.fecha.ToString());
-                        //hObservaciones.InnerText = string.Format("{0}{1}", hObservaciones.InnerText, oCambio.descripcion);
-                        //hCliente.InnerText = oCambio.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ?
-                        //    string.Format("{0}{1} {2}", hCliente.InnerText, oCambio.cliente.nombre, oCambio.cliente.apellido) :
-                        //    string.Format("{0}{1}", hCliente.InnerText, oCambio.cliente.razonSocial);
-                        //hOperador.InnerText = string.Format("{0}{1} {2}", hOperador.InnerText, oCambio.usuario.nombre, oCambio.usuario.apellido);
-
+                        MostrarInfoCabecera(oCambio);    
                         break;
+
                     case (int)Tipo.tipoTransaccion.devolucionDeCliente:
                         oCambio = AdTransaccion.obtenerDetalleCambioProducto(idTran, idTipoTran);
                         MostrarInfoCabecera(oCambio);
                         break;
+
                     default:
                         break;
                 }

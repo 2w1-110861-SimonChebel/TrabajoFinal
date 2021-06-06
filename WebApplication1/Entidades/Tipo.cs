@@ -14,10 +14,10 @@ namespace Easy_Stock.Entidades
             persona = 1,
             empresa = 2
         }
-        public enum tipoEmpresa { 
+        public enum tipoEmpresa {
             pyme = 1,
             sa = 2,
-            srl =3,
+            srl = 3,
             autonomo = 4
         }
         public enum tipoFactura
@@ -42,9 +42,9 @@ namespace Easy_Stock.Entidades
             invitado = 3
         }
 
-        public enum estadoProducto { 
+        public enum estadoProducto {
             disponible = 1,
-            noDisponible =2,
+            noDisponible = 2,
             devuelto = 3,
             defectuoso = 4,
             cambio = 5
@@ -52,10 +52,16 @@ namespace Easy_Stock.Entidades
 
         public enum tipoDevolucionDineroCliente
         {
-            montoDevueltoAcliente =1,
+            montoDevueltoAcliente = 1,
             creditoAfavorDeCliente = 2
         }
 
+        public enum tipoMensajeNoEncontradoGraficos{
+
+            noEncontradoPorFecha = 1,
+            noEncontradoPorMeses =2,
+            noEncontradorPorAnios = 3
+        }
 
         public static List<int> tiposDevolucion { get; } = new List<int> {
             (int)tipoTransaccion.devolucionDeCliente,

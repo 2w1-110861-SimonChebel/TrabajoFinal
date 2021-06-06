@@ -73,7 +73,7 @@
                         <th scope="row"><%=item.producto.nombre%></th>
                         <td><%=item.cantidad%></td>
                         <td><%=item.precio %></td>
-                        <td><%=item.iva%></td>
+                        <td>21</td>
                         <td><%=item.subTotal%></td>
                     </tr>
                     <%
@@ -89,9 +89,9 @@
 
         <div class="row alert alert-primary" style="float: right; padding-left: 1%">
             <div class="col-12">
-                <h5 id="hTotalSinIva" runat="server">Total sin IVA: $<%=(oVenta.factura.total.ToString().Substring(0,6))%></h5>
-                <h5 id="hIva" runat="server">IVA: $<%=(oVenta.factura.total*Convert.ToDecimal(0.21)).ToString().Substring(0,7)%></h5>
-                <h3 id="hTotal" runat="server">Total: $<%=oVenta.factura.total.ToString().Replace(".",",")%></h3>
+                <h5 id="hTotalSinIva" runat="server">Total sin IVA: $<%=(oVenta.factura.total.ToString())%></h5>
+                <h5 id="hIva" runat="server">IVA: $<%=(oVenta.factura.CalcularIvaSobreTotal((decimal)0.21).ToString())%></h5>
+                <h3 id="hTotal" runat="server">Total: $<%=oVenta.factura.ObtenerTotalConIva((decimal)0.21).ToString().Replace(".",",")%></h3>
             </div>
         </div>
 

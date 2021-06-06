@@ -98,7 +98,10 @@ namespace Easy_Stock
                 }
                 else 
                 {
-                    //List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
+                    List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
+                    grvTransacciones.DataSource = lstMov;
+                    grvTransacciones.DataBind();
+                    if (lstMov == null) MostrarMensajeNoEcontrados();
                     //grvTransacciones.DataSource = lstMov;
                     //grvTransacciones.DataBind();
                     //if (lstMov == null) MostrarMensajeNoEcontrados();

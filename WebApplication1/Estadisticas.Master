@@ -1,0 +1,143 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Estadisticas.master.cs" Inherits="Easy_Stock.Estadisticas" %>
+
+<%@ Import Namespace="Easy_Stock.Entidades" %>
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="Bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="Bootstrap/css/bootstrap.grid.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <img src="~/Assets/ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <a class="navbar-brand" src="~/images/insignia.jpg" href="home.aspx">EasyStock</a>
+                    <%-- <a class="navbar-brand" href="#">
+                        <img src="//Assets\ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                     EasyStock
+                    </a>--%>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownProductos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Productos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="productos.aspx">Ver todos</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="editar_producto.aspx">Nuevo</a>
+                                <a class="dropdown-item" href="reponer_producto.aspx">Reponer</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="productos.aspx?accion=carrito&tipoTransaccion=<%=(int)Tipo.tipoTransaccion.ventaCliente%>">Nueva venta</a>
+                                <a class="dropdown-item" href="devolucion.aspx?accion=devolucion">Devolución</a>
+                                <a class="dropdown-item" href="devolucion.aspx?accion=cambio">Cambio</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="productos.aspx?accion=inactivos">Ver inactivos</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownClientes" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Clientes
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="clientes.aspx">Ver todos</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="editar_clientes.aspx">Nuevo Cliente</a>
+
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownDepositos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Depositos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="depositos.aspx">Ver todos</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="editar_deposito.aspx">Nuevo Deposito</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownProveedores" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Proveedores
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="proveedores.aspx">Ver todos</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="editar_deposito.aspx">Nuevo Proveedor</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="movimientos.aspx">Movimientos</a>
+                        </li>
+                        <%if (Session["usuario"] != null && ((Usuario)Session["usuario"]).tipoUsuario.idTipoUsuario == 1)
+                            {
+                        %>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="estadisticas.aspx">Estadisticas</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownUsuarios" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="usuarios.aspx">Administrar usuarios</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="editar_deposito.aspx">Nuevo</a>
+                            </div>
+                        </li>
+                        <%} %>
+                    </ul>
+                    <div class="form-inline" style="padding: 10px">
+                        <a class="navbar-brand">
+                            <asp:Label ID="lblUsuario" Text="" runat="server"></asp:Label></a>
+                    </div>
+                    <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />
+                </div>
+            </nav>
+
+
+
+
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+                <a class="navbar-brand" href=""></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="est_caja_total_facturado.aspx">Caja</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Ventas</a>
+                        </li>
+                    </ul>
+                    <span class="navbar-text">Navbar text with an inline element
+                    </span>
+                </div>
+            </nav>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

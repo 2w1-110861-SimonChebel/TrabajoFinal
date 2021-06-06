@@ -55,6 +55,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -128,6 +129,8 @@
     <Content Include="editar_producto.aspx" />
     <Content Include="editar_proveedor.aspx" />
     <Content Include="editar_usuario.aspx" />
+    <Content Include="estadisticas.aspx" />
+    <Content Include="est_caja_total_facturado.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
@@ -163,6 +166,7 @@
     <Content Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </Content>
+    <Content Include="Estadisticas.Master" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="principal.aspx" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -277,6 +281,7 @@
     <Compile Include="AccesoDatos\AdMarca.cs" />
     <Compile Include="AccesoDatos\AdProducto.cs" />
     <Compile Include="AccesoDatos\AdProveedor.cs" />
+    <Compile Include="AccesoDatos\AdReporte.cs" />
     <Compile Include="AccesoDatos\AdTransaccion.cs" />
     <Compile Include="AccesoDatos\AdUsuario.cs" />
     <Compile Include="AccesoDatos\SqlHelper.cs" />
@@ -373,6 +378,7 @@
     <Compile Include="editar_usuario.aspx.designer.cs">
       <DependentUpon>editar_usuario.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Entidades\Barra.cs" />
     <Compile Include="Entidades\Bootstrap.cs" />
     <Compile Include="Entidades\CambioProducto.cs" />
     <Compile Include="Entidades\CambioProductoCliente.cs" />
@@ -387,6 +393,7 @@
     <Compile Include="Entidades\Envio.cs" />
     <Compile Include="Entidades\EstadoProducto.cs" />
     <Compile Include="Entidades\Factura.cs" />
+    <Compile Include="Entidades\Fecha.cs" />
     <Compile Include="Entidades\FormaPago.cs" />
     <Compile Include="Entidades\HtmlBody.cs" />
     <Compile Include="Entidades\Inventario.cs" />
@@ -397,6 +404,9 @@
     <Compile Include="Entidades\ProductoReponer.cs" />
     <Compile Include="Entidades\Proveedor.cs" />
     <Compile Include="Entidades\Provincia.cs" />
+    <Compile Include="Entidades\Query.cs" />
+    <Compile Include="Entidades\Reporte.cs" />
+    <Compile Include="Entidades\ReTotalFacturado.cs" />
     <Compile Include="Entidades\Sexo.cs" />
     <Compile Include="Entidades\Tipo.cs" />
     <Compile Include="Entidades\TipoCliente.cs" />
@@ -408,6 +418,27 @@
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Validar.cs" />
     <Compile Include="Entidades\VentaCliente.cs" />
+    <Compile Include="estadisticas.aspx.cs">
+      <DependentUpon>estadisticas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="estadisticas.aspx.designer.cs">
+      <DependentUpon>estadisticas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Estadisticas.Master.cs">
+      <DependentUpon>Estadisticas.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Estadisticas.Master.designer.cs">
+      <DependentUpon>Estadisticas.Master</DependentUpon>
+    </Compile>
+    <Compile Include="est_caja_total_facturado.aspx.cs">
+      <DependentUpon>est_caja_total_facturado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="est_caja_total_facturado.aspx.designer.cs">
+      <DependentUpon>est_caja_total_facturado.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
