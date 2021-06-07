@@ -3,13 +3,7 @@
 <%@ Import Namespace="Easy_Stock.Entidades" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style type="text/css">
-        .auto-style1 {
-            left: -1px;
-            top: 0px;
-        }
-    </style>
-</asp:Content>
+    </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="login col-md-12 col-xl-12">
@@ -48,7 +42,7 @@
                 </div>
 
                 <div id="div1" runat="server" class="col-12">
-                    <asp:Chart ID="crtFacturacionPorDia" runat="server" Width="380px">
+                    <asp:Chart ID="crtFacturacionPorDia" runat="server" CssClass="table table-bordered table-condensed table-responsive"  Width="380px">
                         <Series>
                             <asp:Series Name="Series">
                             </asp:Series>
@@ -95,8 +89,8 @@
             <div class="row col-12">
 
 
-                <div id="divChartTotalPorMes" runat="server" class="col-12">
-                    <asp:Chart ID="crtFacturacionPorMes" runat="server" Width="400px">
+                <div id="divChartTotalPorMes" runat="server"  class="col-12">
+                    <asp:Chart ID="crtFacturacionPorMes" CssClass="table table-bordered table-condensed table-responsive" runat="server" Width="400px">
                         <Series>
                             <asp:Series Name="Series">
                             </asp:Series>
@@ -144,7 +138,7 @@
 
         <div id="divChartAnios" runat="server" class="col-12">
 
-            <asp:Chart ID="crtFacturacionAnio" runat="server" Width="400px">
+            <asp:Chart ID="crtFacturacionAnio" runat="server" CssClass="table table-bordered table-condensed table-responsive"  Width="900px">
                 <Series>
                     <asp:Series Name="Series">
                     </asp:Series>

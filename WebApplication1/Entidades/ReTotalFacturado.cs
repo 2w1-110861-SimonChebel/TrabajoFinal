@@ -117,16 +117,22 @@ namespace Easy_Stock.Entidades
                 {
                     totalPorMes += item.total;                 
                 }
-                else
+                if (cont < facturas.Count)
                 {
-                    //pregunta si es el ultimo dato y suma el valor a totalPorMes
-                    if (cont == this.facturas.Count) totalPorMes += item.total;
-                    if (item.fecha.Month != mesIterando) barras.Add(new Barra { fecha = fechaAnterior, total = totalPorMes });
-                    else barras.Add(new Barra { fecha = item.fecha, total = totalPorMes });
-                    totalPorMes = 0;
-                    mesIterando = 0;
-                    fechaAnterior = default;
+                    if (facturas[cont].fecha.Month != mesIterando)
+                    {
+                        //pregunta si es el ultimo dato y suma el valor a totalPorMes
+                        if (cont == this.facturas.Count) totalPorMes += item.total;
+                        if (item.fecha.Month != mesIterando) barras.Add(new Barra { fecha = fechaAnterior, total = totalPorMes });
+                        else barras.Add(new Barra { fecha = item.fecha, total = totalPorMes });
+                        totalPorMes = 0;
+                        mesIterando = 0;
+                        fechaAnterior = default;
+                    }
+                    else continue;
+                 
                 }
+                else { barras.Add(new Barra { fecha = item.fecha, total = totalPorMes });}
                
             }
             
