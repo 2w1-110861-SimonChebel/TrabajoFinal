@@ -49,12 +49,20 @@
     <Reference Include="AspNet.ScriptManager.bootstrap, Version=4.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AspNet.ScriptManager.bootstrap.4.6.0\lib\net45\AspNet.ScriptManager.bootstrap.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -120,6 +128,16 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="DataBase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataBase.Context.cs</LastGenOutput>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Content>
+    <Content Include="DataBase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+      <LastGenOutput>DataBase.cs</LastGenOutput>
+    </Content>
     <Content Include="Default.aspx" />
     <Content Include="depositos.aspx" />
     <Content Include="detalle_movimientos.aspx" />
@@ -167,6 +185,13 @@
       <Link>.editorconfig</Link>
     </Content>
     <Content Include="Estadisticas.Master" />
+    <EntityDeploy Include="DataBase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DataBase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DataBase.edmx.diagram">
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="principal.aspx" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -294,12 +319,18 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Categorias.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="clientes.aspx.cs">
       <DependentUpon>clientes.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="clientes.aspx.designer.cs">
       <DependentUpon>clientes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Clientes.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="cliente_carrito.aspx.cs">
       <DependentUpon>cliente_carrito.aspx</DependentUpon>
@@ -315,6 +346,21 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DataBase.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataBase.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataBase.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -329,12 +375,27 @@
     <Compile Include="depositos.aspx.designer.cs">
       <DependentUpon>depositos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Depositos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Detalles_Facturas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Detalles_Pedidos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Detalles_Remitos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="detalle_movimientos.aspx.cs">
       <DependentUpon>detalle_movimientos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="detalle_movimientos.aspx.designer.cs">
       <DependentUpon>detalle_movimientos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Deudas_Clientes.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="devolucion.aspx.cs">
       <DependentUpon>devolucion.aspx</DependentUpon>
@@ -377,6 +438,9 @@
     </Compile>
     <Compile Include="editar_usuario.aspx.designer.cs">
       <DependentUpon>editar_usuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Empresas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Barra.cs" />
     <Compile Include="Entidades\Bootstrap.cs" />
@@ -433,12 +497,21 @@
     <Compile Include="Estadisticas.Master.designer.cs">
       <DependentUpon>Estadisticas.Master</DependentUpon>
     </Compile>
+    <Compile Include="Estados_Productos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="est_caja_total_facturado.aspx.cs">
       <DependentUpon>est_caja_total_facturado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="est_caja_total_facturado.aspx.designer.cs">
       <DependentUpon>est_caja_total_facturado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Facturas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Formas_Pago.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -457,6 +530,21 @@
     <Compile Include="Header.Master.designer.cs">
       <DependentUpon>Header.Master</DependentUpon>
     </Compile>
+    <Compile Include="Inventario.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Localidades.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Lotes.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LotesxProductos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Marcas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="movimientos.aspx.cs">
       <DependentUpon>movimientos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -470,6 +558,9 @@
     </Compile>
     <Compile Include="pago_carrito.aspx.designer.cs">
       <DependentUpon>pago_carrito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pedidos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="principal.aspx.cs">
       <DependentUpon>principal.aspx</DependentUpon>
@@ -485,6 +576,9 @@
     <Compile Include="productos.aspx.designer.cs">
       <DependentUpon>productos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Productos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proveedores.aspx.cs">
       <DependentUpon>proveedores.aspx</DependentUpon>
@@ -493,12 +587,27 @@
     <Compile Include="proveedores.aspx.designer.cs">
       <DependentUpon>proveedores.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Proveedores.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Provincias.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Remitos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="reponer_producto.aspx.cs">
       <DependentUpon>reponer_producto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="reponer_producto.aspx.designer.cs">
       <DependentUpon>reponer_producto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sexos.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Site.Mobile.Master.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
@@ -508,12 +617,57 @@
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
     <Compile Include="Entidades\Sucursal.cs" />
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sucursales.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos_Clientes.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos_Devoluciones.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos_Empresas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos_Facturas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos_Reportes.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos_Transacciones.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tipos_Usuarios.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transacciones.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transacciones_x_Transacciones.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Transportistas.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
     <Compile Include="usuarios.aspx.cs">
       <DependentUpon>usuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="usuarios.aspx.designer.cs">
       <DependentUpon>usuarios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios.cs">
+      <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="venta_cliente.aspx.cs">
       <DependentUpon>venta_cliente.aspx</DependentUpon>
@@ -559,6 +713,7 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

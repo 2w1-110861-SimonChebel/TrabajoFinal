@@ -46,19 +46,28 @@ namespace Easy_Stock
             Reporte oReporte = new ReTotalFacturado();
             ((ReTotalFacturado)oReporte).CambiarQueryPorMes(meses);
             oReporte = AdReporte.ObtenerTotalFacturadoGrafico(oReporte);
-            int cantidadFacturas = ((ReTotalFacturado)oReporte).facturas.Count;
 
-            ((ReTotalFacturado)oReporte).FiltrarTotalesPorMes(ref barrasMes);
-
-            List<string> auxMeses = new List<string>();
-            foreach (var barra in this.barrasMes)
+            if (oReporte != null)
             {
-                auxMeses.Add(barra.DevolverNombreMes());
-            }
+                int cantidadFacturas = ((ReTotalFacturado)oReporte).facturas.Count;
 
-            crtFacturacionPorMes.Series["Series"].Points.DataBindXY(auxMeses, TotalBarras(barrasMes));
-            Session["totalBarrasPorMes"] = TotalBarras(barrasMes);
-            Session["auxMeses"] = auxMeses;
+                ((ReTotalFacturado)oReporte).FiltrarTotalesPorMes(ref barrasMes);
+
+                List<string> auxMeses = new List<string>();
+                foreach (var barra in this.barrasMes)
+                {
+                    auxMeses.Add(barra.DevolverNombreMes());
+                }
+
+                crtFacturacionPorMes.Series["Series"].Points.DataBindXY(auxMeses, TotalBarras(barrasMes));
+                Session["totalBarrasPorMes"] = TotalBarras(barrasMes);
+                Session["auxMeses"] = auxMeses;
+            }
+            else 
+            {
+                MostrarMensajeNoEncontrado((int)Tipo.tipoMensajeNoEncontradoGraficos.noEncontradoPorMeses);
+            }
+            
         }
 
         private void CargarGraficoAnio(int anio = 0)
@@ -92,13 +101,21 @@ namespace Easy_Stock
             ((ReTotalFacturado)oReporte).CambiarQueryPorDia();
 
             oReporte=  AdReporte.ObtenerTotalFacturadoGrafico(oReporte);
+            if (oReporte != null)
+            {
+                ((ReTotalFacturado)oReporte).FiltrarTotalPorDia(ref barrasDias);
 
-            ((ReTotalFacturado)oReporte).FiltrarTotalPorDia(ref barrasDias);
+                crtFacturacionPorDia.Series["Series"].Points.DataBindXY(new string[] { barrasDias.First().fecha.ToShortDateString() }, TotalBarras(barrasDias));
 
-            crtFacturacionPorDia.Series["Series"].Points.DataBindXY(new string[] { barrasDias.First().fecha.ToShortDateString() }, TotalBarras(barrasDias));
+                Session["totalBarrasPorDia"] = TotalBarras(barrasDias);
+                Session["fechaDia"] = barrasDias.First().fecha.ToShortDateString();
+            }
+            else
+            {
+                MostrarMensajeNoEncontrado((int)Tipo.tipoMensajeNoEncontradoGraficos.noEncontradoPorFecha);
+            }
 
-            Session["totalBarrasPorDia"] = TotalBarras(barrasDias);
-            Session["fechaDia"] = barrasDias.First().fecha.ToShortDateString();
+        
         }
 
         private List<Decimal> TotalBarras(List<Barra>lstBarras)

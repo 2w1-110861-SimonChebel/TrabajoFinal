@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1788eec5a43f4059888eabf807473ca2" Name="Diagram1">
+        <EntityTypeShape EntityType="Easy_Stock_Model.Categorias" Width="1.5" PointX="14.25" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Clientes" Width="1.5" PointX="5.25" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Depositos" Width="1.5" PointX="14.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Detalles_Facturas" Width="1.5" PointX="12.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Detalles_Pedidos" Width="1.5" PointX="15.75" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Detalles_Remitos" Width="1.5" PointX="18.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Deudas_Clientes" Width="1.5" PointX="7.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Empresas" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Estados_Productos" Width="1.5" PointX="16.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Facturas" Width="1.5" PointX="10.5" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Formas_Pago" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Inventario" Width="1.5" PointX="18.75" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Localidades" Width="1.5" PointX="3" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Lotes" Width="1.5" PointX="16.5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.LotesxProductos" Width="1.5" PointX="18.75" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Marcas" Width="1.5" PointX="14.25" PointY="26.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Pedidos" Width="1.5" PointX="10.5" PointY="19.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Productos" Width="1.5" PointX="16.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Proveedores" Width="1.5" PointX="8.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Provincias" Width="1.5" PointX="0.75" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Remitos" Width="1.5" PointX="10.5" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Reportes" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Sexos" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Sucursales" Width="1.5" PointX="8.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Tipos_Clientes" Width="1.5" PointX="3" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Tipos_Devoluciones" Width="1.5" PointX="11.25" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Tipos_Empresas" Width="1.5" PointX="3" PointY="26.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Tipos_Facturas" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Tipos_Reportes" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Tipos_Transacciones" Width="1.5" PointX="11.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Tipos_Usuarios" Width="1.5" PointX="9" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Transacciones" Width="1.5" PointX="13.5" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Transacciones_x_Transacciones" Width="1.5" PointX="15.75" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Transportistas" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Easy_Stock_Model.Usuarios" Width="1.5" PointX="11.25" PointY="30.125" IsExpanded="true" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Productos_Categorias" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Clientes_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Clientes_Localidades" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Clientes_Provincias" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Clientes_Tipos_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Clientes_Tipos_Empresas" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Deudas_Clientes_Deudas_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Facturas_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Remitos_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_Clientes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Productos_Depositos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Sucursales_Depositos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Datalles_Facturas_Facturas" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Detalles_Facturas_Inventario" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Detalles_Pedidos_Pedidos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Detalles_Pedidos_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Detalles_Remitos_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Facturas_Empresas" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Inventario_Estados_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Facturas_Formas_Pago" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Facturas_Transacciones" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Remitos_Formas_Pago" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_Formas_Pago" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Inventario_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Inventario_Transacciones" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Localidades_Provincias" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Proveedores_Localidades" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Sucursales_Localidades" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_LotesxProductos_Lotes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_LotesxProductos_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Productos_Marcas" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Pedidos_Proveedores" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Productos_Productos" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Productos_Proveedores" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Proveedores_Provincias" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_Proveedores" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Sucursales_Provincias" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Remitos_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Reportes_Tipos_Reportes" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Tipos_Devoluciones_Tipos_Devoluciones" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_Tipos_Devoluciones" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_Tipos_Transacciones" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Usuarios_Tipos_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_Transacciones" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_Usuarios" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_x_Transacciones_Transacciones" ManuallyRouted="false" />
+        <AssociationConnector Association="Easy_Stock_Model.FK_Transacciones_x_Transacciones_Transacciones1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

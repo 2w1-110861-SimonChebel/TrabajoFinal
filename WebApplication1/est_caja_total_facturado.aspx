@@ -25,6 +25,10 @@
         <div class="col-sm-12 col-xs-12 col-md-6 col-xl-6">
 
             <div class="row col-12" style="padding-left: 4%">
+
+                <div class="row col-12" style="padding-left: 2%">
+                    <h5>Total facturado por dia</h5>
+                </div>
                 <div class="form-group col-12">
                     <label for="txtFechaDias" class="control-label">Filtrar por fecha especifica</label>
                     <asp:TextBox ID="txtFechaDias" class="form-control" runat="server" TextMode="Date" AutoPostBack="true" OnTextChanged="txtFechaDias_TextChanged">
@@ -38,10 +42,6 @@
 
 
             <div class="row col-12">
-                <div class="row col-12" style="padding-left: 2%">
-                    <h5>Total facturado por dia</h5>
-                </div>
-
 
                 <div class="col-12 alert alert-warning" id="divMensajeNoEncontradoFecha" runat="server" visible="false">
                     <h6 id="hMensajeNoEncontradoFecha" runat="server">No se encontraron resultados para la fecha especificada</h6>
@@ -69,6 +69,10 @@
         <div class="col-sm-12 col-xs-12 col-md-6 col-xl-6">
             <div class="row col-12" style="padding-left: 4%">
 
+                <div class="row col-12" style="padding-left: 2%">
+                    <h5>Total facturado por meses</h5>
+                </div>
+
                 <div class="form-group col-12">
                     <label for="cboMeses" class="control-label">Rango de meses</label>
                     <asp:DropDownList class="form-control" ID="cboMeses" name="cboMeses" runat="server" AutoPostBack="true" OnSelectedIndexChanged="cboMeses_SelectedIndexChanged">
@@ -89,9 +93,7 @@
             </div>
 
             <div class="row col-12">
-                <div class="row col-12" style="padding-left: 2%">
-                    <h5>Total facturado por meses</h5>
-                </div>
+
 
                 <div id="divChartTotalPorMes" runat="server" class="col-12">
                     <asp:Chart ID="crtFacturacionPorMes" runat="server" Width="400px">
@@ -114,12 +116,18 @@
 
     </div>
     <!-------------------------------------------------------->
+    <div class="dropdown-divider"></div>
+    <div class="dropdown-divider"></div>
     <div class="row col-12">
 
         <div class="row col-12" style="padding-left: 4%">
+          
+            <div class="row col-12" style="padding-left: 2%">
+                <h5>Total facturado por año</h5>
+            </div>
 
             <div class="form-group col-12">
-                <label for="cboAnios" class="control-label">Rango de años</label>
+                <label for="cboAnios" class="control-label">Por año</label>
                 <asp:DropDownList class="form-control" ID="cboAnios" name="cboAnios" runat="server" AutoPostBack="true" OnSelectedIndexChanged="cboAnios_SelectedIndexChanged">
                     <asp:ListItem Value="0">- Año actual -</asp:ListItem>
                 </asp:DropDownList>
@@ -130,16 +138,11 @@
 
         </div>
 
-         <div class="col-12 alert alert-warning" id="divMensajeNoEcontradoAnio" runat="server" visible="false">
-                <h6 id="hMensajeNoEcontradoAnio" runat="server">No se encontraron resultados para el año especificado</h6>
-            </div>
+        <div class="col-12 alert alert-warning" id="divMensajeNoEcontradoAnio" runat="server" visible="false">
+            <h6 id="hMensajeNoEcontradoAnio" runat="server">No se encontraron resultados para el año especificado</h6>
+        </div>
 
         <div id="divChartAnios" runat="server" class="col-12">
-
-            <div class="row col-12" style="padding-left: 2%">
-                <h5>Total facturado por año</h5>
-            </div>
-
 
             <asp:Chart ID="crtFacturacionAnio" runat="server" Width="400px">
                 <Series>
