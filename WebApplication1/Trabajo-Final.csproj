@@ -149,6 +149,8 @@
     <Content Include="editar_usuario.aspx" />
     <Content Include="estadisticas.aspx" />
     <Content Include="est_caja_total_facturado.aspx" />
+    <Content Include="est_clientes_ranking_ventas.aspx" />
+    <Content Include="est_ventas.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
@@ -471,6 +473,7 @@
     <Compile Include="Entidades\Query.cs" />
     <Compile Include="Entidades\Reporte.cs" />
     <Compile Include="Entidades\ReTotalFacturado.cs" />
+    <Compile Include="Entidades\ReVenta.cs" />
     <Compile Include="Entidades\Sexo.cs" />
     <Compile Include="Entidades\Tipo.cs" />
     <Compile Include="Entidades\TipoCliente.cs" />
@@ -478,6 +481,8 @@
     <Compile Include="Entidades\TipoFactura.cs" />
     <Compile Include="Entidades\TipoTransaccion.cs" />
     <Compile Include="Entidades\TipoUsuario.cs" />
+    <Compile Include="Entidades\TotalCategoriaxFactura.cs" />
+    <Compile Include="Entidades\TotalPorProducto.cs" />
     <Compile Include="Entidades\Transaccion.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Entidades\Util.cs" />
@@ -506,6 +511,20 @@
     </Compile>
     <Compile Include="est_caja_total_facturado.aspx.designer.cs">
       <DependentUpon>est_caja_total_facturado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="est_clientes_ranking_ventas.aspx.cs">
+      <DependentUpon>est_clientes_ranking_ventas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="est_clientes_ranking_ventas.aspx.designer.cs">
+      <DependentUpon>est_clientes_ranking_ventas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="est_ventas.aspx.cs">
+      <DependentUpon>est_ventas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="est_ventas.aspx.designer.cs">
+      <DependentUpon>est_ventas.aspx</DependentUpon>
     </Compile>
     <Compile Include="Facturas.cs">
       <DependentUpon>DataBase.tt</DependentUpon>

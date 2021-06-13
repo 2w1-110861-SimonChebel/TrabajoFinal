@@ -172,6 +172,8 @@ namespace Easy_Stock
             Session["carrito"] = null;
             Session["clienteCarrito"] = null;
             Session["tipoTranActual"] = null;
+            Session["totalSinRecargo"] = null;
+            Session["totalConRecargo"] = null;
             Response.Redirect("home.aspx?", true);
         }
 

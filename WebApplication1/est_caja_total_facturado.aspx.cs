@@ -26,9 +26,9 @@ namespace Easy_Stock
                 Util.CargarComboYears(ref cboAnios);
             }
             else {
-                crtFacturacionPorMes.Series["Series"].Points.DataBindXY((List<string>)Session["auxMeses"], (List<Decimal>)Session["totalBarrasPorMes"]);
-                crtFacturacionPorDia.Series["Series"].Points.DataBindXY(new string[] { (string)Session["fechaDia"] }, (List<Decimal>)Session["totalBarrasPorDia"]);
-                crtFacturacionAnio.Series["Series"].Points.DataBindXY((List<string>)Session["auxMesesAnio"], (List<Decimal>)Session["totalBarrasPorMesAnio"]);
+                if(Session["auxMeses"] != null && Session["totalBarrasPorMes"]!= null) crtFacturacionPorMes.Series["Series"].Points.DataBindXY((List<string>)Session["auxMeses"], (List<Decimal>)Session["totalBarrasPorMes"]);
+                if(Session["fechaDia"]!= null && Session["totalBarrasPorDia"]!= null) crtFacturacionPorDia.Series["Series"].Points.DataBindXY(new string[] { ((string[])Session["fechaDia"])[0] }, (List<Decimal>)Session["totalBarrasPorDia"]);
+                if(Session["auxMesesAnio"]!= null && Session["totalBarrasPorMesAnio"]!= null) crtFacturacionAnio.Series["Series"].Points.DataBindXY((List<string>)Session["auxMesesAnio"], (List<Decimal>)Session["totalBarrasPorMesAnio"]);
 
             }
         }
@@ -140,6 +140,8 @@ namespace Easy_Stock
                 divMensajeNoEncontradoFecha.Visible = false;
                 ((ReTotalFacturado)oReporte).FiltrarTotalPorDia(ref barrasDias, fecha);
                 crtFacturacionPorDia.Series["Series"].Points.DataBindXY(new string[] { barrasDias.First().fecha.ToShortDateString() }, TotalBarras(barrasDias));
+                Session["fechaDia"] = new string[] { barrasDias.First().fecha.ToShortDateString() };
+                Session["totalBarrasPorDia"] = TotalBarras(barrasDias);
             }
             else 
             {

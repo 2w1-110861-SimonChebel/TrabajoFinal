@@ -16,7 +16,7 @@
                 <h5>Utlimos 5 movimientos</h5>
                 <h6 id="hMensMov" runat="server" visible="false">No se econtraron registros</h6>
             </div>
-            <table class="table table-striped table-info">
+            <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">Fecha</th>

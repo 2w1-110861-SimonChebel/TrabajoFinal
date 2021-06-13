@@ -18,6 +18,9 @@ namespace Easy_Stock.Entidades
         public Usuario usuario { get; set; } = null;
         public int iva { get; set; } = 0;
 
+        //para el ranking de clientes
+        public int cantidadFacutasPorCliente { get; set; } = 0;
+
         public Factura()
         {
             empresa = new Empresa();

@@ -44,11 +44,13 @@
                 <div id="div1" runat="server" class="col-12">
                     <asp:Chart ID="crtFacturacionPorDia" runat="server" CssClass="table table-bordered table-condensed table-responsive"  Width="380px">
                         <Series>
-                            <asp:Series Name="Series">
+                            <asp:Series Name="Series" XValueMember="0" YValueMembers="2" IsValueShownAsLabel="true">
                             </asp:Series>
                         </Series>
                         <ChartAreas>
                             <asp:ChartArea Name="ChartArea">
+                                 <AxisY Title="Total facturado"></AxisY>
+                                <AxisX Title="Fecha"></AxisX>
                             </asp:ChartArea>
                         </ChartAreas>
                     </asp:Chart>
@@ -92,11 +94,13 @@
                 <div id="divChartTotalPorMes" runat="server"  class="col-12">
                     <asp:Chart ID="crtFacturacionPorMes" CssClass="table table-bordered table-condensed table-responsive" runat="server" Width="400px">
                         <Series>
-                            <asp:Series Name="Series">
+                            <asp:Series Name="Series" XValueMember="0" YValueMembers="2" IsValueShownAsLabel="true">
                             </asp:Series>
                         </Series>
                         <ChartAreas>
                             <asp:ChartArea Name="ChartArea">
+                                 <AxisY Title="Total facturado"></AxisY>
+                                <AxisX Title="Meses"></AxisX>
                             </asp:ChartArea>
                         </ChartAreas>
                     </asp:Chart>
@@ -104,9 +108,6 @@
 
             </div>
         </div>
-
-
-
 
     </div>
     <!-------------------------------------------------------->
@@ -140,11 +141,13 @@
 
             <asp:Chart ID="crtFacturacionAnio" runat="server" CssClass="table table-bordered table-condensed table-responsive"  Width="900px">
                 <Series>
-                    <asp:Series Name="Series">
+                    <asp:Series Name="Series" XValueMember="0" YValueMembers="2" IsValueShownAsLabel="true">
                     </asp:Series>
                 </Series>
                 <ChartAreas>
                     <asp:ChartArea Name="ChartArea">
+                         <AxisY Title="Total facturado"></AxisY>
+                          <AxisX Title="Meses"></AxisX>
                     </asp:ChartArea>
                 </ChartAreas>
             </asp:Chart>

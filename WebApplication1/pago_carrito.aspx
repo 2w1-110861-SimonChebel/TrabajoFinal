@@ -3,8 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <script type="text/javascript">
-        function preguntar()
-        {
+        function preguntar() {
             return confirm("¿Desea cancelar y volver al menú principal");
         }
     </script>
@@ -22,22 +21,27 @@
         </div>
     </div>
     <div class="row col-12">
-        <div class="form-group col-4" style="padding: 10px; padding-bottom: 2px">
+        <%--<div class="form-group col-4" style="padding: 10px; padding-bottom: 2px">
             <h5>Cliente</h5>
-        </div>
+        </div>--%>
 
-        <div class="form-group col-4" style="padding: 10px; padding-bottom: 2px">
+        <%--        <div class="form-group col-4" style="padding: 10px; padding-bottom: 2px">
             <h5>Productos</h5>
-        </div>
+        </div>--%>
 
-        <div class="form-group col-4" style="padding: 10px; padding-bottom: 2px">
+        <%--    <div class="form-group col-4" style="padding: 10px; padding-bottom: 2px">
             <h5>Forma de pago</h5>
-        </div>
+        </div>--%>
     </div>
 
     <div class="row col-12">
 
         <div id="divDatosCliente" class="form-group col-xl-3 col-md-3 col-xs-12" runat="server">
+
+            <div class="form-group col-4 col-sm-12 col-xs-12" style="padding: 10px; padding-bottom: 2px">
+                <h5>Cliente</h5>
+            </div>
+
             <div class="form-group">
                 <label for="txtCliente" class="control-label">Cliente</label>
                 <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtCliente" name="txtCliente" runat="server" MaxLength="70"> </asp:TextBox>
@@ -69,6 +73,11 @@
 
 
         <div id="divProductos" class="form-group col-xl-5 col-md-5 col-xs-12" runat="server">
+
+            <div class="form-group col-4 col-sm-12 col-xs-12" style="padding: 10px; padding-bottom: 2px">
+                <h5>Productos</h5>
+            </div>
+
             <div class="form-group">
                 <div id="accordion">
                     <div class="card">
@@ -133,6 +142,10 @@
 
         <div id="divFormaPago" runat="server" class="form-group col-xl-4 col-md-4 col-xs-12">
 
+            <div class="form-group col-4 col-sm-12 col-xs-12" style="padding: 10px; padding-bottom: 2px">
+                <h5>Forma de pago</h5>
+            </div>
+
             <div class="form-group">
                 <label for="txtTipoTran" class="control-label">Acción</label>
                 <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtTipoTran" name="txtTipoTran" runat="server" MaxLength="70"> </asp:TextBox>
@@ -154,7 +167,7 @@
 
             <h6 id="hTotalSinRecargo" runat="server">Total sin recargo: $0,0</h6>
             <h6 id="hRecargo" runat="server">Recargo: $0,0</h6>
-            <h6 id="hIva" runat="server"> IVA: 21%</h6>
+            <h6 id="hIva" runat="server">IVA: 21%</h6>
             <h4 id="hTotal" runat="server"></h4>
             <div class="row" style="padding: 5px">
                 <div style="padding: 5px">

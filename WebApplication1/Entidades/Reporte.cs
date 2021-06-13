@@ -12,5 +12,6 @@ namespace Easy_Stock.Entidades
         {
             query = new Query();
         }
+
     }
 }

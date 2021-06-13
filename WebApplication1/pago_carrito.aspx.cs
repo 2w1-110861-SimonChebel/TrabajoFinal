@@ -36,7 +36,7 @@ namespace Easy_Stock
                 txtLocalidad.Text = oClienteCarrito.localidad.localidad;
                 txtProvincia.Text = oClienteCarrito.provincia.provincia;
                 Session["totalSinRecargo"] = totalSinRecargo;
-                Session["totalConRecargo"] =
+                Session["totalConRecargo"] = totalConRecargo;
                 hTotalSinRecargo.InnerText = string.Format("{0} {1}", "Total sin recargo: $", totalSinRecargo);
                 hTotal.InnerText = string.Format("{0} {1}", "Total: $", totalConRecargo);
                 cargarCombos();
@@ -82,6 +82,8 @@ namespace Easy_Stock
             Session["carrito"] = null;
             Session["clienteCarrito"] = null;
             Session["tipoTranActual"] = null;
+            Session["totalSinRecargo"] = null;
+            Session["totalConRecargo"] = null;
             Response.Redirect("home.aspx", false);
         }
 
