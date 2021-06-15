@@ -154,7 +154,33 @@
         </div>
     </div>
 
+  <%--  <script type="text/javascript">
+        $(document).ready(function () {
+            $("#ctl00$ContentPlaceHolder1$txtFechaDias").change(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "Service/AjaxService/CargarGraficoAnio",
+                    cache: false,
+                    async: true,
+                    data: "{}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (resultado) {
+                        var item = resultado.data;
+                        $.each(item, function (index, it) {
+                            $("#ContentPlaceHolder1_txtFechaDias").append(
+                                "<div> <h5>HOLA</h5> </div>"
+                            );
+                        });
+                    },
+                    error: function (result) {
+                        alert("ERROR");
+                    }
+                });
+            });
 
+        });
+    </script>--%>
 
 </asp:Content>
 

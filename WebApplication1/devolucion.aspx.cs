@@ -2,11 +2,6 @@
 using Easy_Stock.Entidades;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Easy_Stock
@@ -200,13 +195,17 @@ namespace Easy_Stock
             divMensaje.Visible = false;
             Session["totalDevolver"] = null;
             Session["cantidad"] = null;
+            List<Producto> lstProdDevolver = new List<Producto>();
             decimal total = 0;
             int cantidad = Session["cantidad"]!= null ? Convert.ToInt32(Session["cantidad"]):0;
             foreach (DetalleFactura df in ((Factura)Session["facturaVentaDevolucion"]).detallesFactura)
             {
                 total += df.producto.calcularSubTotal();
                 cantidad++;
+                lstProdDevolver.Add(df.producto);
             }
+
+            Session["productosDevolver"] = lstProdDevolver;
 
             foreach (GridViewRow fila in grvDetalleVenta.Rows)
             {

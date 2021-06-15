@@ -859,7 +859,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" FROM Facturas f join Detalles_Facturas DF on f.nroFactura = df.nroFactura ");
                 sbSql.Append(" JOIN Productos p on p.idProducto = df.idProducto ");
                 sbSql.Append(" JOIN Transacciones t on f.idTransaccion = t.idTransaccion");
-                sbSql.Append(" JOIN Inventario inv on inv.idInventario = df.idInventario");
+                sbSql.Append(" LEFT JOIN Inventario inv on inv.idInventario = df.idInventario");
                 sbSql.Append(" JOIN Clientes c  on c.idCliente = f.idCliente");
                 sbSql.Append(" where f.idTransaccion = @idTransaccion ORDER BY f.nroFactura");
                 if (idTransaccion > 0)
