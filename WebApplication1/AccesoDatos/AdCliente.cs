@@ -30,6 +30,34 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
+        public static int ObtenerClientePorDocumento(string documento)
+        {
+            int resultado = 0;
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT idCliente FROM CLIENTES WHERE (dni=@valor or cuit=@valor)");
+                SqlParameter[] parametros = {
+                    new SqlParameter("@valor", documento),
+                };
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros))
+                {
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        resultado = dr.IsDBNull(0) ? 0 : dr.GetInt32(0);
+                    }
+                }
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                throw ex;
+            }            
+            
+        }
+
         public static bool agregarCliente(Cliente oCliente, int tipoCliente)
         {
             sbSql = null;
@@ -60,9 +88,7 @@ namespace Easy_Stock.AccesoDatos
                 }
                 else
                 {
-                    sbSql.Append("SP_AgregarClienteEmpresa");
-                    //sbSql = new StringBuilder("INSERT INTO Clientes(idTipoCliente,telefono,email,direccion,idLocalidad,idProvincia,codigoPostal,idTipoEmpresa,razonSocial,barrio,cuit,habilitado)");
-                    //sbSql.Append("VALUES(@idTipoCliente,@telefono,@email,@direccion,@idLocalidad,@idProvincia,@codigoPostal,@idTipoEmpresa,@razonSocial,@barrio,@cuit,@habilitado)");
+                    sbSql = new StringBuilder("SP_AgregarClienteEmpresa");
 
                     SqlParameter[] parametros = {
                     new SqlParameter("@idTipoCliente", oCliente.tipoCliente.idTipoCliente),

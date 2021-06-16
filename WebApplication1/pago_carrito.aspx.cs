@@ -22,6 +22,7 @@ namespace Easy_Stock
             {
                 txtTipoTran.Text = Session["tipoTranActual"] != null ? ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion: "Undefined";
                 this.oClienteCarrito = (Cliente)Session["clienteCarrito"];
+                if (oClienteCarrito.idCliente == 0 || oClienteCarrito.idCliente == null) { oClienteCarrito.idCliente = AdCliente.ObtenerClientePorDocumento(oClienteCarrito.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oClienteCarrito.dni : oClienteCarrito.cuit); }
                 Carrito aux = (Carrito)Session["carrito"];
                 grvProductos.DataSource = ((Carrito)Session["carrito"]).productos;
                 decimal totalSinRecargo = aux.calcularTotalProductos();
