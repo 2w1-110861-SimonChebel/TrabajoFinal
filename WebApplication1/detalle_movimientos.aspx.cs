@@ -77,6 +77,7 @@ namespace Easy_Stock
             hCliente.InnerText = oTran.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ?
                 string.Format("{0}{1} {2}", hCliente.InnerText, oTran.cliente.nombre, oTran.cliente.apellido) :
                 string.Format("{0}{1}", hCliente.InnerText, oTran.cliente.razonSocial);
+            hOperador.InnerText = "Operador: ";
             hOperador.InnerText = string.Format("{0}{1} {2}", hOperador.InnerText, oTran.usuario.nombre, oTran.usuario.apellido);
 
             if (oTran.tipoTransaccion.idTipoTransaccion == (int)Tipo.tipoTransaccion.cambioProductoDeCliente ||

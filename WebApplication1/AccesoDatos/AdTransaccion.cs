@@ -632,6 +632,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" JOIN Productos p on p.idProducto = df.idProducto ");
                 sbSql.Append(" JOIN Formas_Pago fp on fp.idFormaPago = f.idFormaPago ");
                 sbSql.Append(" JOIN Usuarios u on t.idUsuario = u.idUsuario ");
+                sbSql.Append(" JOIN Tipos_Clientes tc ON tc.idTipoCliente = c.idTipoCliente ");
                 sbSql.Append(" WHERE t.idTransaccion = @id AND t.idTipoTransaccion = @idTipoTransaccion ");
 
                 SqlParameter[] param = new SqlParameter[] {
@@ -966,5 +967,23 @@ namespace Easy_Stock.AccesoDatos
             }
             return Convert.ToInt32(nro);
         }
+
+        //public List<decimal> ObtenerPorcentajeVentaPorTipoCliente()
+        //{
+        //    sbSql = null;
+        //    List<decimal> resultado;
+
+        //    try
+        //    {
+        //        sbSql = new StringBuilder(" SELECT COUNT(*) 'cantidad de ventas',c.idTipoCliente FROM Transacciones t  ");
+        //        sbSql.Append(" JOIN Facturas f ON f.idTransaccion = t.idTransaccion JOIN Clientes c ON c.idCliente = f.idCliente ");
+        //        sbSql.Append(" WHERE idTipoTransaccion = 1 GROUP BY c.idTipoCliente ");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //        throw ex;
+        //    }
+        //}
     }
 }

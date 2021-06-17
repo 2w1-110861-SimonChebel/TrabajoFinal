@@ -11,79 +11,64 @@
             <div class="col-6">
                 <h4 id="hTitulo" runat="server">Movimientos</h4>
             </div>
-          <%--  <div class="col-12">
-                <h6>(por defecto últimos 30 dias)</h6>
-            </div>--%>
         </div>
     </div>
 
- <%--   <div class="row">
-        <div class="col-12">
-            <button type="button" class="collapsible">Open Collapsible</button>
-            <div class="content">
-                <h4>aaaaaaaaaaaa</h4>
+    <div class="col-12">
+        <div class="row col-12">
+            <div class="form-group  col-xs-12 col-md-10 col-lg-4">
+                <label for="txtNroCompra" class="control-label">Por N° transaccion</label>
+                <asp:TextBox type="number" class="form-control" ID="txtNroTran" PlaceHolder="N° de venta" name="txtNroTran" runat="server" MaxLength="50"> </asp:TextBox>
+            </div>
+            <div class="form-group  col-xs-12 col-md-10 col-lg-4">
+                <label for="txtCliente" class="control-label">Por cliente</label>
+                <asp:TextBox type="text" class="form-control" ID="txtCliente" PlaceHolder="Nombre o razón social" name="txtCliente" runat="server" MaxLength="50"> </asp:TextBox>
+            </div>
+
+
+            <div class="form-group  col-xs-12 col-md-10 col-lg-4">
+                <label for="cboUsuario" class="control-label">Usuario</label>
+                <asp:DropDownList class="form-control" ID="cboUsuario" name="cboUsuario" runat="server">
+                    <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
+                </asp:DropDownList>
             </div>
         </div>
-    </div>--%>
+        <div class="row col-12">
+            <div class="form-group  col-xs-12 col-md-10 col-lg-4">
+                <label for="dtpFechaInicio" class="control-label">Por fecha (inicio)</label>
+                <asp:TextBox type="date" class="form-control" ID="dtpFechaInicio" name="dtpFechaInicio" runat="server"></asp:TextBox>
+            </div>
 
-    
+            <div class="form-group  col-xs-12 col-md-10 col-lg-4">
+                <label for="dtpFechaFin" class="control-label">Por fecha (fin)</label>
+                <asp:TextBox type="date" class="form-control" ID="dtpFechaFin" name="dtpFechaFin" runat="server"></asp:TextBox>
+            </div>
+            <div class="form-group  col-xs-12 col-md-10 col-lg-4">
+                <label for="cboProveedor" class="control-label">Proveedor</label>
+                <asp:DropDownList class="form-control" ID="cboProveedor" name="cboProveedor" runat="server">
+                    <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
+                </asp:DropDownList>
+            </div>
 
+        </div>
 
-                <div class="col-12">
-                    <div class="row col-12">
-                        <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                            <label for="txtNroCompra" class="control-label">Por N° transaccion</label>
-                            <asp:TextBox type="number" class="form-control" ID="txtNroTran" PlaceHolder="N° de venta" name="txtNroTran" runat="server" MaxLength="50"> </asp:TextBox>
-                        </div>
-                        <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                            <label for="txtCliente" class="control-label">Por cliente</label>
-                            <asp:TextBox type="text" class="form-control" ID="txtCliente" PlaceHolder="Nombre o razón social" name="txtCliente" runat="server" MaxLength="50"> </asp:TextBox>
-                        </div>
+        <div class="form-group col-xs-12 col-md-10 col-lg-4">
+            <label for="cboTipoTransaccion" class="control-label">Por tipo de movimiento</label>
+            <asp:DropDownList class="form-control" ID="cboTipoTransaccion" AutoPostBack="true" name="cboTipoTransaccion" OnSelectedIndexChanged="cboTipoTransaccion_SelectedIndexChanged" runat="server">
+                <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
+            </asp:DropDownList>
+        </div>
 
-
-                        <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                            <label for="cboUsuario" class="control-label">Usuario</label>
-                            <asp:DropDownList class="form-control" ID="cboUsuario" name="cboUsuario" runat="server">
-                                <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-                    </div>
-                    <div class="row col-12">
-                        <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                            <label for="dtpFechaInicio" class="control-label">Por fecha (inicio)</label>
-                            <asp:TextBox type="date" class="form-control" ID="dtpFechaInicio" name="dtpFechaInicio" runat="server"></asp:TextBox>
-                        </div>
-
-                        <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                            <label for="dtpFechaFin" class="control-label">Por fecha (fin)</label>
-                            <asp:TextBox type="date" class="form-control" ID="dtpFechaFin" name="dtpFechaFin" runat="server"></asp:TextBox>
-                        </div>
-                        <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                            <label for="cboProveedor" class="control-label">Proveedor</label>
-                            <asp:DropDownList class="form-control" ID="cboProveedor" name="cboProveedor" runat="server">
-                                <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
-                            </asp:DropDownList>
-                        </div>
-
-                    </div>
-
-                    <div class="form-group col-xs-12 col-md-10 col-lg-4">
-                        <label for="cboTipoTransaccion" class="control-label">Por tipo de movimiento</label>
-                        <asp:DropDownList class="form-control" ID="cboTipoTransaccion" AutoPostBack="true" name="cboTipoTransaccion" OnSelectedIndexChanged="cboTipoTransaccion_SelectedIndexChanged" runat="server">
-                            <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-
-                </div>
+    </div>
 
 
-                <div class="row col-12">
-                    <div class="form-group col-xs-12" style="padding-left: 3%">
-                        <asp:Button ID="btnBuscar" Text="Buscar" type="button" class="btn btn-dark" runat="server" OnClick="btnBuscar_Click" />
-                    </div>
-                </div>
+    <div class="row col-12">
+        <div class="form-group col-xs-12" style="padding-left: 3%">
+            <asp:Button ID="btnBuscar" Text="Buscar" type="button" class="btn btn-dark" runat="server" OnClick="btnBuscar_Click" />
+        </div>
+    </div>
 
-    <asp:GridView ID="grvTransacciones" runat="server" Height="277px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="btnVerDetalle_Click" OnRowCommand="grvTransacciones_RowCommand" AutoGenerateColumns="False">
+    <asp:GridView ID="grvTransacciones" runat="server" Height="277px" Width="95%" CssClass="gridViewHeader gridView table table-responsive" OnSelectedIndexChanged="btnVerDetalle_Click" OnRowCommand="grvTransacciones_RowCommand" AutoGenerateColumns="False">
         <Columns>
 
             <asp:TemplateField HeaderText="ID Unico" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">

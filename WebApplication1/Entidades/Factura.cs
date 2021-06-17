@@ -70,12 +70,28 @@ namespace Easy_Stock.Entidades
 
         public decimal CalcularIvaSobreTotal(decimal porcIva)
         {
-            return this.total * Convert.ToDecimal(porcIva);
+            return SumarSubTotalesDetalle() * Convert.ToDecimal(porcIva);
+            //eturn this.total
         }
 
         public decimal ObtenerTotalConIva(decimal porcIva=0)
         {
-            return this.total + this.CalcularIvaSobreTotal(porcIva);
+            decimal resultado = SumarSubTotalesDetalle() + SumarSubTotalesDetalle() * porcIva;
+            //this.total = resultado;
+            //return this.total + this.CalcularIvaSobreTotal(porcIva);
+            return resultado;
+        }
+
+        public decimal SumarSubTotalesDetalle()
+        {
+            decimal resultado = 0;
+
+            foreach (var item in detallesFactura)
+            {
+                resultado += item.subTotal;
+            }
+
+            return resultado;
         }
 
     }
