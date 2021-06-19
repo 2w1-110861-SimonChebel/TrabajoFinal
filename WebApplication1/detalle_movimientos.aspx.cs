@@ -26,18 +26,18 @@ namespace Easy_Stock
                 switch (idTipoTran)
                 {
                     case (int)Tipo.tipoTransaccion.ventaCliente:
-                        oVenta = AdTransaccion.obtenerDetalleVentaCliente(idTran, idTipoTran).First();
+                        oVenta = AdTransaccion.ObtenerDetalleVentaCliente(idTran, idTipoTran).First();
                         oVenta.factura.detallesFactura = AgruparDetallePorProducto(oVenta.factura.detallesFactura);
                         MostrarInfoCabecera(oVenta);
                         break;
 
                     case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
-                        oCambio = AdTransaccion.obtenerDetalleCambioProducto(idTran,idTipoTran);
+                        oCambio = AdTransaccion.ObtenerDetalleCambioProducto(idTran,idTipoTran);
                         MostrarInfoCabecera(oCambio);    
                         break;
 
                     case (int)Tipo.tipoTransaccion.devolucionDeCliente:
-                        oCambio = AdTransaccion.obtenerDetalleCambioProducto(idTran, idTipoTran);
+                        oCambio = AdTransaccion.ObtenerDetalleCambioProducto(idTran, idTipoTran);
                         MostrarInfoCabecera(oCambio);
                         break;
 
@@ -88,6 +88,10 @@ namespace Easy_Stock
                 hProductosEntregados.InnerText = string.Format("{0}{1}{2}{3}", hProductosEntregados.InnerText,"(", ((CambioProducto)oTran).productosEntregados.Count().ToString(),")");
                 hProductosRecibidos.InnerText = string.Format("{0}{1}{2}{3}", hProductosRecibidos.InnerText,"(", ((CambioProducto)oTran).productosRecibidos.Count().ToString(),")");
             }
+
+            //agregado
+            //var e =hTotalSinIva.InnerText.Split('$');
+            //hTotal.InnerText = oVenta.factura.total.ToString().Replace(".", ",") + Convert.ToDecimal(hTotalSinIva.InnerText.Split('$')[1]);
         }
     }
 }

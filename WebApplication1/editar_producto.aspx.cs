@@ -38,8 +38,9 @@ namespace Easy_Stock
                         cboDepositos.SelectedValue = oProducto.deposito.idDeposito != null ? oProducto.deposito.idDeposito.ToString() : 0.ToString();
                         txtStockMinimo.Text = oProducto.stockMinimo.ToString();
                         txtStockMaximo.Text = oProducto.stockMaximo.ToString();
-                        dtpFechaElab.Text = oProducto.fechaElab.ToString();
-                        dtpFechaVenc.Text = oProducto.fechaVenc.ToString();
+                        dtpFechaElab.Text = oProducto.fechaElab.ToShortDateString();
+                        dtpFechaVenc.Text = oProducto.fechaVenc.ToShortDateString();
+                        dtpFechaIngreso.Text = oProducto.fechaIngreso.ToShortDateString();
                         txtDescripcion.Text = string.IsNullOrEmpty(oProducto.descripcion) ? string.Empty : oProducto.descripcion;
                         btnAgregarProducto.Text = "Guardar cambios";
                     }

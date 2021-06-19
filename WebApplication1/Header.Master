@@ -134,7 +134,7 @@
     <script type="text/javascript">
             function preguntarGuardar() {
             return confirm("¿Desea confirmar y continuar?");
-        }
+            }
 
         function preguntarEliminarRegistro() {
             return confirm("¿Eliminar este registro?");

@@ -91,7 +91,7 @@
             <div class="col-12">
                 <h5 id="hTotalSinIva" runat="server">Total sin IVA: $<%=((oVenta.factura.SumarSubTotalesDetalle()).ToString())%></h5>
                 <h5 id="hIva" runat="server">IVA: $<%=(oVenta.factura.CalcularIvaSobreTotal((decimal)0.21).ToString())%></h5>
-                <h3 id="hTotal" runat="server">Total: $<%=oVenta.factura.total.ToString().Replace(".",",")%></h3>
+                <h3 id="hTotal" runat="server">Total: $<%=oVenta.factura.ObtenerTotalConIva().ToString().Replace(".",",")%></h3>
             </div>
         </div>
 

@@ -483,6 +483,7 @@
     <Compile Include="Entidades\Reporte.cs" />
     <Compile Include="Entidades\ReTotalFacturado.cs" />
     <Compile Include="Entidades\ReVenta.cs" />
+    <Compile Include="Entidades\ReVentaPorTipoCliente.cs" />
     <Compile Include="Entidades\Sexo.cs" />
     <Compile Include="Entidades\Tipo.cs" />
     <Compile Include="Entidades\TipoCliente.cs" />

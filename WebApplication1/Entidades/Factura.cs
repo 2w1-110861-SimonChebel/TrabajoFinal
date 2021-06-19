@@ -76,7 +76,7 @@ namespace Easy_Stock.Entidades
 
         public decimal ObtenerTotalConIva(decimal porcIva=0)
         {
-            decimal resultado = SumarSubTotalesDetalle() + SumarSubTotalesDetalle() * porcIva;
+            decimal resultado = SumarSubTotalesDetalle() * (decimal)1.21;
             //this.total = resultado;
             //return this.total + this.CalcularIvaSobreTotal(porcIva);
             return resultado;

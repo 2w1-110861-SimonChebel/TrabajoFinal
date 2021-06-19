@@ -17,13 +17,9 @@ namespace Easy_Stock
             {
                 hTitulo.InnerText = string.Format("{0}{1} {2}","Movimientos (",AdTransaccion.CantidadTotalTransaccion()," en total)");
                 divMensaje.Visible = false;
-               // List<Transaccion> lstTransacciones = AdTransaccion.obtenerMovimientos(0,null,null,DateTime.Now.AddDays(-30).ToString("yyyy/MM/dd").Replace("/","-"));
+               
                 CargarCombos();
-                //if (lstTransacciones != null)
-                //{
-                //    grvTransacciones.DataSource = lstTransacciones;
-                //    grvTransacciones.DataBind();
-                //}
+  
             }
         }
 
@@ -73,19 +69,19 @@ namespace Easy_Stock
                     switch (tipoTran)
                     {
                         case (int)Tipo.tipoTransaccion.ventaCliente:
-                            List<VentaCliente> lstVentas = AdTransaccion.obtenerVentasCliente(idTransaccion,cli,usu,fechaInicio,fechaFin,tipoTran, true);
+                            List<VentaCliente> lstVentas = AdTransaccion.ObtenerVentasCliente(idTransaccion,cli,usu,fechaInicio,fechaFin,tipoTran, true,false, true);
                             grvTransacciones.DataSource = lstVentas;
                             grvTransacciones.DataBind();
                             if (lstVentas == null) MostrarMensajeNoEcontrados();
                             break;
                         case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
-                            List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion,cli,usu,fechaInicio,fechaFin, pro, tipoTran);
+                            List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion,cli,usu,fechaInicio,fechaFin, pro, tipoTran, true);
                             grvTransacciones.DataSource = lstMov;
                             grvTransacciones.DataBind();
                             if (lstMov == null) MostrarMensajeNoEcontrados();
                             break;
                         case (int)Tipo.tipoTransaccion.devolucionDeCliente:
-                            List<Transaccion> lstDev = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
+                            List<Transaccion> lstDev = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
                             grvTransacciones.DataSource = lstDev;
                             grvTransacciones.DataBind();
                             if (lstDev == null) MostrarMensajeNoEcontrados();
@@ -98,7 +94,7 @@ namespace Easy_Stock
                 }
                 else 
                 {
-                    List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran);
+                    List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
                     grvTransacciones.DataSource = lstMov;
                     grvTransacciones.DataBind();
                     if (lstMov == null) MostrarMensajeNoEcontrados();

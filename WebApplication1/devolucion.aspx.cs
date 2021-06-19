@@ -44,7 +44,7 @@ namespace Easy_Stock
 
                 if (!string.IsNullOrEmpty(txtCliente.Text)) cli = new Cliente { nombre = txtCliente.Text, apellido = txtCliente.Text, razonSocial = txtCliente.Text };
                 if (Convert.ToInt32(cboUsuario.SelectedValue) > 0) usu = new Usuario { idUsuario = Convert.ToInt32(cboUsuario.SelectedValue) };
-                List<VentaCliente> lstVentas = AdTransaccion.obtenerVentasCliente(txtNroVenta.Text != "" ? Convert.ToInt32(txtNroVenta.Text) : 0, cli, usu, dtpFecha.Text,"",0,false,true);
+                List<VentaCliente> lstVentas = AdTransaccion.ObtenerVentasCliente(txtNroVenta.Text != "" ? Convert.ToInt32(txtNroVenta.Text) : 0, cli, usu, dtpFecha.Text,"",0,true,true,true);
                 if (lstVentas != null)
                 {
                     grvVentas.DataSource = lstVentas;

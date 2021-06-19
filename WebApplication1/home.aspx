@@ -38,7 +38,7 @@
                         <th scope="row"><%=item.fecha%></th>
                         <td><%=(string.Format("{0} {1}", nombre, ape))%></td>
                         <td><%=item.tipoTransaccion.tipoTransaccion %></td>
-                        <td><%=string.Format("{0} {1}",item.usuario.nombre,item.usuario.apellido)%></td>
+                        <td><%=string.Format("{0} {1}",item.usuario.nombre,item.usuario.apellido)%></td>                  
                     </tr>
                     <%
                             }

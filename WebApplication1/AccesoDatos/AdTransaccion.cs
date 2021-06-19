@@ -307,7 +307,7 @@ namespace Easy_Stock.AccesoDatos
             return lstTransacciones;
         }
 
-        public static List<Transaccion> obtenerMovimientos(int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fechaInicio = "", string fechaFin = "", Proveedor oProveedor = null, int idTipoTransaccion = 0)
+        public static List<Transaccion> obtenerMovimientos(int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fechaInicio = "", string fechaFin = "", Proveedor oProveedor = null, int idTipoTransaccion = 0, bool orderBy = false)
         {
             sbSql = null;
             List<Transaccion> lstTransacciones = null;
@@ -382,6 +382,8 @@ namespace Easy_Stock.AccesoDatos
                         else sbSql.Append(" t.idTipoTransaccion=@idTipoTransaccion");
                         hayFiltroAnterior = true;
                     }
+
+                    if (orderBy) sbSql.Append(" ORDER BY t.fecha DESC ");
 
                     param = new SqlParameter[] {
                     new SqlParameter("@nombreCliente",oCliente!= null ? oCliente.nombre:string.Empty),
@@ -469,7 +471,7 @@ namespace Easy_Stock.AccesoDatos
             return lstTransacciones;
         }
 
-        public static List<VentaCliente> obtenerVentasCliente(int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fechaInicio = "", string fechaFin = "", int idTipoTransaccion = 0, bool esMovimiento = false, bool consultaCambioDevolucion = false)
+        public static List<VentaCliente> ObtenerVentasCliente(int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fechaInicio = "", string fechaFin = "", int idTipoTransaccion = 0, bool esMovimiento = false, bool consultaCambioDevolucion = false, bool orderBy=false)
         {
             sbSql = null;
             List<VentaCliente> lstVentas = null;
@@ -491,7 +493,10 @@ namespace Easy_Stock.AccesoDatos
                     bool hayFiltroAnterior = false;
 
                     if (!esMovimiento && !consultaCambioDevolucion) { sbSql.Append(" WHERE t.devuelto=0 "); hayFiltroAnterior = true; }
-                    else { sbSql.Append(" WHERE "); }
+                    else {
+                        if (esMovimiento) { sbSql.Append(" WHERE t.devuelto = 0 "); hayFiltroAnterior = true; }
+                        else { sbSql.Append(" WHERE "); }
+                    }
 
                     if (idVenta > 0) { sbSql.Append(" t.idTransaccion = @idTran "); hayFiltroAnterior = true; }
                     if (oCliente != null)
@@ -538,6 +543,9 @@ namespace Easy_Stock.AccesoDatos
                         else sbSql.Append(" t.idTipoTransaccion=@idTipoTransaccion");
                         hayFiltroAnterior = true;
                     }
+
+                    if (orderBy) sbSql.Append(" ORDER BY t.fecha DESC");
+                   
 
                     param = new SqlParameter[] {
                     new SqlParameter("@nombreCliente",oCliente!= null ? oCliente.nombre:string.Empty),
@@ -617,7 +625,7 @@ namespace Easy_Stock.AccesoDatos
         }
 
 
-        public static List<VentaCliente> obtenerDetalleVentaCliente(int idTransaccion, int idTipoTransaccion)
+        public static List<VentaCliente> ObtenerDetalleVentaCliente(int idTransaccion, int idTipoTransaccion)
         {
             sbSql = null;
             List<VentaCliente> lstVentas = null;
@@ -708,7 +716,7 @@ namespace Easy_Stock.AccesoDatos
             return lstVentas;
         }
 
-        public static CambioProducto obtenerDetalleCambioProducto(int idTransaccion = 0, int idTipoTransaccion = 0)
+        public static CambioProducto ObtenerDetalleCambioProducto(int idTransaccion = 0, int idTipoTransaccion = 0)
         {
             sbSql = null;
             CambioProducto oCambio = null;
@@ -968,22 +976,39 @@ namespace Easy_Stock.AccesoDatos
             return Convert.ToInt32(nro);
         }
 
-        //public List<decimal> ObtenerPorcentajeVentaPorTipoCliente()
-        //{
-        //    sbSql = null;
-        //    List<decimal> resultado;
+        public static ReVentaPorTipoCliente ObtenerPorcentajeVentaPorTipoCliente()
+        {
+            sbSql = null;
+            ReVentaPorTipoCliente resultado = null;
 
-        //    try
-        //    {
-        //        sbSql = new StringBuilder(" SELECT COUNT(*) 'cantidad de ventas',c.idTipoCliente FROM Transacciones t  ");
-        //        sbSql.Append(" JOIN Facturas f ON f.idTransaccion = t.idTransaccion JOIN Clientes c ON c.idCliente = f.idCliente ");
-        //        sbSql.Append(" WHERE idTipoTransaccion = 1 GROUP BY c.idTipoCliente ");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //        throw ex;
-        //    }
-        //}
+            try
+            {
+                sbSql = new StringBuilder(" SELECT COUNT(*) 'cantidad de ventas',c.idTipoCliente FROM Transacciones t  ");
+                sbSql.Append(" JOIN Facturas f ON f.idTransaccion = t.idTransaccion JOIN Clientes c ON c.idCliente = f.idCliente ");
+                sbSql.Append(" WHERE idTipoTransaccion = 1 GROUP BY c.idTipoCliente ");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    if (dr.HasRows)
+                    {
+                        int cont = 0;
+                        resultado = new ReVentaPorTipoCliente();
+                        while (dr.Read())
+                        {
+                            if(cont==0) resultado.cantidadVentasPersonas = dr.IsDBNull(0) ? 0 : dr.GetInt32(0);
+                            else resultado.cantidadVentasEmpresas = dr.IsDBNull(0) ? 0 : dr.GetInt32(0);
+                            cont++;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+
+            return resultado;
+        }
     }
 }

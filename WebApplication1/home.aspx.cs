@@ -38,5 +38,10 @@ namespace Easy_Stock
                 lstProductos = AdProducto.obtenerProductos("", true);
             }
         }
+
+        protected void btnVerDetalle_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
