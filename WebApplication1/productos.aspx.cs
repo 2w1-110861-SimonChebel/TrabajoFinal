@@ -21,7 +21,7 @@ namespace Easy_Stock
             if (!IsPostBack)
             {
                 divMensaje.Visible = false;
-                if(Session["productos"]==null) Session["productos"] = AdProducto.obtenerProductos();
+                if(Session["productos"]==null) Session["productos"] = AdProducto.ObtenerProductos();
                 grvProductos.DataSource = Session["productos"];
                 grvProductos.DataBind();
                 if (!string.IsNullOrEmpty(accion) && accion.Equals("carrito"))
@@ -52,7 +52,7 @@ namespace Easy_Stock
         protected void btnBuscarProducto_Click(object sender, EventArgs e)
         {
             string nombre = txtBuscarProducto.Text;
-            lstProductos = AdProducto.obtenerProductos(nombre);
+            lstProductos = AdProducto.ObtenerProductos(nombre);
 
             if (lstProductos != null && lstProductos.Count > 0)
             {

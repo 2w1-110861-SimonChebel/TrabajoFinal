@@ -180,7 +180,7 @@ namespace Easy_Stock.AccesoDatos
             return true;
         }
 
-        public static List<Transaccion> obtenerTransacciones(bool top5 = false, int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fecha = "")
+        public static List<Transaccion> ObtenerTransacciones(bool top5 = false, int idVenta = 0, Cliente oCliente = null, Usuario oUsuario = null, string fecha = "")
         {
             sbSql = null;
             List<Transaccion> lstTransacciones = null;

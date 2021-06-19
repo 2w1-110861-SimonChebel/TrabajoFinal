@@ -19,6 +19,7 @@
             <table class="table table-striped">
                 <thead class="thead-light">
                     <tr>
+                        <th scope="col">N° Tran.</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Cliente</th>
                         <th scope="col">Tipo</th>
@@ -35,6 +36,7 @@
                                 string nombre = item.cliente.tipoCliente.idTipoCliente.Equals(1) ? item.cliente.nombre : item.cliente.razonSocial;
                     %>
                     <tr>
+                         <th scope="row"><%=item.idTransaccion%></th>
                         <th scope="row"><%=item.fecha%></th>
                         <td><%=(string.Format("{0} {1}", nombre, ape))%></td>
                         <td><%=item.tipoTransaccion.tipoTransaccion %></td>
@@ -60,6 +62,7 @@
             <table class="table table-striped table-warning">
                 <thead class="thead-light">
                     <tr>
+                        <th scope="col">ID</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Fecha Vencimiento</th>
                         <th scope="col">Fecha Ingreso</th>
@@ -71,6 +74,7 @@
                             {
                     %>
                     <tr>
+                        <th scope="row"><%=item.idProducto%></th>
                         <th scope="row"><%=item.nombre%></th>
                         <td><%=item.fechaVenc.ToShortDateString()%></td>
                         <td><%=item.fechaIngreso %></td>

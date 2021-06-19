@@ -16,7 +16,7 @@
 
         <div class="row" style="padding-left: 10%">
             <div class="col-md-6 col-xl-6" style="padding: 20px">
-                <asp:TextBox ID="txtBuscarProducto" CssClass="form-control" PlaceHolder="Buscar productos" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtBuscarProducto" CssClass="form-control" PlaceHolder="Id, codigo, o nombre" runat="server"></asp:TextBox>
             </div>
             <div class="col-md-6 col-xl-6" style="padding: 20px">
                 <asp:Button runat="server" ID="btnBuscarProducto" CssClass="btn btn-dark" type="button" Text="Buscar" OnClick="btnBuscarProducto_Click" />

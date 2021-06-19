@@ -34,8 +34,8 @@ namespace Easy_Stock
                     hMensaje.InnerText = "Cambio realizado correctamente";
                 }
 
-                lstTransacciones = AdTransaccion.obtenerTransacciones(true);
-                lstProductos = AdProducto.obtenerProductos("", true);
+                lstTransacciones = AdTransaccion.ObtenerTransacciones(true);
+                lstProductos = AdProducto.ObtenerProductos("", true);
             }
         }
 
