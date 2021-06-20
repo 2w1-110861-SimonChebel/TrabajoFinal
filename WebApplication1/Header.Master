@@ -25,7 +25,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
                     <img src="~/Assets/ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                    <a class="navbar-brand" src="~/images/insignia.jpg" href="home.aspx">EasyStock</a>
+                    <a class="navbar-brand" src="~/Assets/ES_Logo.png" href="home.aspx">EasyStock</a>
                     <%-- <a class="navbar-brand" href="#">
                         <img src="//Assets\ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
                      EasyStock
@@ -43,8 +43,8 @@
                                 <a class="dropdown-item" href="productos.aspx?accion=carrito&tipoTransaccion=<%=(int)Tipo.tipoTransaccion.ventaCliente%>">Nueva venta</a>
                                 <a class="dropdown-item" href="devolucion.aspx?accion=devolucion">Devolución</a>
                                 <a class="dropdown-item" href="devolucion.aspx?accion=cambio">Cambio</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="productos.aspx?accion=inactivos">Ver inactivos</a>
+                             <%--   <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="productos.aspx?accion=inactivos">Ver inactivos</a>--%>
                             </div>
                         </li>
 
@@ -85,7 +85,7 @@
                         <%if (Session["usuario"] != null && this.oUsuario.tipoUsuario.idTipoUsuario == 1)
                             {
                         %>
-                   <%--     <li class="nav-item dropdown">
+                        <%--     <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Estadisticas
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -100,7 +100,7 @@
                             </div>
                         </li>--%>
 
-                          <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" href="estadisticas.aspx">Estadisticas</a>
                         </li>
 
@@ -114,13 +114,26 @@
                             </div>
                         </li>
                         <%} %>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownMas" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ayuda</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="navbar-brand">
+                                     <a class="dropdown-item" href="ayuda.aspx">Preguntas frecuentes</a>
+                                 <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />
+                            </div>
+
+                        </li>
                     </ul>
+
                     <%-- <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">--%>
+
+
                     <div class="form-inline" style="padding: 10px">
                         <a class="navbar-brand">
                             <asp:Label ID="lblUsuario" Text="" runat="server"></asp:Label></a>
                     </div>
-                    <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />
+                   <%-- <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />--%>
                 </div>
             </nav>
 
@@ -132,9 +145,9 @@
     </form>
 
     <script type="text/javascript">
-            function preguntarGuardar() {
+        function preguntarGuardar() {
             return confirm("¿Desea confirmar y continuar?");
-            }
+        }
 
         function preguntarEliminarRegistro() {
             return confirm("¿Eliminar este registro?");

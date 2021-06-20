@@ -125,6 +125,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Assets\ES_Logo.png" />
+    <Content Include="ayuda.aspx" />
     <Content Include="clientes.aspx" />
     <Content Include="cliente_carrito.aspx" />
     <Content Include="Contact.aspx" />
@@ -161,6 +162,15 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
+    <Content Include="Images\btnFinalizar.png" />
+    <Content Include="Images\buscCliVen.png" />
+    <Content Include="Images\buscCliVenElegir.png" />
+    <Content Include="Images\cantProductos.png" />
+    <Content Include="Images\carrito.png" />
+    <Content Include="Images\devProd.png" />
+    <Content Include="Images\filtroCambioDev.png" />
+    <Content Include="Images\listaDev.png" />
+    <Content Include="Images\pagoCarrito.png" />
     <Content Include="movimientos.aspx" />
     <Content Include="pago_carrito.aspx" />
     <Content Include="productos.aspx" />
@@ -329,6 +339,13 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="ayuda.aspx.cs">
+      <DependentUpon>ayuda.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ayuda.aspx.designer.cs">
+      <DependentUpon>ayuda.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Categorias.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
