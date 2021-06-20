@@ -25,5 +25,28 @@ namespace Easy_Stock.Entidades
             }
 
         }
+
+
+        public static List<DetalleFactura> AgruparDetallePorProducto(List<DetalleFactura> lstDetalle)
+        {
+            List<DetalleFactura> lstResultado = new List<DetalleFactura>();
+            int ultimoIdProducto = 0;
+            foreach (var detalle in lstDetalle)
+            {
+                if (ultimoIdProducto != 0 && detalle.producto.idProducto == ultimoIdProducto)
+                {
+                    continue;
+                }
+                else
+                {
+                    ultimoIdProducto = detalle.producto.idProducto;
+                    int cantidad = lstDetalle.Where(p => p.producto.idProducto == detalle.producto.idProducto).Count();
+                    DetalleFactura auxDetalle = new DetalleFactura { producto = new Producto { nombre = detalle.producto.nombre }, precio = detalle.producto.precioVenta, subTotal = detalle.producto.precioVenta * cantidad, cantidad = cantidad };
+                    lstResultado.Add(auxDetalle);
+                }
+            }
+
+            return lstResultado;
+        }
     }
 }

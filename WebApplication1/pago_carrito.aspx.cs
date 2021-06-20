@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -146,10 +147,13 @@ namespace Easy_Stock
                 if (AdTransaccion.RegistrarVenta(oVenta))
                 {
                     oClienteCarrito = (Cliente)Session["clienteCarrito"];
+                    oVenta.cliente = oClienteCarrito;
                     Usuario auxUsuario = (Usuario)Session["usuario"];
+                    oVenta.usuario = auxUsuario;
                     SmtpClient smtp = new SmtpClient();
-                    Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoClientePorVentaCliente, oVenta, oClienteCarrito, auxUsuario, HtmlBody.BodyClientePorVentaCliente.Replace("@cliente", oClienteCarrito.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oClienteCarrito.nombre : oClienteCarrito.razonSocial));
-                    Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoUsuarioPorVentaCliente, oVenta, oClienteCarrito, auxUsuario, HtmlBody.BodyUsuarioPorVentaCliente.Replace("@usuario", auxUsuario.nombre));
+
+                    Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoClientePorVentaCliente, oVenta, oClienteCarrito, auxUsuario,string.Format("{0} {1}", HtmlBody.BodyClientePorVentaCliente.Replace("@cliente", oClienteCarrito.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oClienteCarrito.nombre : oClienteCarrito.razonSocial), HtmlBody.BodyPorVentaCliente(oVenta)));
+                    Envio.EnviarMail(smtp, "easystockar@gmail.com", auxUsuario.email, "stock123*", HtmlBody.AsuntoUsuarioPorVentaCliente, oVenta, oClienteCarrito, auxUsuario,string.Format( "{0} {1}", HtmlBody.BodyUsuarioPorVentaCliente.Replace("@usuario", auxUsuario.nombre),HtmlBody.BodyPorVentaCliente(oVenta)));
                     Session["carrito"] = null;
                     Session["clienteCarrito"] = null;
                     Session["tipoTranActual"] = null;

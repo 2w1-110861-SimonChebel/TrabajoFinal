@@ -27,7 +27,7 @@ namespace Easy_Stock
                 {
                     case (int)Tipo.tipoTransaccion.ventaCliente:
                         oVenta = AdTransaccion.ObtenerDetalleVentaCliente(idTran, idTipoTran).First();
-                        oVenta.factura.detallesFactura = AgruparDetallePorProducto(oVenta.factura.detallesFactura);
+                        oVenta.factura.detallesFactura = Util.AgruparDetallePorProducto(oVenta.factura.detallesFactura);//AgruparDetallePorProducto(oVenta.factura.detallesFactura);
                         MostrarInfoCabecera(oVenta);
                         break;
 
