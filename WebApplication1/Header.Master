@@ -43,7 +43,7 @@
                                 <a class="dropdown-item" href="productos.aspx?accion=carrito&tipoTransaccion=<%=(int)Tipo.tipoTransaccion.ventaCliente%>">Nueva venta</a>
                                 <a class="dropdown-item" href="devolucion.aspx?accion=devolucion">Devolución</a>
                                 <a class="dropdown-item" href="devolucion.aspx?accion=cambio">Cambio</a>
-                             <%--   <div class="dropdown-divider"></div>
+                                <%--   <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="productos.aspx?accion=inactivos">Ver inactivos</a>--%>
                             </div>
                         </li>
@@ -103,12 +103,13 @@
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropDownMas" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Más</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">  
-                                     <a class="dropdown-item" href="ayuda.aspx">Preguntas frecuentes</a>
-                                     <a class="dropdown-item" href="tyc.aspx">Términos y Condiciones</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="ayuda.aspx">Preguntas frecuentes</a>
+                                <a class="dropdown-item" href="tyc.aspx">Términos y Condiciones</a>
                                 <a class="dropdown-item" href="contacto.aspx">Contactenos</a>
                                 <div class="dropdown-divider"></div>
-                                 <div class="col-12"><asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" BorderStyle="none" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" /></div>
+                                <div class="col-12">
+                                    <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" BorderStyle="none" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" /></div>
                             </div>
 
                         </li>
@@ -121,7 +122,7 @@
                         <a class="navbar-brand">
                             <asp:Label ID="lblUsuario" Text="" runat="server" ForeColor="White"></asp:Label></a>
                     </div>
-                   <%-- <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />--%>
+                    <%-- <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />--%>
                 </div>
             </nav>
 

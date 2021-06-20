@@ -15,7 +15,7 @@
         <h6>O bien, visitenos en nuestras oficinas: </h6>
         <br />
     </div>
-    <div class="row col-12" style="margin-left:1%">
+    <div class="row col-12" style="margin-left: 1%">
         <asp:Image ID="Image7" runat="server" Height="2%" ImageUrl="~/Images/pin.png" Width="2%" AlternateText="Imagen no disponible" ImageAlign="TextTop" runat="server" />
         <h5><strong>Maestro Marcelo López esq, Cruz Roja, Córdoba</strong> </h5>
         <a id="btnVerMapa" href="https://www.google.com/maps/search/?api=1&query=Maestro Marcelo López esq, Cruz Roja,Córdoba" style="margin-left: 1%" target="_blank">Ver en mapa</a>
