@@ -85,20 +85,6 @@
                         <%if (Session["usuario"] != null && this.oUsuario.tipoUsuario.idTipoUsuario == 1)
                             {
                         %>
-                        <%--     <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Estadisticas
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Productos defectuosos</a>
-                                <a class="dropdown-item" href="#">Productos prontos a vencer</a>
-                                <a class="dropdown-item" href="#">Productos en deposito</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Stock disponible</a>
-                                <a class="dropdown-item" href="#">Stock faltante</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>--%>
 
                         <li class="nav-item">
                             <a class="nav-link" href="estadisticas.aspx">Estadisticas</a>
@@ -117,9 +103,10 @@
 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropDownMas" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ayuda</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="navbar-brand">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">  
                                      <a class="dropdown-item" href="ayuda.aspx">Preguntas frecuentes</a>
+                                     <a class="dropdown-item" href="tyc.aspx">Términos y Condiciones</a>
+                                <a class="dropdown-item" href="contacto.aspx">Contactenos</a>
                                  <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />
                             </div>
 
