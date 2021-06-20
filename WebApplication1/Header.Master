@@ -19,12 +19,12 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                    <img src="~/Assets/ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <asp:Image ID="Image7" runat="server" Height="50px" ImageUrl="~/Assets/ES_Logo.png" Width="50px" AlternateText="Imagen no disponible" ImageAlign="TextTop" runat="server" />
                     <a class="navbar-brand" src="~/Assets/ES_Logo.png" href="home.aspx">EasyStock</a>
                     <%-- <a class="navbar-brand" href="#">
                         <img src="//Assets\ES_Logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -102,12 +102,13 @@
                         <%} %>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropDownMas" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ayuda</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="dropDownMas" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Más</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">  
                                      <a class="dropdown-item" href="ayuda.aspx">Preguntas frecuentes</a>
                                      <a class="dropdown-item" href="tyc.aspx">Términos y Condiciones</a>
                                 <a class="dropdown-item" href="contacto.aspx">Contactenos</a>
-                                 <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />
+                                <div class="dropdown-divider"></div>
+                                 <div class="col-12"><asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" BorderStyle="none" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" /></div>
                             </div>
 
                         </li>
@@ -118,7 +119,7 @@
 
                     <div class="form-inline" style="padding: 10px">
                         <a class="navbar-brand">
-                            <asp:Label ID="lblUsuario" Text="" runat="server"></asp:Label></a>
+                            <asp:Label ID="lblUsuario" Text="" runat="server" ForeColor="White"></asp:Label></a>
                     </div>
                    <%-- <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />--%>
                 </div>

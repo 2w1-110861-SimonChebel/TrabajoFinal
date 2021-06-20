@@ -172,6 +172,7 @@
     <Content Include="Images\filtroCambioDev.png" />
     <Content Include="Images\listaDev.png" />
     <Content Include="Images\pagoCarrito.png" />
+    <Content Include="Images\pin.png" />
     <Content Include="movimientos.aspx" />
     <Content Include="pago_carrito.aspx" />
     <Content Include="productos.aspx" />

@@ -7,60 +7,25 @@
     <div id="divMensaje" runat="server">
         <h4 id="hMensaje" runat="server"></h4>
     </div>
-    <div class="row" style="padding-left:50px">
+    <div class="row" style="padding-left: 50px">
         <div class="col-md-6 col-xl-6" style="padding: 20px">
-            <asp:TextBox ID="txtBuscar" runat="server" class="form-control mr-sm-2" aria-label="Buscar" PlaceHolder="Buscar producto(s) a reponer"></asp:TextBox>
+            <asp:TextBox ID="txtBuscar" runat="server" class="form-control mr-sm-2" aria-label="Buscar" PlaceHolder="ID, Codigo o Nombre"></asp:TextBox>
         </div>
         <div class="col-md-6 col-xl-6" style="padding: 20px">
             <asp:Button runat="server" ID="btnBuscarProducto" type="button" class="btn btn-dark" Text="Buscar" OnClick="btnBuscarProducto_Click" />
         </div>
     </div>
 
-    <%--  <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="897px">
-                <Columns>
-                    <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                        <ItemTemplate>
-                            <div id="divCodigoProducto" style="padding-top: 10px;">
-                                <b><%#Eval("idProducto") %></b>
-                            </div>
-                        </ItemTemplate>
-                    </asp:TemplateField>
 
-                        <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                        <ItemTemplate>
-                            <div id="divNombreProducto" style="padding-top: 10px;">
-                                <b><%#Eval("nombre") %></b>
-                            </div>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Cantidad restante" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                        <ItemTemplate>
-                            <div id="divCantidadRestante" style="padding-top: 10px;">
-                                <b><%#Eval("Cantidad restante") %></b>
-                            </div>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Localidad" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                        <ItemTemplate>
-                            <div id="divLocalidadDeposito" style="padding-top: 10px;">
-                                <b><%#Eval("Cantidad a reponer") %></b>
-                            </div>
-
-                             <div id="divTxtNuevaCantidad" style="padding-top: 10px;">
-                                <b>
-                                    <asp:TextBox runat="server" ID="txtNuevaCantidad" type="number" class="form-control mr-sm-2"/></b>                          
-                            </div>
-                        </ItemTemplate>
-                    </asp:TemplateField>            
-
-                </Columns>
-            </asp:GridView>--%>
-
-
-    <asp:GridView ID="grvProducto" runat="server" Height="170px" Width="90%" CssClass="gridViewHeader gridView" AutoGenerateColumns="False">
+    <asp:GridView ID="grvProducto" runat="server" Height="170px" Width="90%" CssClass="gridViewHeader gridView" AutoGenerateColumns="False" OnSelectedIndexChanged="grvProducto_SelectedIndexChanged" OnRowCommand="grvProducto_RowCommand">
         <Columns>
+            <asp:TemplateField HeaderText="ID" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                <ItemTemplate>
+                    <div id="divIdProducto" style="padding-top: 10px;">
+                        <b><%#Eval("idProducto")%></b>
+                    </div>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                 <ItemTemplate>
                     <div id="divCodigoProducto" style="padding-top: 10px;">
@@ -88,7 +53,14 @@
             <asp:TemplateField HeaderText="Cantidad a reponer" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                 <ItemTemplate>
                     <div id="divCodigoProducto" style="padding-top: 10px;">
-                        <asp:TextBox ID="txtNuevaCantidad" type="number" class="form-control" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="txtNuevaCantidad" type="number" class="form-control" runat="server" Text="0" MaxLength="3"></asp:TextBox>
+                    </div>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="" HeaderStyle-CssClass="absolute"  ItemStyle-CssClass="col-lg-5 col-xs-10">
+                <ItemTemplate>
+                    <div id="divCodigoProducto" style="padding-top: 10px;">
+                        <asp:Button class="btn btn-dark" ID="btnReponer" Text="Reponer" runat="server"  CommandArgument='<%#Eval("idProducto")+","+ Eval("codigo")%>' CommandName="reponer"/>
                     </div>
                 </ItemTemplate>
             </asp:TemplateField>

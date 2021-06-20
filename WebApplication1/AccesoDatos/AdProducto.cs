@@ -274,7 +274,8 @@ namespace Easy_Stock.AccesoDatos
             {
                 sbSql = new StringBuilder("SELECT p.idProducto,p.nombre, p.cantidadRestante, p.codigo");
                 sbSql.Append(" FROM Productos p");
-                sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre like '%", nombre, "%' AND habilitado=1"));
+                //sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre like '%", nombre, "%' AND habilitado=1"));
+                sbSql.Append(string.Format(" WHERE p.nombre like '%{0}%' OR p.idProducto LIKE '%{0}%' OR p.codigo LIKE '%{0}%'", nombre));
 
                 SqlParameter parametro = new SqlParameter("@nombre", nombre);
 
@@ -325,31 +326,29 @@ namespace Easy_Stock.AccesoDatos
             return true;
         }
 
-        public static void reponerProductos(List<Producto> lstProductos)
+        public static bool ReponerProductos(int idProd, string codigo, int cantidad)
         {
             sbSql = null;
             try
             {
+                sbSql = new StringBuilder("ReponerProducto");
 
-                foreach (var item in lstProductos)
-                {
-                    StringBuilder sbSql = new StringBuilder("UPDATE Productos");
-                    sbSql.Append(" SET cantidadRestante=@cantidad");
-                    sbSql.Append(" WHERE idProducto = @idProducto");
-
-                    SqlParameter[] parametros = {
-                    new SqlParameter("@idProducto", item.idProducto),
-                    new SqlParameter("@cantidad", item.cantidadRestante)
+                SqlParameter[] parametros = {
+                    new SqlParameter("@idProducto", idProd),
+                    new SqlParameter("@codigoProducto", codigo),
+                    new SqlParameter("@cantidad", cantidad)
                     };
 
-                    SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
-                }
+                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros);
 
             }
             catch (Exception ex)
             {
+                return false;
                 throw ex;
             }
+
+            return true;
         }
 
     }

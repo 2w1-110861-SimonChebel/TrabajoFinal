@@ -12,11 +12,12 @@ namespace Easy_Stock
 {
     public partial class Estadisticas : System.Web.UI.MasterPage
     {
+        protected Usuario oUsuario;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Usuario oUsuario;
+                
                 if (Session["usuario"] == null)
                     Response.Redirect("principal.aspx");
                 oUsuario = (Usuario)Session["usuario"];
