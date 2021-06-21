@@ -20,7 +20,9 @@
             </div>
             <div class="col-md-6 col-xl-6" style="padding: 20px">
                 <asp:Button runat="server" ID="btnBuscarProducto" CssClass="btn btn-dark" type="button" Text="Buscar" OnClick="btnBuscarProducto_Click" />
+                <asp:Button runat="server" ID="btnRecargar" CssClass="btn btn-light" type="button" Text ="Recargar" OnClick="btnRecargar_Click" ToolTip="Recargar el listado"/>
             </div>
+
         </div>
 
 
@@ -179,16 +181,14 @@
                     <asp:TemplateField HeaderText="Precio de venta" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divPrecioVenta" style="padding-top: 10px;">
-                                <b>$<%#Eval("precioVenta") %></b>
-                            </div>
+                                <b>$<%#Eval("precioVenta") %></b></div>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Precio costo" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divPrecioCosto" style="padding-top: 10px;">
-                                <b>$<%#Eval("precioCosto") %></b>
-                            </div>
+                                <b>$<%#Eval("precioCosto") %></b></div>
                         </ItemTemplate>
                     </asp:TemplateField>
 

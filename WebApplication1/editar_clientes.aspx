@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="form-group col-xl-6 col-md-6">
         <div id="divTitulo" class="col-md-6 col-xl-6" style="display: flex; justify-items: right" runat="server">
-            <h2>Nuevo Cliente</h2>
+            <h2 id="hTitulo" runat="server">Nuevo Cliente</h2>
         </div>
 
         <div id="divMensaje" runat="server">

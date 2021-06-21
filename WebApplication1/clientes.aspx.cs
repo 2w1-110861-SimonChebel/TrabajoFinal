@@ -25,10 +25,20 @@ namespace Easy_Stock
                     divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                     hMensaje.InnerText = "El cliente se borró correctamente";
                 }
-                else divMensaje.Visible = false;
-                if(Session["clientes"] == null) Session["clientes"]= AdCliente.obtenerClientes();
-                grvClientes.DataSource = Session["clientes"];
-                grvClientes.DataBind();
+                else 
+                {
+                    if (Request.QueryString["edit"] != null)
+                    {
+                        divMensaje.Visible = true;
+                        divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                        hMensaje.InnerText = "El cliente se editó correctamente";
+                    }
+                    else divMensaje.Visible = false;
+                    if (Session["clientes"] == null) Session["clientes"] = AdCliente.obtenerClientes();
+                    grvClientes.DataSource = Session["clientes"];
+                    grvClientes.DataBind();
+                }
+           
             }
         
         }
@@ -56,9 +66,9 @@ namespace Easy_Stock
                 {
                     grvClientes.DataSource = lstClientes;
                     grvClientes.DataBind();
-                    divMensaje.Visible = true;
-                    divMensaje.Attributes["class"] = Bootstrap.alertInfoDismissable;
-                    hMensaje.InnerText = string.Format("{0} {1}","Clientes con el nombre ",nombre);
+                    //divMensaje.Visible = true;
+                    //divMensaje.Attributes["class"] = Bootstrap.alertInfoDismissable;
+                    //hMensaje.InnerText = string.Format("{0} {1}","Clientes con el nombre ",nombre);
                 }
 
 
@@ -78,8 +88,8 @@ namespace Easy_Stock
             string command = e.CommandArgument.ToString();
             string[] param = command.Split(',');
             int idCliente = Convert.ToInt32(param[0]);
-            int tipoCliente = 0;
-            if(param.Length > 1 )Convert.ToInt32(param[1]);
+            int tipoCliente = param.Length > 1 ? Convert.ToInt32(param[1]) : 0;
+
             if (e.CommandName.Equals("editar"))
             {
                 Response.Redirect("editar_clientes.aspx?id=" + idCliente.ToString() + "&accion=" + e.CommandName+"&tipoCliente="+tipoCliente);
@@ -103,5 +113,10 @@ namespace Easy_Stock
             return fecha.ToShortDateString();
         }
 
+        protected void btnRecargar_Click(object sender, EventArgs e)
+        {
+            Session["clientes"] = null;
+            Response.Redirect("clientes.aspx",false);
+        }
     }
 }

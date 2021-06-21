@@ -109,7 +109,8 @@
                                 <a class="dropdown-item" href="contacto.aspx">Contactenos</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="col-12">
-                                    <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" BorderStyle="none" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" /></div>
+                                    <asp:Button ID="btnCerrarSesion" class="btn btn-outline-danger" BorderStyle="none" Text="Cerrar sesión" runat="server" OnClick="btnCerrarSesion_Click" />
+                                </div>
                             </div>
 
                         </li>
@@ -491,6 +492,19 @@
 
         .active:after {
             content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+
+        .my_btn {
+            font-family: Arial;
+            font-size: 10pt;
+            font-weight: normal;
+            height: 30px;
+            line-height: 30px;
+            width: 98px;
+            border: 0px;
+            background-image: url('../Images/reload.png');
+
         }
     </style>
 </body>

@@ -21,7 +21,7 @@ namespace Easy_Stock
             if (!IsPostBack)
             {
                 divMensaje.Visible = false;
-                if(Session["productos"]==null) Session["productos"] = AdProducto.ObtenerProductos();
+                if (Session["productos"] == null) Session["productos"] = AdProducto.ObtenerProductos();
                 grvProductos.DataSource = Session["productos"];
                 grvProductos.DataBind();
                 if (!string.IsNullOrEmpty(accion) && accion.Equals("carrito"))
@@ -42,6 +42,15 @@ namespace Easy_Stock
 
 
             }
+            //else 
+            //{
+            //    if (Session["productos"] == null) 
+            //    {
+            //        Session["productos"] = AdProducto.ObtenerProductos();
+            //        grvProductos.DataSource = Session["productos"];
+            //        grvProductos.DataBind();
+            //    }
+            //}
         }
 
         protected void btnEditarProducto_Click(object sender, EventArgs e)
@@ -182,5 +191,10 @@ namespace Easy_Stock
             Response.Redirect("cliente_carrito.aspx");
         }
 
+        protected void btnRecargar_Click(object sender, EventArgs e)
+        {
+            Session["productos"] = null;
+            Response.Redirect("productos.aspx",false);
+        }
     }
 }

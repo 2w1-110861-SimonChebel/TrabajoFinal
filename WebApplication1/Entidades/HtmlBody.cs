@@ -11,8 +11,7 @@ namespace Easy_Stock.Entidades
         public static string BodyClientePorVentaCliente { get; } = ("<body> <h1> Muchas gracias por elegirnos @cliente</h1> <br> " +
                "<h4>Le hacemos llegar este email con los detalles de su compra: </h4> </body>");
 
-        public static string BodyUsuarioPorVentaCliente { get; } = ("<body> <h1> @usuario realizaste la siguiente transaccion: </h1> <br> " +
-              "<h4>Este es un mail de prueba que le llega al operador que realiza la transacción </h4> </body>");
+        public static string BodyUsuarioPorVentaCliente { get; } = ("<body> <h1> @usuario realizaste la siguiente transaccion: </h1> <br>  </body>");
 
         public static string AsuntoClientePorVentaCliente { get; } = "Resumen de compra Easy Stock";
         public static string AsuntoUsuarioPorVentaCliente { get; } = "Transaccion realizada";
@@ -26,8 +25,9 @@ namespace Easy_Stock.Entidades
             string nombre = oVenta.cliente.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oVenta.cliente.nombre + " " + oVenta.cliente.apellido : oVenta.cliente.razonSocial;
             sbBody.Append("<li> Cliente: " + nombre + "</li> ");
             sbBody.Append("<li> Operador: " + string.Format("{0} {1}", oVenta.usuario.nombre, oVenta.usuario.apellido) + "</li> ");
-            sbBody.Append("</ul> ");
+            sbBody.Append("</ul> <br>");          
             sbBody.Append(TablaMostrarProductos(oVenta));
+            sbBody.Append(string.Format("<h2>Total: ${0} </h2>", oVenta.factura.total));
 
             return sbBody.ToString();
         }

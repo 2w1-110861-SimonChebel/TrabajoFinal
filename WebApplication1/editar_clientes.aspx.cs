@@ -37,8 +37,11 @@ namespace Easy_Stock
                     {
                         case "editar":
                             Cliente oCliente = AdCliente.obtenerClientePorId(idCliente, tipoCliente);
+                            if (oCliente == null) oCliente = new Cliente();
 
+                            hTitulo.InnerText = "Editar cliente";
                             cboTipoCliente.SelectedValue = oCliente.tipoCliente.idTipoCliente.ToString();
+                            cboTipoCliente.Attributes["disabled"] = "disabled";
                             txtTelefono.Text = oCliente.telefono;
                             txtEmail.Text = oCliente.email;
                             txtTelefono.Text = oCliente.telefono;
@@ -224,10 +227,11 @@ namespace Easy_Stock
                     {
                         if (AdCliente.actualizarCliente(oCliente, tipoCliente))
                         {
-                            divMensaje.Visible = true;
-                            divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
-                            hMensaje.InnerText = "El cliente se actualizó correctamente";
+                            //divMensaje.Visible = true;
+                            //divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                            //hMensaje.InnerText = "El cliente se actualizó correctamente";
                             limpiarCampos();
+                            Response.Redirect("clientes.aspx?edit=ok");                        
                         }
                     }
                     else 

@@ -142,7 +142,7 @@ namespace Easy_Stock.AccesoDatos
                 }
                 else
                 {
-                    sbSql = new StringBuilder("SELECT c.idCliente,c.telefono,c.email,c.direccion,c.codigoPostal,c.razonSocial,c.barrio,tc.idTipoCliente, tc.tipoCliente,l.idLocalidad,l.localidad, p.idProvincia,p.provincia,dc.idDeuda,dc.monto,te.idTipoEmpresa,te.tipoEmpresa,c.cuit,c.habilitado ");
+                    sbSql = new StringBuilder("SELECT c.idCliente,c.telefono,c.email,c.direccion,c.codigoPostal,c.razonSocial,c.barrio,tc.idTipoCliente, tc.tipoCliente,l.idLocalidad,l.localidad, p.idProvincia,p.provincia,dc.idDeuda,dc.monto,te.idTipoEmpresa,te.tipoEmpresa,c.cuit,c.habilitado,dc.montoAfavor ");
 
                     sbSql.Append(" FROM clientes c JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente ");
                     sbSql.Append(" JOIN Localidades l  ON l.idLocalidad = c.idLocalidad");
@@ -275,8 +275,9 @@ namespace Easy_Stock.AccesoDatos
                 else {
                     if (!string.IsNullOrEmpty(nombre))
                     {
-                        sbSql.Append(string.Format("{0}{1}{2}{3}{4}", " AND (c.nombre LIKE '%", nombre, "%' OR c.apellido LIKE '%", nombre, "%') "));
-                        sbSql.Append(string.Format("{0}{1}{2}", " or (c.razonSocial LIKE '%", nombre, "%')"));
+                        //sbSql.Append(string.Format("{0}{1}{2}{3}{4}", " AND (c.nombre LIKE '%", nombre, "%' OR c.apellido LIKE '%", nombre, "%') "));
+                        sbSql.Append(string.Format(" AND (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%' OR c.razonSocial LIKE '%{0}%' OR c.dni LIKE '%{0}%' OR c.cuit LIKE '%{0}%') ",nombre));
+                        //sbSql.Append(string.Format("{0}{1}{2}", " or (c.razonSocial LIKE '%", nombre, "%')"));
                     };
                 }
             

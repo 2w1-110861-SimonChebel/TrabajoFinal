@@ -10,10 +10,11 @@
 
             <div class="row">
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
-                    <asp:TextBox ID="txtBuscarCliente" CssClass="form-control" PlaceHolder="Buscar clientes" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtBuscarCliente" CssClass="form-control" PlaceHolder="Nombre, razón social, DNI o CUIT" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
                     <asp:Button runat="server" ID="btnBuscarCliente" CssClass="btn btn-dark" type="button" Text="Buscar" OnClick="BtnBuscarCliente_Click" />
+                    <asp:Button runat="server" ID="btnRecargar" CssClass="btn btn-light" type="button" Text ="Recargar" OnClick="btnRecargar_Click" ToolTip="Recargar el listado"/>
                 </div>
             </div>
 

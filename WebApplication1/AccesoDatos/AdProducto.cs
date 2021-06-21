@@ -139,7 +139,7 @@ namespace Easy_Stock.AccesoDatos
                 sbSql.Append(" JOIN Proveedores pr ON p.idProveedor = pr.idProveedor");
                 if (esInventario) sbSql.Append(" JOIN Inventario inv  ON inv.idProducto = p.idProducto");
                 //if (!string.IsNullOrEmpty(nombre) && !vencimiento) sbSql.Append(string.Format("{0}{1}{2}", " WHERE p.nombre LIKE '%", nombre, "% OR p.codigo LIKE ' AND p.habilitado=1"));
-                if (!string.IsNullOrEmpty(nombre) && !vencimiento) sbSql.Append(string.Format(" WHERE (p.nombre LIKE '%{0}%' OR p.codigo LIKE '%{0}%' OR p.idProducto LIKE '%{0}%') AND p.habilitado = 1 ", nombre));
+                if (!string.IsNullOrEmpty(nombre) && !vencimiento) sbSql.Append(string.Format(" WHERE p.nombre LIKE '%{0}%' OR p.codigo LIKE '%{0}%' OR p.idProducto LIKE '%{0}%' AND (p.habilitado = 1 )", nombre));
                 if (string.IsNullOrEmpty(nombre) && vencimiento) sbSql.Append(" WHERE DATEDIFF(DAY,GETDATE(),p.fechaVenc) <= 7");
 
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
