@@ -91,7 +91,7 @@ namespace Easy_Stock
             }
             if (e.CommandName.Equals("eliminar"))
             {
-                if (AdProducto.eliminarProductoPorId(idProducto))
+                if (AdProducto.EliminarProductoPorId(idProducto))
                 {
                     divMensaje.Visible = true;
                     divMensaje.InnerText = "Producto eliminado correctamente";
@@ -119,7 +119,7 @@ namespace Easy_Stock
                     grvCarrito.DataSource = null;
                     grvCarrito.DataBind();
                     divTotal.Visible = true;
-                    Producto oProducto = lstProductos != null && lstProductos.Count > 0 ? new List<Producto> { buscarProductoLocal(idProducto) }.First() : AdProducto.obtenerProductoPorId(idProducto,false/*, cantidad*/).First();
+                    Producto oProducto = lstProductos != null && lstProductos.Count > 0 ? new List<Producto> { buscarProductoLocal(idProducto) }.First() : AdProducto.ObtenerProductoPorId(idProducto,false/*, cantidad*/).First();
                     oProducto.cantidad = cantidad;
                     //foreach (var item in lstProd)
                     //{

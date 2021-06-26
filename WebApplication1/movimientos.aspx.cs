@@ -98,23 +98,8 @@ namespace Easy_Stock
                     grvTransacciones.DataSource = lstMov;
                     grvTransacciones.DataBind();
                     if (lstMov == null) MostrarMensajeNoEcontrados();
-                    //grvTransacciones.DataSource = lstMov;
-                    //grvTransacciones.DataBind();
-                    //if (lstMov == null) MostrarMensajeNoEcontrados();
            
                 }
-                //List<>
-                //if (lstVentas != null)
-                //{
-                //    grvVentas.DataSource = lstVentas;
-                //    grvVentas.DataBind();
-                //}
-                //else
-                //{
-                //    divMensajeResult.Visible = true;
-                //    divMensajeResult.Attributes["class"] = Bootstrap.alertWarningDismissable;
-                //    hResult.InnerText = "No se encontraron resultados.";
-                //}
             }
             else
             {

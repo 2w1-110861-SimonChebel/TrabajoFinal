@@ -21,6 +21,8 @@ namespace Easy_Stock
                 oVentas = AdTransaccion.ObtenerPorcentajeVentaPorTipoCliente();
                 string[] aux = oVentas.CalcularPorcentajePorTipo();
                 crtTipoClientes.Series["Series"].Points.DataBindXY(new List<string> {string.Format("{0} {1} {2} {3}", "Ventas a personas","(",aux[0],"%)"), string.Format("{0} {1} {2} {3}", "Ventas a empresas", "(", aux[1], "%)") },new List<int> {oVentas.cantidadVentasPersonas,oVentas.cantidadVentasEmpresas });
+                hCantVentasPersonas.InnerText = string.Format("{0}{1}", hCantVentasPersonas.InnerText, aux[2].ToString());
+                hCantVentasEmpresas.InnerText = string.Format("{0}{1}", hCantVentasEmpresas.InnerText, aux[3].ToString());
             }
         }
     }

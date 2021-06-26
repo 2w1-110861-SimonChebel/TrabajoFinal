@@ -20,7 +20,7 @@ namespace Easy_Stock
         protected void btnBuscarProducto_Click(object sender, EventArgs e)
         {
             hMensaje.InnerText = "";
-            lstProductos = AdProducto.obtenerProductosReponer(txtBuscar.Text);
+            lstProductos = AdProducto.ObtenerProductosReponer(txtBuscar.Text);
             if (lstProductos == null)
             {
                 hMensaje.InnerText = "No se encontraron resultados";

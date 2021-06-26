@@ -15,7 +15,7 @@
 
 
                 <table id="tblRankingClientes" class="table table-responsive table-striped" style="padding-left: 3%">
-                    <thead class="thead-light">
+                    <thead class="thead-dark">
                         <tr>
                             <th scope="col">ID cliente</th>
                             <th scope="col">Cliente</th>
@@ -62,6 +62,9 @@
                         </asp:ChartArea>
                     </ChartAreas>
                 </asp:Chart>
+
+                <h6 id="hCantVentasPersonas" runat="server" style="color:cornflowerblue">Cantidad de ventas a personas: </h6>
+                <h6 id="hCantVentasEmpresas" runat="server" style="color:darkgoldenrod">Cantidad de ventas a empresas: </h6>
             </div>
         </div>
 

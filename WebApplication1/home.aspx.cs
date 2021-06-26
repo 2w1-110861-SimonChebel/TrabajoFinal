@@ -11,6 +11,7 @@ namespace Easy_Stock
     {
         protected List<Transaccion> lstTransacciones;
         protected List<Producto> lstProductos;
+        protected List<Producto> lstProductosStock;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -36,12 +37,18 @@ namespace Easy_Stock
 
                 lstTransacciones = AdTransaccion.ObtenerTransacciones(true);
                 lstProductos = AdProducto.ObtenerProductos("", true);
+                lstProductosStock = AdProducto.ObtenerProductosStock();
             }
         }
 
         protected void btnVerDetalle_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void btnBuscarProducto_Click(object sender, EventArgs e)
+        {
+            lstProductosStock = AdProducto.ObtenerProductosStock();
         }
     }
 }

@@ -13,7 +13,7 @@
     <div class="row col-md-12 col-xs-12">
         <div class="col-md-6 col-xs-12">
             <div class="row" style="padding: 20px">
-                <h5>Utlimos 5 movimientos</h5>
+                <h5>Últimos 5 movimientos</h5>
                 <h6 id="hMensMov" runat="server" visible="false">No se econtraron registros</h6>
             </div>
             <table class="table table-striped">
@@ -87,6 +87,52 @@
                 </tbody>
             </table>
         </div>
+
+
+
+            <div class="col-12 col-xs-12">
+
+             <div class="row" style="padding: 20px">
+                <h5>Productos con bajo stock</h5>
+                <h6 id="h1" runat="server" visible="false">No se econtraron registros</h6>
+            </div>
+            <% if (lstProductosStock != null && lstProductosStock.Count > 0)
+            {%>
+                <div style="margin-bottom:15px"><asp:Button runat="server" ID="btnGenerarReporteStock" CssClass="btn btn-secondary" type="button" Text="Generar reporte" OnClick="btnBuscarProducto_Click" /></div>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Cantidad restante</th>
+                        <th scope="col">Stock mínimo</th>
+                        <th scope="col">Stock máximo</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                            foreach (var item in lstProductosStock)
+                            {
+                    %>
+                    <tr>
+                        <th scope="row"><%=item.idProducto%></th>
+                        <th scope="row"><%=item.nombre%></th>
+                        <td><%=item.categoria.nombre%></td>
+                        <td><%=item.cantidadRestante %></td>
+                        <td><%=item.stockMinimo %></td>
+                        <td><%=item.stockMaximo %></td>
+                    </tr>
+                <%
+                            }
+                }
+                else hMensProd.Visible = true;
+               %>
+                </tbody>
+            </table>
+        </div>
+
 
     </div>
 

@@ -8,14 +8,14 @@
 
     <div class="row col-12" style="padding-bottom: 4%">
 
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="col-12">
 
             <div class="col-12 alert alert-info" style="padding-left: 10%">
                 <h5>Categorias con más ventas (Primeras 5)</h5>
             </div>
 
             <div class="col-12">
-                <table id="tblRankingCategorias" class="table table-responsive table-striped" style="padding-left: 3%">
+                <table id="tblRankingCategorias" class="col-12 table  table-striped" style="padding-left: 3%">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Categoria</th>
@@ -48,14 +48,20 @@
 
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+    </div>
+
+
+    <div class="row col-12" style="padding-bottom: 4%">
+        
+        <div class="col-12">
 
             <div class="col-12 alert alert-info" style="padding-left: 10%">
                 <h5>Productos más vendidos (Primeros 5)</h5>
             </div>
 
             <div class="col-12">
-                <table id="tblRankingProductos" class="table table-responsive table-striped" style="padding-left: 3%">
+                <table id="tblRankingProductos" class="table table-striped" style="padding-left: 3%">
                     <thead class="thead-dark">
                         <tr>
                             <th scope="col">Producto</th>
@@ -86,11 +92,12 @@
                 </table>
             </div>
         </div>
-
     </div>
+
+
     <div class="row col-12">
 
-        <div class="row col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="col-12">
 
             <div class="col-12 alert alert-secondary">
                 <h5>Facturacion por categoria</h5>

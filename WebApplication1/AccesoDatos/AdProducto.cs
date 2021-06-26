@@ -196,7 +196,59 @@ namespace Easy_Stock.AccesoDatos
 
         }
 
-        public static List<Producto> obtenerProductoPorId(int idProducto, bool esInventario = false, int cantidad = 0)
+        public static List<Producto> ObtenerProductosStock()
+        {
+            sbSql = null;
+            List<Producto> resultado = null;
+
+            try
+            {
+                sbSql = new StringBuilder("SELECT p.idProducto,p.nombre,p.descripcion,m.idMarca,m.marca,p.stockMinimo, p.stockMaximo,c.idCategoria, c.nombre 'categoria',p.cantidadRestante, ");
+                sbSql.Append(" p.codigo FROM Productos p JOIN Marcas m ON P.idMarca = m.idMarca JOIN Categorias c ON p.idCategoria = c.idCategoria ");
+                sbSql.Append(" WHERE p.cantidadRestante < p.stockMinimo ORDER BY p.nombre ");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    if (dr.HasRows)
+                    {
+                        resultado = new List<Producto>();
+
+                        while (dr.Read())
+                        {
+                            resultado.Add(
+                                new Producto
+                                {
+                                    idProducto = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                    nombre = dr.IsDBNull(1) ? string.Empty : dr.GetString(1),
+                                    descripcion = dr.IsDBNull(2) ? string.Empty : dr.GetString(2),
+                                    marca = new Marca { 
+                                        idMarca = dr.IsDBNull(3) ? 0 : dr.GetInt32(3),
+                                        marca = dr.IsDBNull(4) ? string.Empty : dr.GetString(4),
+                                    },
+                                    stockMinimo = dr.IsDBNull(5) ? 0 : dr.GetInt32(5),
+                                    stockMaximo = dr.IsDBNull(6) ? 0 : dr.GetInt32(6),
+                                    categoria = new Categoria { 
+                                        idCategoria = dr.IsDBNull(7) ? 0 : dr.GetInt32(7),
+                                        nombre = dr.IsDBNull(8) ? string.Empty : dr.GetString(8),
+                                    },
+                                    cantidadRestante = dr.IsDBNull(9) ? 0 : dr.GetInt32(9),
+                                    codigo = dr.IsDBNull(10) ? string.Empty : dr.GetString(10),
+                                }
+                            );
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+
+            return resultado;
+        }
+
+        public static List<Producto> ObtenerProductoPorId(int idProducto, bool esInventario = false, int cantidad = 0)
         {
             sbSql = null;
             try
@@ -265,7 +317,7 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
-        public static List<ProductoReponer> obtenerProductosReponer(string nombre)
+        public static List<ProductoReponer> ObtenerProductosReponer(string nombre)
         {
 
             sbSql = null;
@@ -305,7 +357,7 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
-        public static bool eliminarProductoPorId(int idProducto)
+        public static bool EliminarProductoPorId(int idProducto)
         {
             sbSql = null;
             try

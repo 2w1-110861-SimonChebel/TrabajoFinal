@@ -17,9 +17,11 @@ namespace Easy_Stock.Entidades
 
         public string[] CalcularPorcentajePorTipo()
         {
-            string[] resultado = new string[2];
+            string[] resultado = new string[4];
             resultado[0] = ((cantidadVentasPersonas) * 100 / (cantidadVentasEmpresas+cantidadVentasPersonas)).ToString();
             resultado[1] = ((cantidadVentasEmpresas) * 100 / (cantidadVentasEmpresas + cantidadVentasPersonas)).ToString();
+            resultado[2] = cantidadVentasPersonas.ToString();
+            resultado[3] = cantidadVentasEmpresas.ToString();
             return resultado;
         }
     }
