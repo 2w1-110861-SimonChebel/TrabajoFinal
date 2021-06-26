@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-6 col-xl-6" style="padding: 20px">
                 <asp:Button runat="server" ID="btnBuscarProducto" CssClass="btn btn-dark" type="button" Text="Buscar" OnClick="btnBuscarProducto_Click" />
-                <asp:Button runat="server" ID="btnRecargar" CssClass="btn btn-light" type="button" Text ="Recargar" OnClick="btnRecargar_Click" ToolTip="Recargar el listado"/>
+                <asp:Button runat="server" ID="btnRecargar" CssClass="btn btn-light" type="button" Text="Recargar" OnClick="btnRecargar_Click" ToolTip="Recargar el listado" />
             </div>
 
         </div>
@@ -36,89 +36,93 @@
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <div class="row">
-                        <div class="col-6">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Carrito
-                                </button>
-                                <asp:LinkButton ID="btnDescartar" Text="Descartar" type="button" class="btn btn-warning" CommandName="descartar" runat="server" OnClientClick="return preguntar();" OnClick="btnDescartar_Click"></asp:LinkButton>
-                                <asp:LinkButton ID="btnContinuar" Text="Continuar" type="button" class="btn btn-success" runat="server" OnClick="btnContinuar_Click"></asp:LinkButton>
+                        <div class="col-12">
+                            <button type="button" class="accordion">Productos</button>
+                            <div class="panel" id="divTotal" runat="server" visible="false" style="margin: 5px">
+                                <asp:GridView ID="grvCarrito" runat="server" Height="150px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito margin2" OnSelectedIndexChanged="grvCarrito_SelectedIndexChanged" OnRowCommand="grvCarrito_RowCommand" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                                            <ItemTemplate>
+                                                <div id="divCodCarrito" style="padding-top: 10px;">
+                                                    <b><%#Eval("codigo") %></b>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
 
-                            </h5>
+                                        <asp:TemplateField HeaderText="Producto" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                                            <ItemTemplate>
+                                                <div id="divNombreCarrito" style="padding-top: 10px;">
+                                                    <b><%#Eval("nombre") %></b>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Precio venta" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                                            <ItemTemplate>
+                                                <div id="divPrecioCarrito" style="padding-top: 10px;">
+                                                    <b><%#string.Format("{0}{1}", "$",Eval("precioVenta")) %></b>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Cantidad" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                                            <ItemTemplate>
+                                                <div id="divCodCarrito" style="padding-top: 10px;">
+                                                    <b><%#Eval("cantidad") %></b>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Subtotal" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                                            <ItemTemplate>
+                                                <div id="divCodCarrito" style="padding-top: 10px;">
+                                                    <b><%# string.Format("{0}{1}", "$", float.Parse(Eval("precioVenta").ToString())* float.Parse(Eval("cantidad").ToString())) %></b>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="cantRestante" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="false">
+                                            <ItemTemplate>
+                                                <div id="divCodCarrito" style="padding-top: 10px;">
+                                                    <b><%#Eval("cantidadRestante") %></b>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+
+                                        <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                                            <ItemTemplate>
+                                                <div id="divAccionesCarrito" style="padding-top: 10px;" runat="server">
+                                                    <b>
+                                                        <asp:Button ID="btnQuitarProductoCarrito" Text="Quitar" CssClass="btn btn-danger" runat="server" CommandArgument='<%#Eval("idProducto") %>' CommandName="quitarCarrito" OnClick="btnQuitarProductoCarrito_Click" /></td>
+                                                    </b>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+
+                                <div class="col-12 margin2">
+                                    <h4 id="hTotal" runat="server">Total: $<%=Session["carrito"]!= null ? ((Carrito)Session["carrito"]).calcularTotalProductos().ToString() : "0.0" %></h4>
+                                </div>
+                            </div>                        
+
                         </div>
                     </div>
                 </div>
 
-                <div class="row" id="divTotal" runat="server" visible="false" style="padding: 5px">
+                <%--  <div class="row" id="divTotal" runat="server" visible="false" style="padding: 5px">
                     <div class="col-12">
                         <h4 id="hTotal" runat="server">Total: $<%=Session["carrito"]!= null ? ((Carrito)Session["carrito"]).calcularTotalProductos().ToString() : "0.0" %></h4>
                     </div>
-                </div>
-                <asp:GridView ID="grvCarrito" runat="server" Height="150px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvCarrito_SelectedIndexChanged" OnRowCommand="grvCarrito_RowCommand" AutoGenerateColumns="False">
-                    <Columns>
-                        <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                            <ItemTemplate>
-                                <div id="divCodCarrito" style="padding-top: 10px;">
-                                    <b><%#Eval("codigo") %></b>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
+                </div>--%>
+         
 
-                        <asp:TemplateField HeaderText="Producto" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                            <ItemTemplate>
-                                <div id="divNombreCarrito" style="padding-top: 10px;">
-                                    <b><%#Eval("nombre") %></b>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Precio venta" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                            <ItemTemplate>
-                                <div id="divPrecioCarrito" style="padding-top: 10px;">
-                                    <b><%#string.Format("{0}{1}", "$",Eval("precioVenta")) %></b>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Cantidad" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                            <ItemTemplate>
-                                <div id="divCodCarrito" style="padding-top: 10px;">
-                                    <b><%#Eval("cantidad") %></b>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Subtotal" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                            <ItemTemplate>
-                                <div id="divCodCarrito" style="padding-top: 10px;">
-                                    <b><%# string.Format("{0}{1}", "$", float.Parse(Eval("precioVenta").ToString())* float.Parse(Eval("cantidad").ToString())) %></b>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="cantRestante" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="false">
-                            <ItemTemplate>
-                                <div id="divCodCarrito" style="padding-top: 10px;">
-                                    <b><%#Eval("cantidadRestante") %></b>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                        <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                            <ItemTemplate>
-                                <div id="divAccionesCarrito" style="padding-top: 10px;" runat="server">
-                                    <b>
-                                        <asp:Button ID="btnQuitarProductoCarrito" Text="Quitar" CssClass="btn btn-danger" runat="server" CommandArgument='<%#Eval("idProducto") %>' CommandName="quitarCarrito" OnClick="btnQuitarProductoCarrito_Click" /></td>
-                                    </b>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                </asp:GridView>
-                <div style="padding: 15px">
-                </div>
-
+            </div> 
+            <div class="row col-12" style="margin:1%">
+                 <asp:LinkButton ID="btnDescartar" Text="Descartar" type="button" class="btn btn-warning margin1" CommandName="descartar" runat="server"  OnClientClick="return preguntar();" OnClick="btnDescartar_Click"></asp:LinkButton>
+                 <asp:LinkButton ID="btnContinuar" Text="Continuar" type="button" class="btn btn-success" runat="server" OnClick="btnContinuar_Click"></asp:LinkButton>
             </div>
+            <br />
             <%} %>
             <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="90%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="btnEditarProducto_Click" OnRowCommand="grvProductos_RowCommand" AutoGenerateColumns="False">
                 <Columns>
@@ -181,14 +185,16 @@
                     <asp:TemplateField HeaderText="Precio de venta" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divPrecioVenta" style="padding-top: 10px;">
-                                <b>$<%#Eval("precioVenta") %></b></div>
+                                <b>$<%#Eval("precioVenta") %></b>
+                            </div>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                     <asp:TemplateField HeaderText="Precio costo" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divPrecioCosto" style="padding-top: 10px;">
-                                <b>$<%#Eval("precioCosto") %></b></div>
+                                <b>$<%#Eval("precioCosto") %></b>
+                            </div>
                         </ItemTemplate>
                     </asp:TemplateField>
 
@@ -263,5 +269,64 @@
             </asp:GridView>
         </div>
     </div>
+
+   <style>
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+        }
+
+            .accordion:after {
+                content: '\02795'; /* Unicode character for "plus" sign (+) */
+                font-size: 13px;
+                color: #777;
+                float: right;
+                margin-left: 5px;
+            }
+
+        .active:after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    </script>
+
+
 </asp:Content>
 

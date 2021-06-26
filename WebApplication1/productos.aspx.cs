@@ -193,8 +193,19 @@ namespace Easy_Stock
 
         protected void btnRecargar_Click(object sender, EventArgs e)
         {
-            Session["productos"] = null;
-            Response.Redirect("productos.aspx",false);
+          string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
+          Session["productos"] = null;
+
+            if (string.IsNullOrEmpty(accion))
+            {
+                Response.Redirect("productos.aspx", false);
+            }
+            else {
+                Session["productos"] =  AdProducto.ObtenerProductos();
+                grvProductos.DataSource = Session["productos"];
+                grvProductos.DataBind();
+            }
+         
         }
     }
 }

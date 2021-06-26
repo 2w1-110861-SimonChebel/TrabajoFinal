@@ -17,13 +17,14 @@ namespace Easy_Stock
         {
             if (!IsPostBack)
             {
-                
+
                 if (Session["usuario"] == null)
                     Response.Redirect("principal.aspx");
                 oUsuario = (Usuario)Session["usuario"];
                 lblUsuario.Text = string.Format("{0} {1}", oUsuario.nombre, oUsuario.apellido);
                 if (Session["empresa"] == null) Session["empresa"] = AdGeneral.obtenerDatosEmpresa();
             }
+            else { oUsuario = (Usuario)Session["usuario"]; }
         }
 
 

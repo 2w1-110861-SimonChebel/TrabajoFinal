@@ -19,7 +19,13 @@ namespace Easy_Stock
             {
                 Usuario oUsuario = (Usuario)Session["usuario"];
                 if (oUsuario.tipoUsuario.idTipoUsuario != 1) grvDepositos.Columns[8].Visible = false;
-                divMensaje.Visible = false;
+                if (Request.QueryString["edit"] != null)
+                {
+                    divMensaje.Visible = true;
+                    divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "Los cambios se guardaron correctamente";
+                }
+                else divMensaje.Visible = false;
                 oSucursal = new Sucursal();
                 lstDepositos = AdDeposito.obtenerDepositos();
                 grvDepositos.DataSource = lstDepositos;

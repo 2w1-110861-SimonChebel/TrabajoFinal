@@ -74,11 +74,11 @@ namespace Easy_Stock
                 if (AdDeposito.editarDeposito(oSucursal))
                 {
                     limpiarCampos();
-                    divMensaje.Visible = true;
-                    divMensaje.Style["class"] = "alert alert-success";
-                    hMensaje.InnerText = "Deposito actualizado correctamente";
-                    System.Threading.Thread.Sleep(2000);
-                    Response.Redirect("depositos.aspx");
+                    //divMensaje.Visible = true;
+                    //divMensaje.Style["class"] = "alert alert-success";
+                    //hMensaje.InnerText = "Deposito actualizado correctamente";
+                    //System.Threading.Thread.Sleep(2000);
+                    Response.Redirect("depositos.aspx?edit=ok");
                 }
                 else {
                     divMensaje.Visible = true;

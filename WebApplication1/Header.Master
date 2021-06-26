@@ -143,6 +143,22 @@
             return confirm("¿Eliminar este registro?");
         }
 
+
+        //var acc = document.getElementsByClassName("accordion");
+        //var i;
+
+        //for (i = 0; i < acc.length; i++) {
+        //    acc[i].addEventListener("click", function () {
+        //        this.classList.toggle("active");
+        //        var panel = this.nextElementSibling;
+        //        if (panel.style.maxHeight) {
+        //            panel.style.maxHeight = null;
+        //        } else {
+        //            panel.style.maxHeight = panel.scrollHeight + "px";
+        //        }
+        //    });
+        //}
+
     </script>
 
 
@@ -494,17 +510,48 @@
             content: "\2796"; /* Unicode character for "minus" sign (-) */
         }
 
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
 
-        .my_btn {
-            font-family: Arial;
-            font-size: 10pt;
-            font-weight: normal;
-            height: 30px;
-            line-height: 30px;
-            width: 98px;
-            border: 0px;
-            background-image: url('../Images/reload.png');
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+        }
 
+            .accordion:after {
+                content: '\02795'; /* Unicode character for "plus" sign (+) */
+                font-size: 13px;
+                color: #777;
+                float: right;
+                margin-left: 5px;
+            }
+
+        .active:after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+        /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .margin1 {
+            margin-right: 10px;
+        }     
+        .margin2 {
+            margin-top :20px;
         }
     </style>
 </body>

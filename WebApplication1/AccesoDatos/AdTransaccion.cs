@@ -492,10 +492,10 @@ namespace Easy_Stock.AccesoDatos
                 {
                     bool hayFiltroAnterior = false;
 
-                    if (!esMovimiento && !consultaCambioDevolucion) { sbSql.Append(" WHERE t.devuelto=0 "); hayFiltroAnterior = true; }
+                    if (!esMovimiento && consultaCambioDevolucion) { sbSql.Append(" WHERE t.devuelto=0 "); hayFiltroAnterior = true; }
                     else {
-                        if (esMovimiento) { sbSql.Append(" WHERE t.devuelto = 0 "); hayFiltroAnterior = true; }
-                        else { sbSql.Append(" WHERE "); }
+                        //if (esMovimiento) { sbSql.Append(" WHERE t.devuelto = 0 "); hayFiltroAnterior = true; }
+                       /* else {*/ sbSql.Append(" WHERE "); /*}*/
                     }
 
                     if (idVenta > 0) { sbSql.Append(" t.idTransaccion = @idTran "); hayFiltroAnterior = true; }
