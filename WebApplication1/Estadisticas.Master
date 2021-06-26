@@ -145,7 +145,7 @@
                             <a class="nav-link" style="color: white" href="est_clientes_ranking_ventas.aspx">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="color: white" href="est_ventas.aspx">Ventas</a>
+                            <a class="nav-link" style="color: white" href="est_ventas.aspx">Productos</a>
                         </li>
                     </ul>
                     <%--  <span class="navbar-text">Navbar text with an inline element

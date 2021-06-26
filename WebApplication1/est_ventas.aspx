@@ -110,11 +110,11 @@
                 </asp:DropDownList>
             </div>
 
-            <div class="row col-12">
-
-                <div id="divMensajeNoEncontrado" runat="server" class="col-12 alert alert-warning"  style="padding-left: 10%">
+             <div id="divMensajeNoEncontrado" runat="server" class="col-12 alert alert-warning"  style="padding-left: 10%">
                     <h6>No se encontraron resultados</h6>
-                </div>
+              </div>
+
+            <div class="row col-12" runat="server" id="divGrafico" style="display:none">
 
                 <div id="divChart" runat="server" class="col-12">
                     <asp:Chart ID="crtVentasCategoria" runat="server" CssClass="table table-bordered table-condensed table-responsive" Width="380px">
@@ -136,5 +136,48 @@
 
         </div>
     </div>
+
+         <div class="col-12 col-xs-12">
+
+             <div class="row" style="padding: 20px">
+                <h5>Productos con bajo stock</h5>
+                <h6 id="h1" runat="server" visible="false">No se econtraron registros</h6>
+            </div>
+            <% if (lstProductosStock != null && lstProductosStock.Count > 0)
+            {%>
+                <div style="margin-bottom:15px"><asp:Button runat="server" ID="btnGenerarReporteStock" CssClass="btn btn-secondary" type="button" Text="Generar reporte" OnClick="btnGenerarReporteStock_Click" /></div>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Cantidad restante</th>
+                        <th scope="col">Stock mínimo</th>
+                        <th scope="col">Stock máximo</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                            foreach (var item in lstProductosStock)
+                            {
+                    %>
+                    <tr>
+                        <th scope="row"><%=item.idProducto%></th>
+                        <th scope="row"><%=item.nombre%></th>
+                        <td><%=item.categoria.nombre%></td>
+                        <td><%=item.cantidadRestante %></td>
+                        <td><%=item.stockMinimo %></td>
+                        <td><%=item.stockMaximo %></td>
+                    </tr>
+                <%
+                        }
+                    }
+                    //else hMensProd.Visible = true;
+               %>
+                </tbody>
+            </table>
+        </div>
 
 </asp:Content>
