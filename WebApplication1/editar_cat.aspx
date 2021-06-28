@@ -8,7 +8,7 @@
         <h4 id="hTitulo" runat="server">Nueva categoria</h4>
     </div>
 
-    <div class="row col-12" runat="server" id="divMensaje">
+    <div class="col-12" runat="server" id="divMensaje">
         <h5 id="hMensaje" runat="server"></h5>
     </div>
 

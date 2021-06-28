@@ -31,8 +31,9 @@ namespace Easy_Stock.AccesoDatos
                     if (hayFiltroAnterior)
                     {
                         sbSql.Append(string.Format(" AND idCategoria= {0} ", id.ToString()));
+                        hayFiltroAnterior = true;
                     }
-                    else { sbSql.Append(string.Format(" WHERE idCategoria= {0} ", id.ToString())); }
+                    else { sbSql.Append(string.Format(" WHERE idCategoria= {0} ", id.ToString())); hayFiltroAnterior = true; }
                 }
                 if (hayFiltroAnterior) { sbSql.Append(" AND estado=1 "); }
                 else { sbSql.Append("WHERE estado = 1"); }

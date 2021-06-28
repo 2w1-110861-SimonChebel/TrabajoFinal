@@ -17,7 +17,7 @@
                 <h6 id="hMensMov" runat="server" visible="false">No se econtraron registros</h6>
             </div>
             <table class="table table-striped">
-                <thead class="thead-light">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">N° Tran.</th>
                         <th scope="col">Fecha</th>
@@ -59,8 +59,8 @@
             </div>
             <% if (lstProductos != null && lstProductos.Count > 0)
             {%>
-            <table class="table table-striped table-warning">
-                <thead class="thead-light">
+            <table class="table table-striped">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Producto</th>

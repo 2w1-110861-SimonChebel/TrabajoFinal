@@ -14,36 +14,6 @@
     <link href="Bootstrap/css/bootstrap.grid.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<%--    <form id="frmLogin" runat="server">--%>
-
-      <%--  <div class="container login-container" style="display: block">
-            <div class="row" style="justify-content: center">
-                <div class="col-md-6 col-xl-6 login-form-1">
-                    <h3>Ingresar</h3>
-
-                    <div id="divAlertaDatosIncorrectos" class="alert alert-danger" visible="false" runat="server">
-                        <h6 id="hMensaje" runat="server"></h6>
-                    </div>
-                    <div class="form-group">
-                        <asp:TextBox runat="server" type="text" ID="txtEmail" class="form-control" name="login" placeholder="E-mail"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <asp:TextBox runat="server" type="password" ID="txtClave" class="form-control" name="login" placeholder="Clave"></asp:TextBox>
-                    </div>
-
-                    <div class="form-group centrarItemsDiv">
-                        <asp:Button runat="server" ID="btnIngresar" type="submit" class="btn btn-primary" Text="Ingresar" OnClientClick="return validarCampos();" OnClick="BtnIngresar_Click"></asp:Button>
-                    </div>
-
-                    <div class="form-group centrarItemsDiv">
-                        <a href="#" class="btnForgetPwd">Olvide mi contraseña</a>
-                    </div>
-                    <%--     <div class="form-group centrarItemsDiv">
-                        <a href="#" class="btnForgetPwd">Nuevo usuario</a>
-                    </div>--%>
-          <%--      </div>
-            </div>
-        </div>--%>
 
         <div class="login col-md-6 col-xl-6">
             <div class="login-triangle"></div>
