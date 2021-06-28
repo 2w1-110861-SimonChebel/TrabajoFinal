@@ -98,7 +98,7 @@
             </div>
             <% if (lstProductosStock != null && lstProductosStock.Count > 0)
             {%>
-                <div style="margin-bottom:15px"><asp:Button runat="server" ID="btnGenerarReporteStock" CssClass="btn btn-secondary" type="button" Text="Generar reporte" OnClick="btnBuscarProducto_Click" /></div>
+               <%-- <div style="margin-bottom:15px"><asp:Button runat="server" ID="btnGenerarReporteStock" CssClass="btn btn-secondary" type="button" Text="Generar reporte" OnClick="btnBuscarProducto_Click" /></div>--%>
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>

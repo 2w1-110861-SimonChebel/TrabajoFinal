@@ -124,7 +124,7 @@
             </div>
             <br />
             <%} %>
-            <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="90%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="btnEditarProducto_Click" OnRowCommand="grvProductos_RowCommand" AutoGenerateColumns="False">
+            <asp:GridView ID="grvProductos" runat="server" Height="277px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="btnEditarProducto_Click" OnRowCommand="grvProductos_RowCommand" AutoGenerateColumns="False">
                 <Columns>
                     <asp:TemplateField HeaderText="Código" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>

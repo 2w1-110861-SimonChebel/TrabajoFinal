@@ -23,7 +23,7 @@
             </div>
 
 
-            <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="85%" CssClass="gridView gridViewHeader" OnRowCommand="grvDepositos_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
+            <asp:GridView ID="grvDepositos" runat="server" Height="277px" Width="85%" CssClass="gridViewCarrito gridViewCarritoHeader" OnRowCommand="grvDepositos_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
                 <Columns>
 
 

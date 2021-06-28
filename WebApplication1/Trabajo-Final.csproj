@@ -165,6 +165,7 @@
     <Content Include="About.aspx" />
     <Content Include="Assets\ES_Logo.png" />
     <Content Include="ayuda.aspx" />
+    <Content Include="categorias.aspx" />
     <Content Include="clientes.aspx" />
     <Content Include="cliente_carrito.aspx" />
     <Content Include="Contact.aspx" />
@@ -190,6 +191,7 @@
     <Content Include="depositos.aspx" />
     <Content Include="detalle_movimientos.aspx" />
     <Content Include="devolucion.aspx" />
+    <Content Include="editar_cat.aspx" />
     <Content Include="editar_clientes.aspx" />
     <Content Include="editar_deposito.aspx" />
     <Content Include="editar_producto.aspx" />
@@ -390,6 +392,13 @@
     <Compile Include="ayuda.aspx.designer.cs">
       <DependentUpon>ayuda.aspx</DependentUpon>
     </Compile>
+    <Compile Include="categorias.aspx.cs">
+      <DependentUpon>categorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="categorias.aspx.designer.cs">
+      <DependentUpon>categorias.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Categorias.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
@@ -481,6 +490,13 @@
     </Compile>
     <Compile Include="devolucion.aspx.designer.cs">
       <DependentUpon>devolucion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editar_cat.aspx.cs">
+      <DependentUpon>editar_cat.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editar_cat.aspx.designer.cs">
+      <DependentUpon>editar_cat.aspx</DependentUpon>
     </Compile>
     <Compile Include="editar_clientes.aspx.cs">
       <DependentUpon>editar_clientes.aspx</DependentUpon>

@@ -11,8 +11,44 @@ namespace Easy_Stock
 {
 
 
-    public partial class home
+    public partial class categorias
     {
+
+        /// <summary>
+        /// txtBuscarCat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBuscarCat;
+
+        /// <summary>
+        /// btnBuscarCat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBuscarCat;
+
+        /// <summary>
+        /// btnRecargar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRecargar;
+
+        /// <summary>
+        /// btnNuevaCat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnNuevaCat;
 
         /// <summary>
         /// divMensaje control.
@@ -33,30 +69,12 @@ namespace Easy_Stock
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl hMensaje;
 
         /// <summary>
-        /// hMensMov control.
+        /// grvCategorias control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hMensMov;
-
-        /// <summary>
-        /// hMensProd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hMensProd;
-
-        /// <summary>
-        /// h1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h1;
+        protected global::System.Web.UI.WebControls.GridView grvCategorias;
     }
 }

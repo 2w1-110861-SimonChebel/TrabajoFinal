@@ -25,7 +25,7 @@
 
 
 
-            <asp:GridView ID="grvClientes" runat="server" Height="277px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="BtnEditarCliente_Click" OnRowCommand="grvClientes_RowCommand" AutoGenerateColumns="False">
+            <asp:GridView ID="grvClientes" runat="server" Height="277px" Width="95%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="BtnEditarCliente_Click" OnRowCommand="grvClientes_RowCommand" AutoGenerateColumns="False">
                 <Columns>
 
                     <asp:TemplateField HeaderText="Nombre o razón social" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">

@@ -50,11 +50,11 @@ namespace Easy_Stock
 
         }
 
-        protected void btnBuscarProducto_Click(object sender, EventArgs e)
-        {
-            List<Producto> lst= AdProducto.ObtenerProductosStock();
-            ExportarPDF(lst, (Usuario)Session["usuario"], "Faltante de stock");
-        }
+        //protected void btnBuscarProducto_Click(object sender, EventArgs e)
+        //{
+        //    List<Producto> lst= AdProducto.ObtenerProductosStock();
+        //    ExportarPDF(lst, (Usuario)Session["usuario"], "Faltante de stock");
+        //}
 
         void ExportarPDF(List<Producto> lst, Usuario oUsuario, string tipoReporte)
         {

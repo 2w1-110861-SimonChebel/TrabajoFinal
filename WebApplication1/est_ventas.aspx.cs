@@ -31,7 +31,7 @@ namespace Easy_Stock
                 oReVentaProd = AdReporte.ObtenerTotalPorProduto();
                 Session["oReVentaProd"] = oReVentaProd;
 
-                categorias = AdCategoria.obtenerCategorias();
+                categorias = AdCategoria.ObtenerCategorias();
                 Session["catRanking"] = categorias;
 
                 lstProductosStock = AdProducto.ObtenerProductosStock();
