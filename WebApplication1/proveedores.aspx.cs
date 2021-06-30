@@ -15,6 +15,7 @@ namespace Easy_Stock
         protected void Page_Load(object sender, EventArgs e)
         {
             this.oUsuario = Session["usuario"] != null ? (Usuario)Session["usuario"] : null;
+            if (oUsuario.tipoUsuario.idTipoUsuario != 1) grvProveedores.Columns[9].Visible = false;
             if (!IsPostBack)
             {
                 divMensaje.Visible = false;
@@ -32,7 +33,7 @@ namespace Easy_Stock
                 }
                 if (oUsuario != null &&oUsuario.tipoUsuario.idTipoUsuario!=1)
                 {
-                    grvProveedores.Columns[8].Visible = false;//div de acciones
+                    //grvProveedores.Columns[8].Visible = false;//div de acciones
                 }
                 List<Proveedor> lstProveedores = AdProveedor.obtenerProveedores();
                 if (lstProveedores != null && lstProveedores.Count > 0)

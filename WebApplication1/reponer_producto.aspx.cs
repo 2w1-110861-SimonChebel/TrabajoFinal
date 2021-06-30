@@ -61,6 +61,7 @@ namespace Easy_Stock
                     divMensaje.Visible = true;
                     divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                     hMensaje.InnerText = "Se repuso el producto correctamente.";
+                    Session["productos"] = null;
                     return;
 
                 }

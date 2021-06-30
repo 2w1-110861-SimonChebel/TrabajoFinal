@@ -180,7 +180,7 @@ namespace Easy_Stock
         protected void btnAgregarCliente_Click(object sender, EventArgs e)
         {
             int tipoCliente = Convert.ToInt32(cboTipoCliente.SelectedValue);
-            string accion = Request.QueryString["accion"];
+            string accion = Request.QueryString["accion"] == null ? "agregar" :Request.QueryString["accion"];
             if (validarCampos(tipoCliente))
             {
                 Cliente oCliente = new Cliente
@@ -223,7 +223,7 @@ namespace Easy_Stock
                 };
                 if (!AdCliente.verificarDniCuitExiste((tipoCliente == 1) ? oCliente.dni : oCliente.cuit,oCliente.idCliente))
                 {
-                    if (accion.Equals("editar"))
+                    if (!string.IsNullOrEmpty(accion) && accion.Equals("editar"))
                     {
                         if (AdCliente.actualizarCliente(oCliente, tipoCliente))
                         {
@@ -236,7 +236,7 @@ namespace Easy_Stock
                     }
                     else 
                     {
-                        if (accion.Equals("eliminar"))
+                        if (!string.IsNullOrEmpty(accion) && accion.Equals("agregar"))
                         {
                             if (AdCliente.agregarCliente(oCliente, tipoCliente))
                             {
@@ -254,7 +254,7 @@ namespace Easy_Stock
                             }
                         }
                         else {
-                            if (accion.Equals("cli_carrito"))
+                            if (!string.IsNullOrEmpty(accion) && accion.Equals("cli_carrito"))
                             {
                                 if (AdCliente.agregarCliente(oCliente, tipoCliente))
                                 {
@@ -270,6 +270,13 @@ namespace Easy_Stock
                                     divMensaje.Visible = true;
                                     divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
                                     hMensaje.InnerText = "Hubo en error al cargar los datos. Intente nuevamente";
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(accion) && accion.Equals("eliminar"))
+                            {
+                                if (AdCliente.eliminarClientePorId(oCliente.idCliente))
+                                {
+                                    Response.Redirect("clientes.aspx?eliminado=true");
                                 }
                             }
                         }

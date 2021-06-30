@@ -92,7 +92,7 @@
                     </asp:TemplateField>
 
 
-                    <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="true">
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
                                 <b>

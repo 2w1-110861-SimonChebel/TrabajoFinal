@@ -90,7 +90,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
 
-                    <asp:TemplateField HeaderText="Mapa" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <asp:TemplateField HeaderText="Mapa" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="true">
                         <ItemTemplate>
                             <div id="divMapa" style="padding-top: 10px;">
                                  <a href="<%# string.Format("https://www.google.com/maps/search/?api=1&query={0}", Eval("direccion"))%>" target="_blank">Ver en mapa</a>
