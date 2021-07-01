@@ -141,7 +141,7 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" style="color: white" href="est_caja_total_facturado.aspx">Caja</a>
+                            <a class="nav-link" style="color: white" href="est_caja_total_facturado.aspx">Facturación</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" style="color: white" href="est_clientes_ranking_ventas.aspx">Clientes</a>
