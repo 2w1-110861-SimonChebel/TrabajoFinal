@@ -377,5 +377,27 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
+        public static bool ReestablecerClave(string email, string clave)
+        {
+            sbSql = null;
+
+            try
+            {
+                sbSql = new StringBuilder("UPDATE Usuarios SET Clave = @clave WHERE email = @email");
+
+                SqlParameter[] parametros = {new SqlParameter("@email",email), new SqlParameter("@clave",clave) };
+
+                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros);
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+            return true;
+        }
+
+
+  
     }
 }

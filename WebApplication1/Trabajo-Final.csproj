@@ -219,6 +219,7 @@
     <Content Include="pago_carrito.aspx" />
     <Content Include="productos.aspx" />
     <Content Include="proveedores.aspx" />
+    <Content Include="reestablecer.aspx" />
     <Content Include="reponer_producto.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -706,6 +707,13 @@
     </Compile>
     <Compile Include="Provincias.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="reestablecer.aspx.cs">
+      <DependentUpon>reestablecer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="reestablecer.aspx.designer.cs">
+      <DependentUpon>reestablecer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Remitos.cs">
       <DependentUpon>DataBase.tt</DependentUpon>

@@ -200,5 +200,20 @@ namespace Easy_Stock.AccesoDatos
             }
             return true;
         }
+
+        public static bool VerificarEmailExiste(string email)
+        {
+            sbSql = new StringBuilder("SELECT TOP 1 idUsuario FROM Usuarios WHERE (email=@email)");
+
+            SqlParameter[] parametros = {
+                    new SqlParameter("@email", email),
+            };
+
+            using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros))
+            {
+                return dr.HasRows;
+            }
+        }
+
     }
 }

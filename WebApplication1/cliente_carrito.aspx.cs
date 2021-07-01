@@ -21,7 +21,7 @@ namespace Easy_Stock
             string documento = txtBuscarCliente.Text;
             if (string.IsNullOrEmpty(documento)) return;
             Cliente oCliente = null;
-            List<Cliente> lst = AdCliente.obtenerClientes("", 0, documento);
+            List<Cliente> lst = AdCliente.ObtenerClientes("", 0, documento);
             if (lst != null) oCliente = lst.FirstOrDefault();                      
             Session["clienteCarrito"] = (Cliente) oCliente;
             if (oCliente != null)

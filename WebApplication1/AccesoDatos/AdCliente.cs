@@ -15,13 +15,13 @@ namespace Easy_Stock.AccesoDatos
         static StringBuilder sbSql = null;
         private static readonly string cadenaConexion = System.Configuration.ConfigurationManager.ConnectionStrings["conexion"].ConnectionString.ToString();
 
-        public static bool verificarDniCuitExiste(string valor, int idCliente)
+        public static bool VerificarDniCuitExiste(string valor, int idCliente=0)
         {
-            sbSql = new StringBuilder("SELECT TOP 1 idCliente FROM CLIENTES WHERE (dni=@valor or cuit=@valor) and idCliente <>@idCliente");
+            sbSql = new StringBuilder(string.Format( "SELECT TOP 1 idCliente FROM CLIENTES WHERE (dni=@valor or cuit=@valor) {0}", idCliente > 0 ? "and idCliente <> @idCliente" : ""));
 
             SqlParameter[] parametros = {
                     new SqlParameter("@valor", valor),
-                    new SqlParameter("@idCliente",idCliente)
+                    new SqlParameter("@idCliente",idCliente > 0 ? idCliente : 0)
             };
 
             using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), parametros))
@@ -58,7 +58,7 @@ namespace Easy_Stock.AccesoDatos
             
         }
 
-        public static bool agregarCliente(Cliente oCliente, int tipoCliente)
+        public static bool AgregarCliente(Cliente oCliente, int tipoCliente)
         {
             sbSql = null;
             try
@@ -117,7 +117,7 @@ namespace Easy_Stock.AccesoDatos
             return true;
         }
 
-        public static Cliente obtenerClientePorId(int idCliente, int tipoCli)
+        public static Cliente ObtenerClientePorId(int idCliente, int tipoCli)
         {
             sbSql = null;
             try
@@ -252,7 +252,7 @@ namespace Easy_Stock.AccesoDatos
             }
         }
 
-        public static List<Cliente> obtenerClientes(string nombre = "", int idTipoCliente = 0, string docu="")
+        public static List<Cliente> ObtenerClientes(string nombre = "", int idTipoCliente = 0, string docu="")
         {
             sbSql = null;
             try
@@ -353,7 +353,7 @@ namespace Easy_Stock.AccesoDatos
             }
 
         }
-        public static bool eliminarClientePorId(int idCliente)
+        public static bool EliminarClientePorId(int idCliente)
         {
             sbSql = null;
             try
@@ -373,7 +373,7 @@ namespace Easy_Stock.AccesoDatos
             }
             return true;
         }
-        public static bool actualizarCliente(Cliente oCLiente, int tipoCliente)
+        public static bool ActualizarCliente(Cliente oCLiente, int tipoCliente)
         {
             sbSql = null;
             bool actualizo = false;

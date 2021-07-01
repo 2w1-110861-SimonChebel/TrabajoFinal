@@ -14,11 +14,18 @@ namespace Easy_Stock
             if (!IsPostBack)
             {
                 divAlertaDatosIncorrectos.Visible = false;
+                string reset = Request.QueryString["reset"] != null ? Request.QueryString["reset"] : string.Empty;
                 if (Request.QueryString["session"] != null && Request.QueryString["session"].Equals("out"))
                 {
                     divAlertaDatosIncorrectos.Visible = true;
                     divAlertaDatosIncorrectos.Attributes["class"] = Bootstrap.alertSuccesDismissable;
                     hMensaje.InnerText = "La sesión se cerró correctamente";
+                }
+                if (!string.IsNullOrEmpty(reset))
+                {
+                    divAlertaDatosIncorrectos.Visible = true;
+                    divAlertaDatosIncorrectos.Attributes["class"] = Bootstrap.alertSuccesDismissable;
+                    hMensaje.InnerText = "Contraseña reestablecida correctamente";
                 }
             }
         }

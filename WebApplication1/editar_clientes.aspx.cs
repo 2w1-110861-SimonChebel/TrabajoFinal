@@ -36,7 +36,7 @@ namespace Easy_Stock
                     switch (accion)
                     {
                         case "editar":
-                            Cliente oCliente = AdCliente.obtenerClientePorId(idCliente, tipoCliente);
+                            Cliente oCliente = AdCliente.ObtenerClientePorId(idCliente, tipoCliente);
                             if (oCliente == null) oCliente = new Cliente();
 
                             hTitulo.InnerText = "Editar cliente";
@@ -221,11 +221,11 @@ namespace Easy_Stock
                     cuit = string.IsNullOrEmpty(txtCuit.Text) ? null : txtCuit.Text,
                     habilitado = true
                 };
-                if (!AdCliente.verificarDniCuitExiste((tipoCliente == 1) ? oCliente.dni : oCliente.cuit,oCliente.idCliente))
+                if (!AdCliente.VerificarDniCuitExiste((tipoCliente == 1) ? oCliente.dni : oCliente.cuit,oCliente.idCliente))
                 {
                     if (!string.IsNullOrEmpty(accion) && accion.Equals("editar"))
                     {
-                        if (AdCliente.actualizarCliente(oCliente, tipoCliente))
+                        if (AdCliente.ActualizarCliente(oCliente, tipoCliente))
                         {
                             //divMensaje.Visible = true;
                             //divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
@@ -238,7 +238,7 @@ namespace Easy_Stock
                     {
                         if (!string.IsNullOrEmpty(accion) && accion.Equals("agregar"))
                         {
-                            if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                            if (AdCliente.AgregarCliente(oCliente, tipoCliente))
                             {
                                 divMensaje.Visible = true;
                                 divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
@@ -256,7 +256,7 @@ namespace Easy_Stock
                         else {
                             if (!string.IsNullOrEmpty(accion) && accion.Equals("cli_carrito"))
                             {
-                                if (AdCliente.agregarCliente(oCliente, tipoCliente))
+                                if (AdCliente.AgregarCliente(oCliente, tipoCliente))
                                 {
                                     divMensaje.Visible = true;
                                     divMensaje.Attributes["class"] = Bootstrap.alertSuccesDismissable;
@@ -274,7 +274,7 @@ namespace Easy_Stock
                             }
                             if (!string.IsNullOrEmpty(accion) && accion.Equals("eliminar"))
                             {
-                                if (AdCliente.eliminarClientePorId(oCliente.idCliente))
+                                if (AdCliente.EliminarClientePorId(oCliente.idCliente))
                                 {
                                     Response.Redirect("clientes.aspx?eliminado=true");
                                 }

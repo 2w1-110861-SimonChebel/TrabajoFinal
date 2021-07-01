@@ -34,7 +34,7 @@ namespace Easy_Stock
                         hMensaje.InnerText = "El cliente se editó correctamente";
                     }
                     else divMensaje.Visible = false;
-                    if (Session["clientes"] == null) Session["clientes"] = AdCliente.obtenerClientes();
+                    if (Session["clientes"] == null) Session["clientes"] = AdCliente.ObtenerClientes();
                     grvClientes.DataSource = Session["clientes"];
                     grvClientes.DataBind();
                 }
@@ -53,7 +53,7 @@ namespace Easy_Stock
             }
             else
             {
-                List<Cliente> lstClientes = AdCliente.obtenerClientes(nombre);
+                List<Cliente> lstClientes = AdCliente.ObtenerClientes(nombre);
                 if (lstClientes == null)
                 {
                     grvClientes.DataSource = lstClientes;
@@ -96,7 +96,7 @@ namespace Easy_Stock
             }
             if (e.CommandName.Equals("eliminar"))
             {
-                if (AdCliente.eliminarClientePorId(idCliente))
+                if (AdCliente.EliminarClientePorId(idCliente))
                 {
                     Response.Redirect("clientes.aspx?eliminado=true", true);
                 }
