@@ -1,11 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="reestablecer.aspx.cs" Inherits="Easy_Stock.reestablecer" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="validar.aspx.cs" Inherits="Easy_Stock.validar" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Reestablecer contraseña</title>
-
+    <title>Reestablecer clave</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -15,51 +14,31 @@
     <link href="Bootstrap/css/bootstrap.grid.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <form id="frm" runat="server">
-        <div>
+    <form id="form1" runat="server">
+        <div class="login col-md-6 col-xl-6">
 
-            <div id="divTitulo" class="alert alert-info col-12" runat="server" style="display:flex;justify-content:center">
-                <h4 id="hTitulo" runat="server">Reestablecer contraseña</h4>
+            <div id="divMensaje" class="alert alert-warning" runat="server" style="display: none">
+                <h6 id="hMensaje" runat="server">Las contraseñas deben coincidir</h6>
             </div>
 
+             <div class="form-group">
+                <asp:TextBox runat="server" type="text" ID="txtEmail" class="form-control" name="txtEmail" Enabled="false" Visible="true"></asp:TextBox>
+            </div>
 
+            <div class="form-group">
+                <asp:TextBox runat="server" type="password" ID="txtClave1" class="form-control" name="login" placeholder="Nueva contraseña"></asp:TextBox>
+            </div>
+            <div class="form-group">
+                <asp:TextBox runat="server" type="password" ID="txtClave2" class="form-control" name="login" placeholder="Confirme contraseña"></asp:TextBox>
+            </div>
 
-            <div class="login col-md-6 col-xl-6">
-                <form class="login-container" id="frmPrincipal">
-
-                     <div id="divMensajeEmail" class="alert alert-warning" runat="server" visible ="false">
-                        <h6 id="h1" runat="server">El mail ingresado no coincide con el de un usuario cargado en el sistema</h6>
-                    </div>
-
-         <%--           <div id="divMensaje" class="alert alert-warning" runat="server" style="display: none">
-                        <h6 id="hMensaje" runat="server">Las contraseñas deben coincidir</h6>
-                    </div>--%>
-
-                    <div class="form-group">
-                        <label for="login" class="control-label">Ingrese su email</label>
-                        <asp:TextBox runat="server" type="text" ID="txtEmail" class="form-control" name="login"></asp:TextBox>
-                    </div>
-
-             <%--       <div class="form-group">
-                        <asp:TextBox runat="server" type="password" ID="txtClave1" class="form-control" name="login" placeholder="Nueva contraseña"></asp:TextBox>
-                    </div>
-                    <div class="form-group">
-                        <asp:TextBox runat="server" type="password" ID="txtClave2" class="form-control" name="login" placeholder="Confirme contraseña"></asp:TextBox>
-                    </div>--%>
-
-                    <div class="form-group centrarItemsDiv">
-                        <asp:Button runat="server" ID="btnReestablecer" type="submit" class="btn btn-primary" Text="Continuar" OnClientClick="return validarCampos();" OnClick="btnReestablecer_Click"></asp:Button>
-                    </div>
-
-                    <div class="form-group centrarItemsDiv">
-                        <a href="principal.aspx" class="btnForgetPwd">Volver</a>
-                    </div>
-
-                </form>
+            <div class="form-group centrarItemsDiv">
+                <asp:Button runat="server" ID="btnReestablecer" type="submit" class="btn btn-primary" Text="Reestablecer" OnClientClick="return validarCampos();" OnClick="btnReestablecer_Click"></asp:Button>
             </div>
         </div>
-        <%--   </form>--%>
-        <!------------------------CSS---------------------------------------------------------------------------->
+
+
+
         <style>
             .centrarItemsDiv {
                 display: flex;
@@ -163,27 +142,23 @@
         <script type="text/javascript">
 
             function validarCampos() {
-                //var txtClave1 = document.getElementById("txtClave1");
-                //var txtClave2 = document.getElementById("txtClave2");
-                var txtEmail = document.getElementById("txtEmail");
+                var txtClave1 = document.getElementById("txtClave1");
+                var txtClave2 = document.getElementById("txtClave2");
 
-
-                if (/*txtClave1.value == "" || txtClave2.value == "" || */txtEmail.value == "") {
-                    /*alert("Complete todos los campos campos");*/
-                    alert("Ingrese email");
+                if (txtClave1.value == "" || txtClave2.value == "") {
+                    alert("Complete ambos campos");
                     return false;
                 };
 
-                //if (txtClave1.value !== txtClave2.value) {
-                //    document.getElementById("divMensaje").style.display = "block";
-                //    return false;
-                //};
+                if (txtClave1.value !== txtClave2.value) {
+                    document.getElementById("divMensaje").style.display = "block";
+                    return false;
+                };
 
                 document.getElementById("divMensaje").style.display = "none";
 
             }
         </script>
-
     </form>
 </body>
 </html>

@@ -16,6 +16,11 @@ namespace Easy_Stock.Entidades
         public static string AsuntoClientePorVentaCliente { get; } = "Resumen de compra Easy Stock";
         public static string AsuntoUsuarioPorVentaCliente { get; } = "Transaccion realizada";
 
+        public static string AsuntoReestablecerClave { get; } = "Reestablecer contraseña";
+
+        public static string BodyConfirmacionClave { get; } = ("<body> <h1>Reestablecé tu clave en el siguiente link: </h1> <br> " +
+              "<h4> <a href='https://localhost:44374/validar.aspx?id=@id'>Reestablecer clave</a> </h4> </body>");
+
         public static string BodyPorVentaCliente(VentaCliente oVenta)
         {
             StringBuilder sbBody = new StringBuilder("<ul> ");

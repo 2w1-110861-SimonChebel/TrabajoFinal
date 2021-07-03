@@ -27,5 +27,22 @@ namespace Easy_Stock.Entidades
 
             return false;
         }
+        public static bool EnviarMail(SmtpClient smtp, string fromEmail, string toEmail, string clave, string asunto,  string body = "")
+        {
+            smtp = new SmtpClient("smtp.gmail.com", 587);
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(fromEmail, clave);
+            smtp.EnableSsl = true;
+
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(fromEmail, "Easy Stock");
+            mail.To.Add(new MailAddress(toEmail));
+            mail.Subject = asunto;
+            mail.IsBodyHtml = true;
+            mail.Body = body;
+            smtp.Send(mail);
+
+            return false;
+        }
     }
 }

@@ -359,6 +359,7 @@
     <Content Include="Service\AjaxService.svc" />
     <Content Include="tyc.aspx" />
     <Content Include="usuarios.aspx" />
+    <Content Include="validar.aspx" />
     <Content Include="venta_cliente.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -549,6 +550,7 @@
     <Compile Include="Entidades\DeudaCliente.cs" />
     <Compile Include="Entidades\DevolucionCliente.cs" />
     <Compile Include="Entidades\Empresa.cs" />
+    <Compile Include="Entidades\Encode.cs" />
     <Compile Include="Entidades\Envio.cs" />
     <Compile Include="Entidades\EstadoProducto.cs" />
     <Compile Include="Entidades\Exportar.cs" />
@@ -800,6 +802,13 @@
     </Compile>
     <Compile Include="Usuarios.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="validar.aspx.cs">
+      <DependentUpon>validar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="validar.aspx.designer.cs">
+      <DependentUpon>validar.aspx</DependentUpon>
     </Compile>
     <Compile Include="venta_cliente.aspx.cs">
       <DependentUpon>venta_cliente.aspx</DependentUpon>
