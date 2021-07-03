@@ -215,6 +215,7 @@
     <Content Include="Images\pagoCarrito.png" />
     <Content Include="Images\pin.png" />
     <Content Include="Images\reload.png" />
+    <Content Include="inventario.aspx" />
     <Content Include="movimientos.aspx" />
     <Content Include="pago_carrito.aspx" />
     <Content Include="productos.aspx" />
@@ -371,6 +372,7 @@
     <Compile Include="AccesoDatos\AdCliente.cs" />
     <Compile Include="AccesoDatos\AdDeposito.cs" />
     <Compile Include="AccesoDatos\AdGeneral.cs" />
+    <Compile Include="AccesoDatos\AdInventario.cs" />
     <Compile Include="AccesoDatos\AdMarca.cs" />
     <Compile Include="AccesoDatos\AdProducto.cs" />
     <Compile Include="AccesoDatos\AdProveedor.cs" />
@@ -646,6 +648,13 @@
     </Compile>
     <Compile Include="Header.Master.designer.cs">
       <DependentUpon>Header.Master</DependentUpon>
+    </Compile>
+    <Compile Include="inventario.aspx.cs">
+      <DependentUpon>inventario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="inventario.aspx.designer.cs">
+      <DependentUpon>inventario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Inventario.cs">
       <DependentUpon>DataBase.tt</DependentUpon>

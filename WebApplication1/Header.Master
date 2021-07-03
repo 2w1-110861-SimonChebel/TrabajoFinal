@@ -45,8 +45,9 @@
                                 <a class="dropdown-item" href="devolucion.aspx?accion=cambio">Cambio</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="categorias.aspx">Categorias</a>
-                                <%--   <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="productos.aspx?accion=inactivos">Ver inactivos</a>--%>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="inventario.aspx">Inventario</a>
                             </div>
                         </li>
 

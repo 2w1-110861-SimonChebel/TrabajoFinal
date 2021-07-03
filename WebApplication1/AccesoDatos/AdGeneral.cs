@@ -83,6 +83,38 @@ namespace Easy_Stock.AccesoDatos
 
         }
 
+        public static List<EstadoProducto> ObtenerEstadosProductos()
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SELECT * FROM Estados_Productos ORDER BY estado");
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString()))
+                {
+                    List<EstadoProducto> lstEstados = null;
+                    if (dr.HasRows)
+                    {
+                        lstEstados = new List<EstadoProducto>();
+                        while (dr.Read())
+                        {
+                            lstEstados.Add(new EstadoProducto
+                            {
+                                idEstadoProducto = dr.IsDBNull(0) ? 0 : dr.GetInt32(0),
+                                estadoProducto = dr.IsDBNull(1) ? "N/d" : dr.GetString(1)
+                            });
+                        }
+                    }
+                    return lstEstados;
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+
+        }
 
         public static List<TipoFactura> obtenerTiposFacturas()
         {
