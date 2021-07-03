@@ -68,7 +68,7 @@
         </div>
     </div>
 
-    <asp:GridView ID="grvTransacciones" runat="server" Height="277px" Width="95%" CssClass="gridViewHeader gridView table table-responsive" OnSelectedIndexChanged="btnVerDetalle_Click" OnRowCommand="grvTransacciones_RowCommand" AutoGenerateColumns="False">
+    <asp:GridView ID="grvTransacciones" runat="server" Height="277px" Width="95%" CssClass="gridViewHeader gridView" OnSelectedIndexChanged="btnVerDetalle_Click" OnRowCommand="grvTransacciones_RowCommand" AllowPaging="true" OnPageIndexChanging="grvTransacciones_PageIndexChanging" AutoGenerateColumns="False">
         <Columns>
 
             <asp:TemplateField HeaderText="ID Unico" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
@@ -104,14 +104,6 @@
                 </ItemTemplate>
             </asp:TemplateField>
 
-            <%--   <asp:TemplateField HeaderText="Proveedor" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
-                        <ItemTemplate>
-                            <div id="divProveedor" style="padding-top: 10px;">
-                                <b><%#string.IsNullOrEmpty(Eval("proveedor.nombre").ToString()) && Convert.ToInt32(Eval("proveedor.idProveedor").ToString()) > 0  ? Eval("proveedor.nombre") : "-" %></b>
-                            </div>
-                        </ItemTemplate>
-                    </asp:TemplateField>--%>
-
             <asp:TemplateField HeaderText="Tipo de movimiento" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                 <ItemTemplate>
                     <div id="divTipo" style="padding-top: 10px;">
@@ -138,6 +130,7 @@
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>
+        <PagerStyle BackColor="#284775" ForeColor="Black" HorizontalAlign="Left" CssClass="pagination"/>
     </asp:GridView>
 
     <div class="row" style="padding: 20px" id="divMensajeResult" runat="server">

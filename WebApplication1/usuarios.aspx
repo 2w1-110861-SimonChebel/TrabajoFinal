@@ -22,7 +22,7 @@
             </div>
 
 
-            <asp:GridView ID="grvUsuarios" runat="server" Height="277px" Width="90%" CssClass="gridViewCarritoHeader gridView" OnRowCommand="grvUsuarios_RowCommand" AllowPaging="True" AutoGenerateColumns="False">
+            <asp:GridView ID="grvUsuarios" runat="server" Height="277px" Width="90%" CssClass="gridViewCarritoHeader gridView" OnRowCommand="grvUsuarios_RowCommand" AllowPaging="True" OnPageIndexChanging="grvUsuarios_PageIndexChanging" AutoGenerateColumns="False">
                 <Columns>
 
                     <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" Visible="false" ItemStyle-CssClass="col-lg-5 col-xs-10">
@@ -77,6 +77,7 @@
                     </asp:TemplateField>
 
                 </Columns>
+                <PagerStyle BackColor="#284775" ForeColor="Black" HorizontalAlign="Left" CssClass="pagination"/>
             </asp:GridView>
         </div>
     </div>

@@ -32,82 +32,14 @@ namespace Easy_Stock
         {
             string[] arguments = e.CommandArgument.ToString().Split(',');
             int idTran = Convert.ToInt32(arguments[0]);
-            int idTipoTran = Convert.ToInt32(arguments[1]);
-            Response.Redirect("detalle_movimientos.aspx?id=" + idTran + "&idTipo=" + idTipoTran);
+            int idTipoTran = arguments.Length > 1 ?  Convert.ToInt32(arguments[1]) : 0;
+            if(idTipoTran > 0)Response.Redirect("detalle_movimientos.aspx?id=" + idTran + "&idTipo=" + idTipoTran);
 
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            divMensajeResult.Visible = false;
-            divMensaje.Visible = false;
-            grvTransacciones.DataSource = null;
-            grvTransacciones.DataBind();
-            WebControl[] aControles = new WebControl[] {
-                txtCliente,
-                txtNroTran,
-                cboUsuario,
-                dtpFechaInicio,
-                dtpFechaFin,
-                cboProveedor,
-                cboTipoTransaccion
-            };
-
-            //filtros
-            int idTransaccion = string.IsNullOrEmpty(txtNroTran.Text) ? 0 : Convert.ToInt32(txtNroTran.Text);
-            Cliente cli = !string.IsNullOrEmpty(txtCliente.Text) ? new Cliente { nombre = txtCliente.Text, apellido = txtCliente.Text, razonSocial = txtCliente.Text }:null;
-            Usuario usu = Convert.ToInt32(cboUsuario.SelectedValue) > 0? new Usuario { idUsuario = Convert.ToInt32(cboUsuario.SelectedValue) } : null;
-            Proveedor pro = Convert.ToInt32(cboProveedor.SelectedValue) > 0 ? new Proveedor { idProveedor = Convert.ToInt32(cboProveedor.SelectedValue) } : null;
-            string fechaInicio = !string.IsNullOrEmpty(dtpFechaInicio.Text) ? dtpFechaInicio.Text : string.Empty;
-            string fechaFin = !string.IsNullOrEmpty(dtpFechaFin.Text) ? dtpFechaFin.Text : string.Empty;
-
-            if (Validar.HayUnCampoSeleccionado(aControles))
-            {
-                int tipoTran = Convert.ToInt32(cboTipoTransaccion.SelectedValue);
-                if (Convert.ToInt32(cboTipoTransaccion.SelectedValue) > 0)
-                {
-                    switch (tipoTran)
-                    {
-                        case (int)Tipo.tipoTransaccion.ventaCliente:
-                            List<VentaCliente> lstVentas = AdTransaccion.ObtenerVentasCliente(idTransaccion,cli,usu,fechaInicio,fechaFin,tipoTran, true,false, true);
-                            grvTransacciones.DataSource = lstVentas;
-                            grvTransacciones.DataBind();
-                            if (lstVentas == null) MostrarMensajeNoEcontrados();
-                            break;
-                        case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
-                            List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion,cli,usu,fechaInicio,fechaFin, pro, tipoTran, true);
-                            grvTransacciones.DataSource = lstMov;
-                            grvTransacciones.DataBind();
-                            if (lstMov == null) MostrarMensajeNoEcontrados();
-                            break;
-                        case (int)Tipo.tipoTransaccion.devolucionDeCliente:
-                            List<Transaccion> lstDev = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
-                            grvTransacciones.DataSource = lstDev;
-                            grvTransacciones.DataBind();
-                            if (lstDev == null) MostrarMensajeNoEcontrados();
-                            break;
-                        default:
-                            //List<Transaccion> lstTran = AdTransaccion.
-                            break;
-
-                    }
-                }
-                else 
-                {
-                    List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
-                    grvTransacciones.DataSource = lstMov;
-                    grvTransacciones.DataBind();
-                    if (lstMov == null) MostrarMensajeNoEcontrados();
-           
-                }
-            }
-            else
-            {
-                divMensaje.Visible = true;
-                divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
-                hMensaje.InnerText = "Debe completar al menos un (1) filtro";
-            }
-            return;
+            BuscarTransacciones();
         }
 
         private void CargarCombos()
@@ -187,5 +119,85 @@ namespace Easy_Stock
             }
         }
 
+
+        private void BuscarTransacciones()
+        {
+            divMensajeResult.Visible = false;
+            divMensaje.Visible = false;
+            grvTransacciones.DataSource = null;
+            grvTransacciones.DataBind();
+            WebControl[] aControles = new WebControl[] {
+                txtCliente,
+                txtNroTran,
+                cboUsuario,
+                dtpFechaInicio,
+                dtpFechaFin,
+                cboProveedor,
+                cboTipoTransaccion
+            };
+
+            //filtros
+            int idTransaccion = string.IsNullOrEmpty(txtNroTran.Text) ? 0 : Convert.ToInt32(txtNroTran.Text);
+            Cliente cli = !string.IsNullOrEmpty(txtCliente.Text) ? new Cliente { nombre = txtCliente.Text, apellido = txtCliente.Text, razonSocial = txtCliente.Text } : null;
+            Usuario usu = Convert.ToInt32(cboUsuario.SelectedValue) > 0 ? new Usuario { idUsuario = Convert.ToInt32(cboUsuario.SelectedValue) } : null;
+            Proveedor pro = Convert.ToInt32(cboProveedor.SelectedValue) > 0 ? new Proveedor { idProveedor = Convert.ToInt32(cboProveedor.SelectedValue) } : null;
+            string fechaInicio = !string.IsNullOrEmpty(dtpFechaInicio.Text) ? dtpFechaInicio.Text : string.Empty;
+            string fechaFin = !string.IsNullOrEmpty(dtpFechaFin.Text) ? dtpFechaFin.Text : string.Empty;
+
+            if (Validar.HayUnCampoSeleccionado(aControles))
+            {
+                int tipoTran = Convert.ToInt32(cboTipoTransaccion.SelectedValue);
+                if (Convert.ToInt32(cboTipoTransaccion.SelectedValue) > 0)
+                {
+                    switch (tipoTran)
+                    {
+                        case (int)Tipo.tipoTransaccion.ventaCliente:
+                            List<VentaCliente> lstVentas = AdTransaccion.ObtenerVentasCliente(idTransaccion, cli, usu, fechaInicio, fechaFin, tipoTran, true, false, true);
+                            grvTransacciones.DataSource = lstVentas;
+                            grvTransacciones.DataBind();
+                            if (lstVentas == null) MostrarMensajeNoEcontrados();
+                            break;
+                        case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
+                            List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
+                            grvTransacciones.DataSource = lstMov;
+                            grvTransacciones.DataBind();
+                            if (lstMov == null) MostrarMensajeNoEcontrados();
+                            break;
+                        case (int)Tipo.tipoTransaccion.devolucionDeCliente:
+                            List<Transaccion> lstDev = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
+                            grvTransacciones.DataSource = lstDev;
+                            grvTransacciones.DataBind();
+                            if (lstDev == null) MostrarMensajeNoEcontrados();
+                            break;
+                        default:
+                            //List<Transaccion> lstTran = AdTransaccion.
+                            break;
+
+                    }
+                }
+                else
+                {
+                    List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
+                    grvTransacciones.DataSource = lstMov;
+                    grvTransacciones.DataBind();
+                    if (lstMov == null) MostrarMensajeNoEcontrados();
+
+                }
+            }
+            else
+            {
+                divMensaje.Visible = true;
+                divMensaje.Attributes["class"] = Bootstrap.alertDangerDismissable;
+                hMensaje.InnerText = "Debe completar al menos un (1) filtro";
+            }
+            return;
+        }
+
+        protected void grvTransacciones_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ((GridView)sender).PageIndex = e.NewPageIndex;
+            BuscarTransacciones();
+        
+        }
     }
 }

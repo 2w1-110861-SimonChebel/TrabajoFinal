@@ -118,5 +118,12 @@ namespace Easy_Stock
             Session["clientes"] = null;
             Response.Redirect("clientes.aspx",false);
         }
+
+        protected void grvClientes_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ((GridView)sender).PageIndex = e.NewPageIndex;
+            grvClientes.DataSource = Session["clientes"] != null ? (List<Cliente>)Session["clientes"] : AdCliente.ObtenerClientes();
+            grvClientes.DataBind();
+        }
     }
 }

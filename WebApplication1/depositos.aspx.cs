@@ -81,5 +81,11 @@ namespace Easy_Stock
             }
         }
 
+        protected void grvDepositos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ((GridView)sender).PageIndex = e.NewPageIndex;
+            grvDepositos.DataSource = AdDeposito.obtenerDepositos();
+            grvDepositos.DataBind();
+        }
     }
 }
