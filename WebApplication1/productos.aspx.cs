@@ -82,7 +82,7 @@ namespace Easy_Stock
         {
             string[] argumentos = e.CommandArgument.ToString().Split(',');
             int idProducto = Convert.ToInt32(argumentos[0]);
-            int fila = Convert.ToInt32(argumentos[1]);
+            int fila = argumentos.Length > 1? Convert.ToInt32(argumentos[1]) : 0;
             if (e.CommandName.Equals("editar"))
             {
                 Response.Redirect("editar_producto.aspx?id=" + idProducto.ToString() + "&accion=" + e.CommandName);
@@ -204,6 +204,13 @@ namespace Easy_Stock
                 grvProductos.DataBind();
             }
          
+        }
+
+        protected void grvProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ((GridView)sender).PageIndex = e.NewPageIndex;
+            grvProductos.DataSource = Session["productos"] != null ? (List<Producto>)Session["productos"] : AdProducto.ObtenerProductos();
+            grvProductos.DataBind();
         }
     }
 }
