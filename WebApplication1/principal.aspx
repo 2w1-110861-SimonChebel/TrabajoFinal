@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group centrarItemsDiv">
-                        <a href="reestablecer.aspx" class="btnForgetPwd">Olvide mi contraseña</a>
+                        <a href="reestablecer.aspx" class="btnForgetPwd">Olvidé mi contraseña</a>
                     </div>
             </form>
         </div>

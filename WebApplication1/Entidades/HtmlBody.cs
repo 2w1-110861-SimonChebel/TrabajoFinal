@@ -19,7 +19,7 @@ namespace Easy_Stock.Entidades
         public static string AsuntoReestablecerClave { get; } = "Reestablecer contraseña";
 
         public static string BodyConfirmacionClave { get; } = ("<body> <h1>Reestablecé tu clave en el siguiente link: </h1> <br> " +
-              "<h4> <a href='https://localhost:44374/validar.aspx?id=@id'>Reestablecer clave</a> </h4> </body>");
+              "<h3> <a href='https://localhost:44374/validar.aspx?id=@id'>Reestablecer clave</a> </h3> </body>");
 
         public static string BodyPorVentaCliente(VentaCliente oVenta)
         {

@@ -31,9 +31,9 @@
                         <h6 id="h1" runat="server">El mail ingresado no coincide con el de un usuario cargado en el sistema</h6>
                     </div>
 
-         <%--           <div id="divMensaje" class="alert alert-warning" runat="server" style="display: none">
-                        <h6 id="hMensaje" runat="server">Las contraseñas deben coincidir</h6>
-                    </div>--%>
+                    <div id="divMensaje" class="alert alert-warning" runat="server" visible="false">
+                        <h6 id="hMensaje" runat="server"></h6>
+                    </div>
 
                     <div class="form-group">
                         <label for="login" class="control-label">Ingrese su email</label>
