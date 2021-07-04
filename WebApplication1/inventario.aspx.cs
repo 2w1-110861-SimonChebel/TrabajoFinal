@@ -10,8 +10,11 @@ namespace Easy_Stock
 {
     public partial class inventario : Page
     {
+        protected bool esBusqueda;
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             if (grvInventario.DataSource == null)
             {
                 divMensaje.Visible = true;
@@ -68,6 +71,41 @@ namespace Easy_Stock
             ((GridView)sender).PageIndex = e.NewPageIndex;
             grvInventario.DataSource = Session["inventario"] != null ? (List<InventarioP>)Session["inventario"] : AdInventario.ObtenerInventario();
             grvInventario.DataBind();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+            List<InventarioP> resultado = null;
+
+            esBusqueda = true;
+
+            divMensaje.Visible = false;
+
+            string[] aux = txtCodigoUnico.Text.Split('-');
+            string codigoUnico = aux.Length > 1 ? string.Format("{0}-{1}", aux[0], aux[1]) : string.Empty;
+            string codigo = txtCodigo.Text;
+            int idEstado = Convert.ToInt32( cboEstado.SelectedValue);
+            DateTime fechaInicio = string.IsNullOrEmpty(dtpFechaInicio.Text) ? default: Convert.ToDateTime( dtpFechaInicio.Text);
+            DateTime fechaFin = string.IsNullOrEmpty(dtpFechaFin.Text) ? default : Convert.ToDateTime(dtpFechaFin.Text).AddHours(23).AddMinutes(59).AddSeconds(59);
+
+            resultado = AdInventario.ObtenerInventario(codigoUnico, codigo, idEstado, fechaInicio, fechaFin);
+
+            if (resultado != null)
+            {
+                Session["inventario"] = resultado;
+                grvInventario.DataSource = resultado;
+                grvInventario.DataBind();
+            }
+            else 
+            {
+                Session["inventario"] = null;
+                grvInventario.DataSource = null;
+                grvInventario.DataBind();
+                divMensaje.Visible = true;
+            }
+
+
         }
     }
 }

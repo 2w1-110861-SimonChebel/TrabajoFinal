@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-6 col-xl-6" style="padding: 20px">
                 <asp:Button runat="server" ID="btnBuscarProducto" CssClass="btn btn-dark" type="button" Text="Buscar" OnClick="btnBuscarProducto_Click" />
-                <asp:Button runat="server" ID="btnRecargar" CssClass="btn btn-light" type="button" Text="Recargar" OnClick="btnRecargar_Click" ToolTip="Recargar el listado" />
+                <asp:Button runat="server" ID="btnRecargar" CssClass="btn btn-secondary" type="button" Text="Recargar" OnClick="btnRecargar_Click" ToolTip="Recargar el listado" />
             </div>
 
         </div>

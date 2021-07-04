@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-      <div id="divTitulo" class="alert alert-info" style="padding-top: 20px" visible="true" runat="server">
+    <div id="divTitulo" class="alert alert-info" style="padding-top: 20px" visible="true" runat="server">
         <h5 id="hTitulo" runat="server">Inventario</h5>
     </div>
 
@@ -19,17 +19,17 @@
                 <div class="row">
                     <div class="col-12">
 
-                        <button type="button" class="accordion">Buscador</button>
+                        <button id="btnAcordion" type="button" class="accordion" runat="server">Buscador</button>
                         <div class="panel" style="margin: 20px">
 
                             <div class="row col-12">
                                 <div class="form-group  col-xs-12 col-md-10 col-lg-4">
                                     <label for="txtCodigoUnico" class="control-label">ID Único</label>
-                                    <asp:TextBox type="text" class="form-control" ID="txtCodigoUnico" name="txtNroTran" runat="server" MaxLength="50"> </asp:TextBox>
+                                    <asp:TextBox type="text" class="form-control" ID="txtCodigoUnico" name="txtCodigoUnico" runat="server" MaxLength="50"> </asp:TextBox>
                                 </div>
                                 <div class="form-group  col-xs-12 col-md-10 col-lg-4">
                                     <label for="txtCodigo" class="control-label">Código</label>
-                                    <asp:TextBox type="text" class="form-control" ID="txtCodigo" PlaceHolder="Nombre o razón social" name="txtCliente" runat="server" MaxLength="50"> </asp:TextBox>
+                                    <asp:TextBox type="text" class="form-control" ID="txtCodigo" name="txtCodigo" runat="server" MaxLength="60"> </asp:TextBox>
                                 </div>
 
                                 <div class="form-group  col-xs-12 col-md-10 col-lg-4">
@@ -45,19 +45,24 @@
                                 </div>
 
                                 <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                                    <label for="dtpFechaInicio" class="control-label">Por fecha (inicio)</label>
+                                    <label for="dtpFechaInicio" class="control-label">Fecha de ingreso (desde)</label>
                                     <asp:TextBox type="date" class="form-control" ID="dtpFechaInicio" name="dtpFechaInicio" runat="server"></asp:TextBox>
                                 </div>
 
                                 <div class="form-group  col-xs-12 col-md-10 col-lg-4">
-                                    <label for="dtpFechaFin" class="control-label">Por fecha (fin)</label>
+                                    <label for="dtpFechaFin" class="control-label">Fecha de ingreso (hasta)</label>
                                     <asp:TextBox type="date" class="form-control" ID="dtpFechaFin" name="dtpFechaFin" runat="server"></asp:TextBox>
                                 </div>
+
+                                <div class="col-12" style="display:flex;justify-items:right">
+                                    <asp:Button runat="server" ID="btnBuscar" type="button" class="btn btn-dark" Text="Buscar" OnClick="btnBuscar_Click"></asp:Button>
+                                </div>
+
                             </div>
 
                         </div>
-
                     </div>
+
                 </div>
             </div>
         </div>
@@ -66,10 +71,8 @@
     <div class="col-12" style="margin: 25px">
 
 
-        <asp:GridView ID="grvInventario" runat="server" Height="277px" Width="85%" CssClass="gridViewCarrito gridViewCarritoHeader" OnRowCommand="grvInventario_RowCommand" AllowPaging="True" OnPageIndexChanging="grvInventario_PageIndexChanging" AutoGenerateColumns="False">
+        <asp:GridView ID="grvInventario" runat="server" Height="277px" Width="95%" CssClass="gridView gridViewHeader" OnRowCommand="grvInventario_RowCommand" AllowPaging="True" OnPageIndexChanging="grvInventario_PageIndexChanging" AutoGenerateColumns="False">
             <Columns>
-
-
 
                 <asp:TemplateField HeaderText="ID único" HeaderStyle-CssClass="absolute" Visible="true" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
@@ -151,7 +154,7 @@
         }
 
             .accordion:after {
-                content: '\02795'; 
+                content: '\02795';
                 font-size: 13px;
                 color: #777;
                 float: right;
@@ -159,10 +162,10 @@
             }
 
         .active:after {
-            content: "\2796"; 
+            content: "\2796";
         }
 
-       
+
         .active, .accordion:hover {
             background-color: #ccc;
         }
