@@ -85,11 +85,12 @@ namespace Easy_Stock
             string[] aux = txtCodigoUnico.Text.Split('-');
             string codigoUnico = aux.Length > 1 ? string.Format("{0}-{1}", aux[0], aux[1]) : string.Empty;
             string codigo = txtCodigo.Text;
+            string nombre = txtNombre.Text;
             int idEstado = Convert.ToInt32( cboEstado.SelectedValue);
             DateTime fechaInicio = string.IsNullOrEmpty(dtpFechaInicio.Text) ? default: Convert.ToDateTime( dtpFechaInicio.Text);
             DateTime fechaFin = string.IsNullOrEmpty(dtpFechaFin.Text) ? default : Convert.ToDateTime(dtpFechaFin.Text).AddHours(23).AddMinutes(59).AddSeconds(59);
 
-            resultado = AdInventario.ObtenerInventario(codigoUnico, codigo, idEstado, fechaInicio, fechaFin);
+            resultado = AdInventario.ObtenerInventario(codigoUnico, codigo, idEstado, fechaInicio, fechaFin,nombre);
 
             if (resultado != null)
             {
