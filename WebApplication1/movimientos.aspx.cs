@@ -47,7 +47,7 @@ namespace Easy_Stock
             cboUsuario.DataSource = null;
             cboProveedor.DataSource = null;
             List<Usuario> lstUsuario = Session["listaUsuario"] != null ? (List<Usuario>)Session["listaUsuario"] : AdUsuario.ObtenerUsuarios();
-            List<Proveedor> lstProveedor = Session["listaProveedores"] != null ? (List<Proveedor>)Session["listaProveedores"] : AdProveedor.obtenerProveedores();
+            List<Proveedor> lstProveedor = Session["listaProveedores"] != null ? (List<Proveedor>)Session["listaProveedores"] : AdProveedor.ObtenerProveedores();
             List<TipoTransaccion> lstTipoTransaccion = Session["listaTipoTransaccion"] != null ? (List<TipoTransaccion>)Session["listaTipoTransaccion"] : AdGeneral.obtenerTiposTransacciones();
             if (Session["listaUsuario"] == null) Session["listaUsuario"] = lstUsuario;
             if(Session["listaProveedores"] == null) Session["listaProveedores"] = lstProveedor;
@@ -157,17 +157,26 @@ namespace Easy_Stock
                             grvTransacciones.DataBind();
                             if (lstVentas == null) MostrarMensajeNoEcontrados();
                             break;
+
                         case (int)Tipo.tipoTransaccion.cambioProductoDeCliente:
                             List<Transaccion> lstMov = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
                             grvTransacciones.DataSource = lstMov;
                             grvTransacciones.DataBind();
                             if (lstMov == null) MostrarMensajeNoEcontrados();
                             break;
+
                         case (int)Tipo.tipoTransaccion.devolucionDeCliente:
                             List<Transaccion> lstDev = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
                             grvTransacciones.DataSource = lstDev;
                             grvTransacciones.DataBind();
                             if (lstDev == null) MostrarMensajeNoEcontrados();
+                            break;
+
+                        case (int)Tipo.tipoTransaccion.compraProveedor:
+                            List<Transaccion> lst = AdTransaccion.obtenerMovimientos(idTransaccion, cli, usu, fechaInicio, fechaFin, pro, tipoTran, true);
+                            grvTransacciones.DataSource = lst;
+                            grvTransacciones.DataBind();
+                            if (lst == null) MostrarMensajeNoEcontrados(); 
                             break;
                         default:
                             //List<Transaccion> lstTran = AdTransaccion.

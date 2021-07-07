@@ -15,6 +15,33 @@ namespace Easy_Stock
     {
 
         /// <summary>
+        /// divTitulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTitulo;
+
+        /// <summary>
+        /// hTitulo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl hTitulo;
+
+        /// <summary>
+        /// cboProveedor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList cboProveedor;
+
+        /// <summary>
         /// txtBuscarProducto control.
         /// </summary>
         /// <remarks>

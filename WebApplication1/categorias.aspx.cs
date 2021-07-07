@@ -133,5 +133,12 @@ namespace Easy_Stock
         {
             Response.Redirect("editar_cat.aspx");
         }
+
+        protected void grvCategorias_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            ((GridView)sender).PageIndex = e.NewPageIndex;
+            grvCategorias.DataSource = AdCategoria.ObtenerCategorias();
+            grvCategorias.DataBind();
+        }
     }
 }

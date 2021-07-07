@@ -99,7 +99,7 @@ namespace Easy_Stock.AccesoDatos
             return true;
         }
 
-        public static List<Proveedor> obtenerProveedores(string nombre="",int id=0)
+        public static List<Proveedor> ObtenerProveedores(string nombre="",int id=0)
         {
             sbSql = null;
             try

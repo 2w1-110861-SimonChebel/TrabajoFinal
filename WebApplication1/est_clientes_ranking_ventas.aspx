@@ -46,10 +46,11 @@
 
             </div>
         </div>
+
         <div class="row col-md-6 col-lg-6 col-xl-6 col-xs-12 col-sm-12" style="padding-left: 10%">
             <div style="margin-left: 10%">
-                <div class="alert alert-info">
-                    <h5>Porcentaje de ventas por tipo de cliente</h5>
+                <div class="row alert alert-info" style="padding-right: 10%">
+                    <h5>Porcentaje de ventas por tipo de clientes</h5>
                 </div>
 
                 <asp:Chart ID="crtTipoClientes" runat="server" CssClass="table table-bordered table-condensed table-responsive">

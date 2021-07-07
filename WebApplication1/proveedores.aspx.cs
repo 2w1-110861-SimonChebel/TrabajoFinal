@@ -35,7 +35,7 @@ namespace Easy_Stock
                 {
                     //grvProveedores.Columns[8].Visible = false;//div de acciones
                 }
-                List<Proveedor> lstProveedores = AdProveedor.obtenerProveedores();
+                List<Proveedor> lstProveedores = AdProveedor.ObtenerProveedores();
                 if (lstProveedores != null && lstProveedores.Count > 0)
                 {
                     grvProveedores.DataSource = lstProveedores;
@@ -73,7 +73,7 @@ namespace Easy_Stock
             if (string.IsNullOrEmpty(nombre)) return;
             grvProveedores.DataSource = null;
             grvProveedores.DataBind();
-            List<Proveedor> lstProveedores=  AdProveedor.obtenerProveedores(nombre);
+            List<Proveedor> lstProveedores=  AdProveedor.ObtenerProveedores(nombre);
             if (lstProveedores != null)
             {
                 divMensaje.Visible = true;
@@ -95,7 +95,7 @@ namespace Easy_Stock
         protected void grvProveedores_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             ((GridView)sender).PageIndex = e.NewPageIndex;
-            grvProveedores.DataSource = AdProveedor.obtenerProveedores();
+            grvProveedores.DataSource = AdProveedor.ObtenerProveedores();
             grvProveedores.DataBind();
         }
     }

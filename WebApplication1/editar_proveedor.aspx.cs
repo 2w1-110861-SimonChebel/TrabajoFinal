@@ -18,7 +18,7 @@ namespace Easy_Stock
             if (!IsPostBack && accion.Equals("editar"))
             {
                 cargarCombos();
-                Proveedor oProveedor = AdProveedor.obtenerProveedores("", idProveedor).FirstOrDefault();
+                Proveedor oProveedor = AdProveedor.ObtenerProveedores("", idProveedor).FirstOrDefault();
                 if (oProveedor != null)
                 {
                     btnAgregarProveedor.Text = "Guardar cambios";

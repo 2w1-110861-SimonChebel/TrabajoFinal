@@ -4,6 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+    <div class="row col-12 alert alert-info">
+        <h5 id="hTitulo" runat="server" style="margin: 1%">Clientes</h5>
+    </div>
 
     <div class="col-xs-12 col-md-10 col-xl-10 table table-responsive">
         <div class="col-xl-12 col-md-12">

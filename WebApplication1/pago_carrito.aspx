@@ -38,10 +38,26 @@
 
         <div id="divDatosCliente" class="form-group col-xl-3 col-md-3 col-xs-12" runat="server">
 
+
             <div class="form-group col-4 col-sm-12 col-xs-12" style="padding: 10px; padding-bottom: 2px">
-                <h5>Cliente</h5>
+                <h5 id="hTituloClienteProv" runat="server">Cliente</h5>
             </div>
 
+            <%if (Request.QueryString["accion"].Equals("pedido"))
+                { %>
+
+            <div class="form-group">
+                <label for="txtProv" class="control-label">Proveedor</label>
+                <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtProv" name="txtProv" runat="server" MaxLength="90"> </asp:TextBox>
+            </div>
+
+            <div class="form-group">
+                <label for="txtEmailProv" class="control-label">Email</label>
+                <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtEmailProv" name="txtEmailProv" runat="server" MaxLength="80"> </asp:TextBox>
+            </div>
+            <%}
+                else
+                { %>
             <div class="form-group">
                 <label for="txtCliente" class="control-label">Cliente</label>
                 <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtCliente" name="txtCliente" runat="server" MaxLength="70"> </asp:TextBox>
@@ -51,6 +67,7 @@
                 <label for="txtDniCLiente" class="control-label">Documento, CUIT O CUIL</label>
                 <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtDniCLiente" name="txtDniCLiente" runat="server" MaxLength="70"> </asp:TextBox>
             </div>
+            <%} %>
             <div class="form-group">
                 <label for="txtDireccion" class="control-label">Dirección</label>
                 <asp:TextBox type="text" ReadOnly="true" class="form-control" ID="txtDireccion" name="txtDireccion" runat="server" MaxLength="70"> </asp:TextBox>
@@ -158,12 +175,21 @@
                 </asp:DropDownList>
             </div>
 
+            <%if (Request.QueryString["accion"] != null && Request.QueryString["accion"] != "pedido")
+                { %>
             <div class="form-group">
                 <label for="cboTipoFactura" class="control-label">Tipo de factura</label>
                 <asp:DropDownList class="form-control" ID="cboTipoFactura" name="cboTipoFactura" runat="server">
                     <asp:ListItem Value="0">- Seleccione -</asp:ListItem>
                 </asp:DropDownList>
             </div>
+            <%} %>
+
+              <div class="form-group">
+                  <label for="txtObservaciones" class="control-label">Observaciones</label>
+                 <asp:TextBox type="text" class="form-control" ID="txtObservaciones" name="txtObservaciones" runat="server" MaxLength="140" TextMode="MultiLine"></asp:TextBox>
+            </div>
+
 
             <h6 id="hTotalSinRecargo" runat="server">Total sin recargo: $0,0</h6>
             <h6 id="hRecargo" runat="server">Recargo: $0,0</h6>
@@ -180,6 +206,7 @@
             <div>
                 <asp:LinkButton ID="btnVolverCarrito" runat="server" OnClick="btnVolverCarrito_Click">Volver al carrito</asp:LinkButton>
             </div>
+          
         </div>
     </div>
 

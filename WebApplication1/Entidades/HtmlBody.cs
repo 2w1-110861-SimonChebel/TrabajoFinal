@@ -11,9 +11,15 @@ namespace Easy_Stock.Entidades
         public static string BodyClientePorVentaCliente { get; } = ("<body> <h1> Muchas gracias por elegirnos @cliente</h1> <br> " +
                "<h4>Le hacemos llegar este email con los detalles de su compra: </h4> </body>");
 
+        public static string BodyClientePorCompraProveedor { get; } = ("<body> <h1> Nuevo pedido realizado para @proveedor</h1> <br> " +
+               "<h4>Estimado proveedor, a continuaciónd detallamos el pedido a realizar: </h4> </body>");
+
         public static string BodyUsuarioPorVentaCliente { get; } = ("<body> <h1> @usuario realizaste la siguiente transaccion: </h1> <br>  </body>");
 
+        public static string BodyUsuarioPorCompraProveedor { get; } = ("<body> <h1> @usuario se realizó el siguiente pedido: </h1> <br>  </body>");
         public static string AsuntoClientePorVentaCliente { get; } = "Resumen de compra Easy Stock";
+
+        public static string AsuntoClientePorCompraProveedor { get; } = "Resumen de pedido";
         public static string AsuntoUsuarioPorVentaCliente { get; } = "Transaccion realizada";
 
         public static string AsuntoReestablecerClave { get; } = "Reestablecer contraseña";
@@ -37,6 +43,22 @@ namespace Easy_Stock.Entidades
             return sbBody.ToString();
         }
 
+        public static string BodyPorCompraProveedor(CompraProveedor oCompra)
+        {
+            StringBuilder sbBody = new StringBuilder("<ul> ");
+            //sbBody.Append("<li> Nro transaccion: " + oVenta.factura.nroFactura + "</li> ");
+            sbBody.Append("<li> Fecha: " + oCompra.fecha + "</li> ");
+            sbBody.Append("<li> Observaciones: " + oCompra.descripcion + "</li> ");
+            string nombre = oCompra.proveedor.nombre;
+            sbBody.Append("<li> Proveedor: " + nombre + "</li> ");
+            sbBody.Append("<li> Operador: " + string.Format("{0} {1}", oCompra.usuario.nombre, oCompra.usuario.apellido) + "</li> ");
+            sbBody.Append("</ul> <br>");
+            sbBody.Append(TablaMostrarProductosProveedor(oCompra));
+            sbBody.Append(string.Format("<h2>Total: ${0} </h2>", oCompra.total));
+
+            return sbBody.ToString();
+        }
+
         private static string TablaMostrarProductos(VentaCliente oVenta) //productos entregados es para cuando se realiza un cambio
         {
             bool primeraVez = true; //para saber si es la primera vez y dibujar la cabecera
@@ -52,6 +74,27 @@ namespace Easy_Stock.Entidades
             {
                 var item = oVenta.factura.detallesFactura[i];
                 sb.Append(string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>{2}</td>  <td>21</td>  <td>{3}</td>  </tr>", item.producto.nombre, item.cantidad, item.producto.precioVenta, item.subTotal));
+            }
+            sb.Append(" </tbody> </table>");
+
+            return sb.ToString();
+        }
+
+        private static string TablaMostrarProductosProveedor(CompraProveedor oCompra) //productos entregados es para cuando se realiza un cambio
+        {
+            bool primeraVez = true; //para saber si es la primera vez y dibujar la cabecera
+            StringBuilder sb = new StringBuilder("<table border='1'>");
+            //List<DetalleFactura> lstProductos = Util.AgruparDetallePorProducto(oVenta.factura.detallesFactura);
+            if (primeraVez)
+            {
+                sb.Append(" <caption>Detalle de los productos</caption> <tbody>");
+                sb.Append("<tr> <th>Producto</th> <th>Cantidad</th> <th>Precio unitario</th>  <th>Iva</th>  <th>Sub total</th>  </tr>");
+                primeraVez = false;
+            }
+            for (int i = 0; i < oCompra.pedido.detallesPedido.Count(); i++)
+            {
+                var item = oCompra.pedido.detallesPedido[i];
+                sb.Append(string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>{2}</td>  <td>21</td>  <td>{3}</td>  </tr>", item.producto.nombre, item.cantidad, item.producto.precioCosto, item.subTotal));
             }
             sb.Append(" </tbody> </table>");
 

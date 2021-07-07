@@ -135,7 +135,7 @@ namespace Easy_Stock.AccesoDatos
                 {
 
 
-                    int idFactura = obtenerUltimoNroFactura();
+                    int idFactura = ObtenerUltimoNroFactura();
                     string sql = "SP_InsertarDetalle_QuitarDeInventario";
                     for (int i = 0; i < oVentaCliente.factura.detallesFactura.Count; i++)
                     {
@@ -157,6 +157,70 @@ namespace Easy_Stock.AccesoDatos
                             new SqlParameter("@idEstado",(int)Tipo.estadoProducto.noDisponible)
 
                              };
+                            try
+                            {
+                                SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sql, paramDetalle);
+                            }
+                            catch (Exception ex)
+                            {
+                                return false;
+                                throw ex;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+                throw ex;
+            }
+            return true;
+        }
+
+        public static bool RegistraCompra(CompraProveedor compra)
+        {
+            sbSql = null;
+            try
+            {
+                sbSql = new StringBuilder("SP_RegistrarCompra");
+
+                SqlParameter[] parametros = {
+                    new SqlParameter("@fecha", compra.fecha),
+                    new SqlParameter("@desc", compra.descripcion),
+                    new SqlParameter("@idProveedor", compra.proveedor.idProveedor),
+                    new SqlParameter("@idEmpresa", compra.pedido.empresa.idEmpresa),
+                    new SqlParameter("@descuento", compra.descuento),
+                    new SqlParameter("@total", compra.pedido.total),
+                    new SqlParameter("@idFormaPago", compra.formaPago.idFormaPago),
+                    new SqlParameter("@idTipoTransaccion", compra.tipoTransaccion.idTipoTransaccion),
+                    new SqlParameter("@idUsuario", compra.pedido.usuario.idUsuario),
+                };
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.StoredProcedure, sbSql.ToString(), parametros))
+                {
+
+
+                    int idPedido = ObtenerUltimoNroPedido();
+                    string sql = "SP_InsertarDetalle_Pedido";
+                    for (int i = 0; i < compra.pedido.detallesPedido.Count; i++)
+                    {
+                        var item = compra.pedido.detallesPedido[i];
+
+
+                        for (int e = 0; e < item.producto.cantidad; e++)
+                        {
+                            //int aux = item.producto.cantidadRestante - 1 - e;
+                            SqlParameter[] paramDetalle =  {
+                            new SqlParameter("@idPedido", idPedido),
+                            new SqlParameter("@idProducto", item.producto.idProducto),
+                            new SqlParameter("@precioCosto", item.producto.precioCosto),
+                            new SqlParameter("@cantidadProducto", item.cantidad/item.cantidad),
+                            new SqlParameter("@subTotal", item.producto.calcularSubTotal()),
+
+                            };
                             try
                             {
                                 SqlHelper.ExecuteNonQuery(cadenaConexion, CommandType.StoredProcedure, sql, paramDetalle);
@@ -318,13 +382,13 @@ namespace Easy_Stock.AccesoDatos
                 sbSql = new StringBuilder("SELECT t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion, ");
                 sbSql.Append(" c.idCliente,c.nombre,c.apellido,c.dni,c.cuit,c.direccion,c.barrio,lo.idLocalidad,lo.localidad,p.idProvincia,p.provincia,pr.idProveedor, pr.nombre, c.razonSocial, tc.idTipoCliente,tc.tipoCliente, u.idUsuario,u.nombre,u.apellido  ");
                 sbSql.Append(" FROM Transacciones t ");
-                sbSql.Append(" JOIN Clientes c on T.idCliente = C.idCliente");
-                sbSql.Append(" JOIN Localidades lo ON c.idLocalidad = lo.idLocalidad");
-                sbSql.Append(" JOIN Provincias p ON c.idProvincia = p.idProvincia");
-                sbSql.Append(" JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente");
-                sbSql.Append(" JOIN Tipos_Transacciones tt ON t.idTipoTransaccion = tt.idTipoTransaccion");
+                sbSql.Append(" LEFT JOIN Clientes c on T.idCliente = C.idCliente");
+                sbSql.Append(" LEFT JOIN Localidades lo ON c.idLocalidad = lo.idLocalidad");
+                sbSql.Append(" LEFT JOIN Provincias p ON c.idProvincia = p.idProvincia");
+                sbSql.Append(" LEFT JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente");
+                sbSql.Append(" LEFT JOIN Tipos_Transacciones tt ON t.idTipoTransaccion = tt.idTipoTransaccion");
                 sbSql.Append(" LEFT JOIN Proveedores pr ON t.idProveedor = pr.idProveedor");
-                sbSql.Append(" JOIN Usuarios u ON t.idUsuario = u.idUsuario");
+                sbSql.Append(" LEFT JOIN Usuarios u ON t.idUsuario = u.idUsuario");
                 if (idVenta > 0 || oCliente != null || oUsuario != null || !string.IsNullOrEmpty(fechaFin) || !string.IsNullOrEmpty(fechaInicio) || oProveedor != null || idTipoTransaccion > 0)
                 {
                     bool hayFiltroAnterior = false;
@@ -716,6 +780,98 @@ namespace Easy_Stock.AccesoDatos
             return lstVentas;
         }
 
+        public static CompraProveedor ObtenerDetalleCompraProveedor(int idTransaccion, int idTipoTransaccion)
+        {
+            sbSql = null;
+            CompraProveedor resultado = null;
+            try
+            {
+                sbSql = new StringBuilder(" SELECT t.idTransaccion,t.fecha,t.descripcion,pr.idProveedor,pr.Nombre, ");
+                sbSql.Append(" pe.idPedido,dp.idDetallePedido,p.idProducto,p.nombre,p.precioCosto,dp.cantidad,dp.subTotal,fp.idFormaPago,fp.formaPago, u.idUsuario,u.nombre,u.apellido,pe.total  ");
+                sbSql.Append(" FROM Transacciones t ");
+                sbSql.Append(" JOIN Pedidos pe ON pe.idTransaccion = t.idTransaccion");
+                sbSql.Append(" JOIN Detalles_Pedidos dp ON dp.idPedido = pe.idPedido ");
+                sbSql.Append(" JOIN Proveedores pr ON pr.idProveedor = pe.idProveedor ");
+                sbSql.Append(" JOIN Productos p ON p.idProducto = dp.idProducto ");
+                sbSql.Append(" JOIN Formas_Pago fp ON t.idFormaPago = fp.idFormaPago ");
+                sbSql.Append(" JOIN Usuarios u on t.idUsuario = u.idUsuario ");
+                sbSql.Append(" WHERE t.idTransaccion = @id AND t.idTipoTransaccion = @idTipoTransaccion ");
+
+                SqlParameter[] param = new SqlParameter[] {
+                    new SqlParameter("@id",idTransaccion),
+                    new SqlParameter("@idTipoTransaccion",idTipoTransaccion)
+                };
+
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sbSql.ToString(), param))
+                {
+                    if (dr.HasRows)
+                    {
+                        resultado = new CompraProveedor();
+                        List<DetallePedido> detallesPedido = new List<DetallePedido>();
+                        while (dr.Read())
+                        {
+                            detallesPedido.Add(
+                                new DetallePedido
+                                {
+                                    idDetallePedido = dr.IsDBNull(6) ? default(int) : dr.GetInt32(6),
+                                    producto = new Producto
+                                    {
+                                        idProducto = dr.IsDBNull(7) ? default(int) : dr.GetInt32(7),
+                                        nombre = dr.IsDBNull(8) ? string.Empty : dr.GetString(8),
+                                        precioCosto = dr.IsDBNull(9) ? default(decimal) : dr.GetDecimal(9)
+                                    },
+                                    cantidad = dr.IsDBNull(10) ? default(int) : dr.GetInt32(10),
+                                    iva = 21,
+                                    subTotal = dr.IsDBNull(11) ? default(decimal) : dr.GetDecimal(11)
+                                }
+                            );
+                            resultado = new CompraProveedor
+                            {
+                                idTransaccion = dr.IsDBNull(0) ? default(int) : dr.GetInt32(0),
+                                fecha = dr.IsDBNull(1) ? default(DateTime) : dr.GetDateTime(1),
+                                descripcion = dr.IsDBNull(2) ? default(string) : dr.GetString(2),
+                                proveedor = new Proveedor
+                                {
+                                    idProveedor = dr.IsDBNull(3) ? default(int) : dr.GetInt32(3),
+                                    nombre = dr.IsDBNull(4) ? default(string) : dr.GetString(4),
+                                },
+                                pedido = new Pedido
+                                {
+                                    idPedido = dr.IsDBNull(5) ? default(int) : dr.GetInt32(5),
+                                    detallesPedido = detallesPedido,
+                                    total = dr.IsDBNull(17) ? default(decimal) : dr.GetDecimal(17)
+                                }
+                                ,
+                                formaPago = new FormaPago { 
+                                    idFormaPago = dr.IsDBNull(12) ? default(int) : dr.GetInt32(12),
+                                    formaPago = dr.IsDBNull(13) ? default(string) : dr.GetString(13),
+                                },
+                            
+                                usuario = new Usuario
+                                {
+                                    idUsuario= dr.IsDBNull(14) ? default(int) : dr.GetInt32(14),
+                                    nombre = dr.IsDBNull(15) ? default(string) : dr.GetString(15),
+                                    apellido = dr.IsDBNull(16) ? default(string) : dr.GetString(16)
+                                },
+
+
+                            };
+                        }
+
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+                throw ex;
+            }
+            return resultado;
+        }
+
+
         public static CambioProducto ObtenerDetalleCambioProducto(int idTransaccion = 0, int idTipoTransaccion = 0)
         {
             sbSql = null;
@@ -953,10 +1109,32 @@ namespace Easy_Stock.AccesoDatos
             return cantidad;
         }
 
-        private static int obtenerUltimoNroFactura()
+        private static int ObtenerUltimoNroFactura()
         {
             decimal nro = 0;
             StringBuilder sql = new StringBuilder("SELECT IDENT_CURRENT('Facturas')");
+            try
+            {
+                using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sql.ToString()))
+                {
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        nro = dr.IsDBNull(0) ? 0 : dr.GetDecimal(0);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+                throw ex;
+            }
+            return Convert.ToInt32(nro);
+        }
+        private static int ObtenerUltimoNroPedido()
+        {
+            decimal nro = 0;
+            StringBuilder sql = new StringBuilder("SELECT IDENT_CURRENT('Pedidos')");
             try
             {
                 using (SqlDataReader dr = SqlHelper.ExecuteReader(cadenaConexion, CommandType.Text, sql.ToString()))

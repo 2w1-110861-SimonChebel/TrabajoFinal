@@ -15,6 +15,21 @@ namespace Easy_Stock
         protected void Page_Load(object sender, EventArgs e)
         {
             string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
+
+            switch (accion)
+            {
+                case "":
+                    hTitulo.InnerText = "Productos cargados";
+                    break;
+                case "pedido":
+                    hTitulo.InnerText = "Realizar nuevo pedido";
+                    break;
+                case "carrito":
+                    hTitulo.InnerText = "Nueva venta";
+                    break;
+                default:
+                    break;
+            }
             Session["tipoTranActual"] = Session["tipoTranActual"] != null ? (TipoTransaccion)Session["tipoTranActual"] : AdGeneral.obtenerTiposTransacciones(Convert.ToInt32(Request.QueryString["tipoTransaccion"])).First();
             if (!IsPostBack)
             {
@@ -22,21 +37,33 @@ namespace Easy_Stock
                 if (Session["productos"] == null) Session["productos"] = AdProducto.ObtenerProductos();
                 grvProductos.DataSource = Session["productos"];
                 grvProductos.DataBind();
-                if (!string.IsNullOrEmpty(accion) && accion.Equals("carrito"))
+                if (!string.IsNullOrEmpty(accion) && (accion.Equals("carrito") || accion.Equals("pedido")))
                 {
                     grvProductos.Columns[14].Visible = false;
                     grvProductos.Columns[15].Visible = true;
+
+                    if (accion.Equals("pedido")) { 
+                        EsconderCamposPedido();
+                        CargarComboProveedor();
+                    }
+
                     if (Session["carrito"] != null)
                     {
                         grvCarrito.DataSource = ((Carrito)Session["carrito"]).productos;
                         grvCarrito.DataBind();
                     }
                 }
+                //if (!string.IsNullOrEmpty(accion) && accion.Equals("pedido"))
+                //{
+                //    grvProductos.Columns[14].Visible = false;
+                //    grvProductos.Columns[15].Visible = true;
+                //}
                 else
                 {
                     grvProductos.Columns[14].Visible = true;
                     grvProductos.Columns[15].Visible = false;
                 }
+
 
 
             }
@@ -82,7 +109,7 @@ namespace Easy_Stock
         {
             string[] argumentos = e.CommandArgument.ToString().Split(',');
             int idProducto = Convert.ToInt32(argumentos[0]);
-            int fila = argumentos.Length > 1? Convert.ToInt32(argumentos[1]) : 0;
+            int fila = argumentos.Length > 1 ? Convert.ToInt32(argumentos[1]) : 0;
             if (e.CommandName.Equals("editar"))
             {
                 Response.Redirect("editar_producto.aspx?id=" + idProducto.ToString() + "&accion=" + e.CommandName);
@@ -117,7 +144,7 @@ namespace Easy_Stock
                     grvCarrito.DataSource = null;
                     grvCarrito.DataBind();
                     divTotal.Visible = true;
-                    Producto oProducto = lstProductos != null && lstProductos.Count > 0 ? new List<Producto> { buscarProductoLocal(idProducto) }.First() : AdProducto.ObtenerProductoPorId(idProducto,false/*, cantidad*/).First();
+                    Producto oProducto = lstProductos != null && lstProductos.Count > 0 ? new List<Producto> { buscarProductoLocal(idProducto) }.First() : AdProducto.ObtenerProductoPorId(idProducto, false/*, cantidad*/).First();
                     oProducto.cantidad = cantidad;
                     //foreach (var item in lstProd)
                     //{
@@ -164,8 +191,8 @@ namespace Easy_Stock
                 Carrito auxCarrito = (Carrito)Session["carrito"];
                 auxCarrito.removerProducto(id);
                 Session["carrito"] = auxCarrito.productos.Count < 1 ? null : auxCarrito;
-                grvCarrito.DataSource = Session["carrito"] != null? ((Carrito)Session["carrito"]).productos : null;
-                grvCarrito.DataBind();            
+                grvCarrito.DataSource = Session["carrito"] != null ? ((Carrito)Session["carrito"]).productos : null;
+                grvCarrito.DataBind();
             }
         }
 
@@ -186,24 +213,31 @@ namespace Easy_Stock
 
         protected void btnContinuar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("cliente_carrito.aspx");
+            if (Request.QueryString["accion"].Equals("pedido")) {
+                int idProv = Convert.ToInt32(cboProveedor.SelectedValue);
+                Session["provCarrito"] = AdProveedor.ObtenerProveedores("", idProv).First();
+            }
+
+
+            if (Request.QueryString["accion"].Equals("pedido")) Response.Redirect("pago_carrito.aspx?accion=pedido");
+            else Response.Redirect("cliente_carrito.aspx");
         }
 
         protected void btnRecargar_Click(object sender, EventArgs e)
         {
-          string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
-          Session["productos"] = null;
+            string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
+            Session["productos"] = null;
 
             if (string.IsNullOrEmpty(accion))
             {
                 Response.Redirect("productos.aspx", false);
             }
             else {
-                Session["productos"] =  AdProducto.ObtenerProductos();
+                Session["productos"] = AdProducto.ObtenerProductos();
                 grvProductos.DataSource = Session["productos"];
                 grvProductos.DataBind();
             }
-         
+
         }
 
         protected void grvProductos_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -211,6 +245,34 @@ namespace Easy_Stock
             ((GridView)sender).PageIndex = e.NewPageIndex;
             grvProductos.DataSource = Session["productos"] != null ? (List<Producto>)Session["productos"] : AdProducto.ObtenerProductos();
             grvProductos.DataBind();
+        }
+
+        protected void cboProveedor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EsconderCamposPedido()
+        {
+            grvCarrito.Columns[3].Visible = false;
+            grvCarrito.Columns[4].Visible = false;
+            grvCarrito.Columns[5].Visible = false;
+
+        }
+
+        private void CargarComboProveedor()
+        {
+            List<Proveedor> lst = AdProveedor.ObtenerProveedores();
+
+            for (int i = 0; i < lst.Count; i++)
+            {
+                ListItem li = new ListItem
+                {
+                    Text = lst[i].nombre,
+                    Value = lst[i].idProveedor.ToString()
+                };
+                cboProveedor.Items.Add(li);
+            }
         }
     }
 }

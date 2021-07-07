@@ -25,7 +25,7 @@
                 <h5 id="hMensaje" runat="server"></h5>
             </div>
         </div>
-        <asp:GridView ID="grvCategorias" runat="server" Height="277px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvCategorias_SelectedIndexChanged" OnRowCommand="grvCategorias_RowCommand" AutoGenerateColumns="False">
+        <asp:GridView ID="grvCategorias" runat="server" Height="277px" Width="90%" CssClass="gridViewCarritoHeader gridViewCarrito" OnSelectedIndexChanged="grvCategorias_SelectedIndexChanged" AllowPaging="true" OnPageIndexChanging="grvCategorias_PageIndexChanging" OnRowCommand="grvCategorias_RowCommand" AutoGenerateColumns="False">
             <Columns>
                 <asp:TemplateField HeaderText="ID" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10" Visible="false">
                     <ItemTemplate>
@@ -65,6 +65,7 @@
 
 
             </Columns>
+            <PagerStyle BackColor="#284775" ForeColor="Black" HorizontalAlign="Left" CssClass="pagination" />
         </asp:GridView>
     </div>
 

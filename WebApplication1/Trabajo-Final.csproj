@@ -218,6 +218,7 @@
     <Content Include="inventario.aspx" />
     <Content Include="movimientos.aspx" />
     <Content Include="pago_carrito.aspx" />
+    <Content Include="pedido.aspx" />
     <Content Include="productos.aspx" />
     <Content Include="proveedores.aspx" />
     <Content Include="reestablecer.aspx" />
@@ -547,8 +548,10 @@
     <Compile Include="Entidades\Carrito.cs" />
     <Compile Include="Entidades\Categoria.cs" />
     <Compile Include="Entidades\Cliente.cs" />
+    <Compile Include="Entidades\CompraProveedor.cs" />
     <Compile Include="Entidades\Deposito.cs" />
     <Compile Include="Entidades\DetalleFactura.cs" />
+    <Compile Include="Entidades\DetallePedido.cs" />
     <Compile Include="Entidades\DeudaCliente.cs" />
     <Compile Include="Entidades\DevolucionCliente.cs" />
     <Compile Include="Entidades\Empresa.cs" />
@@ -564,6 +567,7 @@
     <Compile Include="Entidades\Localidad.cs" />
     <Compile Include="Entidades\Lote.cs" />
     <Compile Include="Entidades\Marca.cs" />
+    <Compile Include="Entidades\Pedido.cs" />
     <Compile Include="Entidades\PorcentajeVentaTipoCliente.cs" />
     <Compile Include="Entidades\Producto.cs" />
     <Compile Include="Entidades\ProductoReponer.cs" />
@@ -684,6 +688,13 @@
     </Compile>
     <Compile Include="pago_carrito.aspx.designer.cs">
       <DependentUpon>pago_carrito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="pedido.aspx.cs">
+      <DependentUpon>pedido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pedido.aspx.designer.cs">
+      <DependentUpon>pedido.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pedidos.cs">
       <DependentUpon>DataBase.tt</DependentUpon>
