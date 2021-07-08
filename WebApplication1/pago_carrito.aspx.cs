@@ -343,7 +343,7 @@ namespace Easy_Stock
             int porcentajeRecargo = Convert.ToInt32(cboFormaPago.SelectedValue.Split(',')[1]);
             total += total * Convert.ToDecimal(0.21);
             decimal recargo = total * porcentajeRecargo / 100;
-            decimal totalConRecargo = (total += recargo);
+            decimal totalConRecargo = (total + recargo);
             hRecargo.InnerText = string.Format("{0} {1}", "Recargo: $", recargo);
             hTotalSinRecargo.InnerText = string.Format("{0} {1}", "Total sin recargo: $", total);
             hTotal.InnerText = string.Format("{0} {1}", "Total: $", totalConRecargo);
