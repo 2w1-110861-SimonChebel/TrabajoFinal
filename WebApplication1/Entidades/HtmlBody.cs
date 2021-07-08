@@ -38,7 +38,7 @@ namespace Easy_Stock.Entidades
             sbBody.Append("<li> Operador: " + string.Format("{0} {1}", oVenta.usuario.nombre, oVenta.usuario.apellido) + "</li> ");
             sbBody.Append("</ul> <br>");          
             sbBody.Append(TablaMostrarProductos(oVenta));
-            sbBody.Append(string.Format("<h2>Total: ${0} </h2>", oVenta.factura.total));
+            sbBody.Append(string.Format("<h2>Total: ${0} </h2>", oVenta.factura.total * (decimal)1.21));
 
             return sbBody.ToString();
         }
@@ -54,7 +54,7 @@ namespace Easy_Stock.Entidades
             sbBody.Append("<li> Operador: " + string.Format("{0} {1}", oCompra.usuario.nombre, oCompra.usuario.apellido) + "</li> ");
             sbBody.Append("</ul> <br>");
             sbBody.Append(TablaMostrarProductosProveedor(oCompra));
-            sbBody.Append(string.Format("<h2>Total: ${0} </h2>", oCompra.total));
+            sbBody.Append(string.Format("<h2>Total: ${0} </h2>", oCompra.total*(decimal)1.21));
 
             return sbBody.ToString();
         }
@@ -73,7 +73,7 @@ namespace Easy_Stock.Entidades
             for (int i = 0; i < oVenta.factura.detallesFactura.Count(); i++)
             {
                 var item = oVenta.factura.detallesFactura[i];
-                sb.Append(string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>{2}</td>  <td>21</td>  <td>{3}</td>  </tr>", item.producto.nombre, item.cantidad, item.producto.precioVenta, item.subTotal));
+                sb.Append(string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>${2}</td>  <td>21</td>  <td>${3}</td>  </tr>", item.producto.nombre, item.cantidad, item.producto.precioVenta, item.subTotal));
             }
             sb.Append(" </tbody> </table>");
 
@@ -94,7 +94,7 @@ namespace Easy_Stock.Entidades
             for (int i = 0; i < oCompra.pedido.detallesPedido.Count(); i++)
             {
                 var item = oCompra.pedido.detallesPedido[i];
-                sb.Append(string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>{2}</td>  <td>21</td>  <td>{3}</td>  </tr>", item.producto.nombre, item.cantidad, item.producto.precioCosto, item.subTotal));
+                sb.Append(string.Format("<tr> <td>{0}</td> <td>{1}</td> <td>${2}</td>  <td>21</td>  <td>${3}</td>  </tr>", item.producto.nombre, item.cantidad, item.producto.precioCosto, item.subTotal));
             }
             sb.Append(" </tbody> </table>");
 
