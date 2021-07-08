@@ -71,5 +71,6 @@ namespace Easy_Stock.Entidades
 
             return lstResultado;
         }
+
     }
 }

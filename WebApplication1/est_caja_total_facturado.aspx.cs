@@ -35,8 +35,8 @@ namespace Easy_Stock
 
         private void CargarGraficos()
         {
-            CargarGraficoMes();
             CargarGraficoPorFecha();
+            CargarGraficoMes();
             CargarGraficoAnio();
 
         }

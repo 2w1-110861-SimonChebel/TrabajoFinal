@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Header.Master" AutoEventWireup="true" CodeBehind="usuarios.aspx.cs" Inherits="Easy_Stock.usuarios" %>
 
+<%@ Import Namespace="Easy_Stock.Entidades" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -7,13 +8,14 @@
     <div class="table-responsive">
         <div class="col-xl-12 col-md-12">
 
-            <div class="row" style="padding-left:5%">
+            <div class="row" style="padding-left: 5%">
 
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
                     <asp:TextBox ID="txtBuscarUsuario" CssClass="form-control" PlaceHolder="Buscar usuarios" runat="server"></asp:TextBox>
                 </div>
                 <div class="col-md-6 col-xl-6" style="padding: 20px">
                     <asp:Button runat="server" ID="btnBuscarUsuario" type="button" class="btn btn-dark" Text="Buscar" OnClick="btnBuscarUsuario_Click" />
+                    <asp:Button runat="server" ID="btnNuevoUsuario" type="button" class="btn btn-success" Text="Nuevo" OnClick="btnNuevoUsuario_Click" />
                 </div>
             </div>
 
@@ -25,7 +27,15 @@
             <asp:GridView ID="grvUsuarios" runat="server" Height="277px" Width="90%" CssClass="gridViewCarritoHeader gridView" OnRowCommand="grvUsuarios_RowCommand" AllowPaging="True" OnPageIndexChanging="grvUsuarios_PageIndexChanging" AutoGenerateColumns="False">
                 <Columns>
 
-                    <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" Visible="false" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                    <asp:TemplateField HeaderText="ID" HeaderStyle-CssClass="absolute" Visible="false" ItemStyle-CssClass="col-lg-5 col-xs-10">
+                        <ItemTemplate>
+                            <div id="divId" style="padding-top: 10px;">
+                                <b id="bId" runat="server"><%#Eval("idUsuario")%></b>
+                            </div>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+
+                    <asp:TemplateField HeaderText="Nombre" HeaderStyle-CssClass="absolute" Visible="true" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divNombre" style="padding-top: 10px;">
                                 <b><%#Eval("nombre")%></b>
@@ -68,16 +78,18 @@
                     <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                         <ItemTemplate>
                             <div id="divAcciones" style="padding-top: 10px;">
+
                                 <b>
                                     <asp:Button runat="server" ID="btnEditarUsuario" type="button" class="btn btn-info" CommandArgument='<%#Eval("idUsuario")%>' CommandName="editar" Text="Editar" /></b>
                                 <b>
                                     <asp:Button runat="server" ID="btnEliminarUsuario" type="button" class="btn btn-danger" CommandArgument='<%#Eval("idUsuario") %>' OnClientClick="preguntarEliminarRegistro();" CommandName="eliminar" Text="Eliminar"></asp:Button></b>
+
                             </div>
                         </ItemTemplate>
                     </asp:TemplateField>
 
                 </Columns>
-                <PagerStyle BackColor="#284775" ForeColor="Black" HorizontalAlign="Left" CssClass="pagination"/>
+                <PagerStyle BackColor="#284775" ForeColor="Black" HorizontalAlign="Left" CssClass="pagination" />
             </asp:GridView>
         </div>
     </div>

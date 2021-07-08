@@ -132,7 +132,7 @@ namespace Easy_Stock.Entidades
                     else continue;
                  
                 }
-                else { barras.Add(new Barra { fecha = item.fecha, total = totalPorMes });}
+                else { totalPorMes += item.total; barras.Add(new Barra { fecha = item.fecha, total = totalPorMes });}
                
             }
             

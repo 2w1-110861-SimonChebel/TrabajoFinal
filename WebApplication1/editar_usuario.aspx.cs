@@ -16,6 +16,7 @@ namespace Easy_Stock
         {
             string accion = string.IsNullOrEmpty(Request.QueryString["accion"]) ? string.Empty : Request.QueryString["accion"];
             int idUsuario = string.IsNullOrEmpty(Request.QueryString["id"]) ? 0 : Convert.ToInt32(Request.QueryString["id"]);
+
             if (!IsPostBack)
             {
                 cargarCombos();
@@ -29,6 +30,12 @@ namespace Easy_Stock
                     cboTipoUsuario.SelectedValue = oUsuario.tipoUsuario.idTipoUsuario.ToString();
                     hTitulo.InnerText = "Editar usuario";
                     btnRegistrar.Text = "Guardar cambios";
+
+                    if (oUsuario.idUsuario == ((Usuario)Session["usuario"]).idUsuario) 
+                    {
+                        cboTipoUsuario.Enabled = false;
+                        cboTipoUsuario.Attributes["class"] = "form-control";
+                    }
                 }
             }
         }
@@ -44,6 +51,7 @@ namespace Easy_Stock
                 {
                     Usuario oUsuario = new Usuario
                     {
+                        idUsuario = idUsuario,
                         nombre=txtNombre.Text,
                         apellido = txtApellido.Text,
                         clave = txtClave.Text,

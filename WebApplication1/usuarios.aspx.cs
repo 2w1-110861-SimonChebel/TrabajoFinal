@@ -2,9 +2,6 @@
 using Easy_Stock.Entidades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Easy_Stock
@@ -13,6 +10,7 @@ namespace Easy_Stock
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 divMensaje.Visible = false;
@@ -27,6 +25,21 @@ namespace Easy_Stock
                 grvUsuarios.Columns[0].Visible = true;
                 
             }
+
+            //para esconder boton eliminar al mismo usuario logueado
+            if (grvUsuarios.DataSource != null && grvUsuarios.Rows.Count > 0) 
+            {
+                foreach (GridViewRow row in grvUsuarios.Rows)
+                {
+                    string id = ((System.Web.UI.HtmlControls.HtmlGenericControl)row.Cells[0].FindControl("bId")).InnerText;
+                    if (id == ((Usuario)Session["usuario"]).idUsuario.ToString())
+                    {
+                        ((System.Web.UI.WebControls.Button)row.FindControl("btnEliminarUsuario")).Visible = false;
+                        break;
+                    }
+                }
+            }
+   
         }
 
         protected void btnBuscarUsuario_Click(object sender, EventArgs e)
@@ -89,6 +102,11 @@ namespace Easy_Stock
             ((GridView)sender).PageIndex = e.NewPageIndex;
             grvUsuarios.DataSource = AdUsuario.ObtenerUsuarios();
             grvUsuarios.DataBind();
+        }
+
+        protected void btnNuevoUsuario_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("editar_usuario.aspx");
         }
     }
 }

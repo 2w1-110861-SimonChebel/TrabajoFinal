@@ -119,186 +119,194 @@ namespace Easy_Stock
 
         protected void btnConfirmar_Click(object sender, EventArgs e)
         {
-
-            string[] valuesFormaPago = cboFormaPago.SelectedValue.Split(',');
-            Carrito aux = (Carrito)Session["carrito"];
-      
-            //quiere decir que es venta a cliente
-            if (Session["clienteCarrito"] != null) 
+            try
             {
-                if (cboFormaPago.SelectedValue != "0" && cboTipoFactura.SelectedValue != "0")
+                string[] valuesFormaPago = cboFormaPago.SelectedValue.Split(',');
+                Carrito aux = (Carrito)Session["carrito"];
+
+                //quiere decir que es venta a cliente
+                if (Session["clienteCarrito"] != null)
                 {
-
-                    List<DetalleFactura> lstDetalle = new List<DetalleFactura>();
-                    foreach (var item in aux.productos)
+                    if (cboFormaPago.SelectedValue != "0" && cboTipoFactura.SelectedValue != "0")
                     {
-                        lstDetalle.Add(new DetalleFactura
-                        {
-                            cantidad = item.cantidad,
-                            producto = item,
-                            iva = 0,
-                            subTotal = item.calcularSubTotal(),
-                            precio = item.precioVenta
-                        });
-                    }
 
-                    VentaCliente oVenta = new VentaCliente
-                    {
-                        fecha = DateTime.Now,
-                        descripcion = txtObservaciones.Text,
-                        proveedor = null,
-                        descuento = 0,
-                        total = (Decimal)Session["totalConRecargo"]  /*aux.calcularTotalProductos()*/,
-                        formaPago = new FormaPago
+                        List<DetalleFactura> lstDetalle = new List<DetalleFactura>();
+                        foreach (var item in aux.productos)
                         {
-                            idFormaPago = Convert.ToInt32(valuesFormaPago[0]),
-                            formaPago = cboFormaPago.SelectedItem.Text
-                        },
-                        tipoTransaccion = new TipoTransaccion
-                        {
-                            idTipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).idTipoTransaccion,
-                            tipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion
-                        },
-                        factura = new Factura
-                        {
-                            fecha = DateTime.Now,
-                            total = aux.calcularTotalProductos(),
-                            observaciones = string.Empty,
-                            cliente = (Cliente)Session["clienteCarrito"],
-                            empresa = (Empresa)Session["empresa"],
-                            usuario = (Usuario)Session["usuario"],
-                            detallesFactura = lstDetalle,
-                            tipoFactura = new TipoFactura
+                            lstDetalle.Add(new DetalleFactura
                             {
-                                idTipoFactura = Convert.ToInt32(cboTipoFactura.SelectedValue),
-                                tipoFactura = cboTipoFactura.SelectedItem.Text
-                            },
-                            iva = 21
-                        },
+                                cantidad = item.cantidad,
+                                producto = item,
+                                iva = 0,
+                                subTotal = item.calcularSubTotal(),
+                                precio = item.precioVenta
+                            });
+                        }
 
-
-                    };
-                    if (AdTransaccion.RegistrarVenta(oVenta))
-                    {
-                        oClienteCarrito = (Cliente)Session["clienteCarrito"];
-                        oVenta.cliente = oClienteCarrito;
-                        Usuario auxUsuario = (Usuario)Session["usuario"];
-                        oVenta.usuario = auxUsuario;
-                        SmtpClient smtp = new SmtpClient();
-
-                        Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoClientePorVentaCliente, oVenta, oClienteCarrito, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyClientePorVentaCliente.Replace("@cliente", oClienteCarrito.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oClienteCarrito.nombre : oClienteCarrito.razonSocial), HtmlBody.BodyPorVentaCliente(oVenta)));
-                        Envio.EnviarMail(smtp, "easystockar@gmail.com", auxUsuario.email, "stock123*", HtmlBody.AsuntoUsuarioPorVentaCliente, oVenta, oClienteCarrito, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyUsuarioPorVentaCliente.Replace("@usuario", auxUsuario.nombre), HtmlBody.BodyPorVentaCliente(oVenta)));
-                        Session["carrito"] = null;
-                        Session["clienteCarrito"] = null;
-                        Session["tipoTranActual"] = null;
-                        Session["productos"] = null;
-                        Session["clientes"] = null;
-                        Session["totalSinRecargo"] = null;
-                        Session["totalConRecargo"] = null;
-                        Response.Redirect("home.aspx?transaction=ok");
-                    }
-                    else
-                    {
-                        divMensaje.Visible = true;
-                        hMensaje.InnerText = "Hubo un error al realizar la transacción. Intente nuevamente.";
-                    }
-                }
-                else
-                {
-                    if (cboFormaPago.SelectedValue == "0") cboFormaPago.BorderColor = Color.Red; else cboFormaPago.BorderColor = Color.Gray;
-                    if (cboTipoFactura.SelectedValue == "0") cboTipoFactura.BorderColor = Color.Red; else cboTipoFactura.BorderColor = Color.Gray;
-                }
-            }
-
-            //compra a proveedor
-            if (Session["provCarrito"] != null) 
-            {
-                if (cboFormaPago.SelectedValue != "0")
-                {
-                    Proveedor auxProveedor = (Proveedor)Session["provCarrito"];
-
-                    List<DetallePedido> lstDetalle = new List<DetallePedido>();
-                    foreach (var item in aux.productos)
-                    {
-                        lstDetalle.Add(new DetallePedido
-                        {
-                            cantidad = item.cantidad,
-                            producto = item,
-                            iva = 0,
-                            subTotal = item.calcularSubTotal(),
-                            precio = item.precioVenta
-                        });
-                    }
-
-
-                    CompraProveedor oCompra = new CompraProveedor
-                    {
-                        fecha = DateTime.Now,
-                        descripcion = txtObservaciones.Text,
-                        proveedor = auxProveedor,
-                        descuento = 0,
-                        total = (Decimal)Session["totalConRecargo"]  /*aux.calcularTotalProductos()*/,
-                        formaPago = new FormaPago
-                        {
-                            idFormaPago = Convert.ToInt32(valuesFormaPago[0]),
-                            formaPago = cboFormaPago.SelectedItem.Text
-                        },
-                        tipoTransaccion = new TipoTransaccion
-                        {
-                            idTipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).idTipoTransaccion,
-                            tipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion
-                        },
-                        pedido = new Pedido
+                        VentaCliente oVenta = new VentaCliente
                         {
                             fecha = DateTime.Now,
-                            total = aux.calcularTotalProductos(),
-                            descripcion = string.Empty,
-                            proveedor = auxProveedor,
-                            empresa = (Empresa)Session["empresa"],
-                            usuario = (Usuario)Session["usuario"],
-                            detallesPedido = lstDetalle,
-                            //formaPago = new FormaPago
-                            //{
-                            //    idFormaPago = Convert.ToInt32(cboFormaPago.SelectedValue),
-                            //    formaPago = cboFormaPago.SelectedItem.Text
-                            //},
-                            iva = 21
-                        },
-                    };
+                            descripcion = txtObservaciones.Text,
+                            proveedor = null,
+                            descuento = 0,
+                            total = (Decimal)Session["totalConRecargo"]  /*aux.calcularTotalProductos()*/,
+                            formaPago = new FormaPago
+                            {
+                                idFormaPago = Convert.ToInt32(valuesFormaPago[0]),
+                                formaPago = cboFormaPago.SelectedItem.Text
+                            },
+                            tipoTransaccion = new TipoTransaccion
+                            {
+                                idTipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).idTipoTransaccion,
+                                tipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion
+                            },
+                            factura = new Factura
+                            {
+                                fecha = DateTime.Now,
+                                total = aux.calcularTotalProductos(),
+                                observaciones = string.Empty,
+                                cliente = (Cliente)Session["clienteCarrito"],
+                                empresa = (Empresa)Session["empresa"],
+                                usuario = (Usuario)Session["usuario"],
+                                detallesFactura = lstDetalle,
+                                tipoFactura = new TipoFactura
+                                {
+                                    idTipoFactura = Convert.ToInt32(cboTipoFactura.SelectedValue),
+                                    tipoFactura = cboTipoFactura.SelectedItem.Text
+                                },
+                                iva = 21
+                            },
 
-                    if (AdTransaccion.RegistraCompra(oCompra))
-                    {
-                        Proveedor oProveedorCarrito = (Proveedor)Session["provCarrito"];
-                        Usuario auxUsuario = (Usuario)Session["usuario"];
-                        oCompra.usuario = auxUsuario;
-                        SmtpClient smtp = new SmtpClient();
 
-                        //Envio.EnviarMail(smtp, "easystockar@gmail.com", oProveedorCarrito.email, "stock123*", HtmlBody.AsuntoClientePorCompraProveedor, oCompra, auxProveedor, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyPorCompraProveedor.Replace("@proveedor", auxProveedor.nombre), HtmlBody.BodyPorCompraProveedor(oCompra)));
-                        Envio.EnviarMail(smtp, "easystockar@gmail.com", auxUsuario.email, "stock123*", HtmlBody.AsuntoClientePorCompraProveedor, oCompra,auxProveedor, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyUsuarioPorCompraProveedor.Replace("@usuario", auxUsuario.nombre), HtmlBody.BodyPorCompraProveedor(oCompra)));
-                        Session["carrito"] = null;
-                        Session["clienteCarrito"] = null;
-                        Session["tipoTranActual"] = null;
-                        Session["productos"] = null;
-                        Session["clientes"] = null;
-                        Session["totalSinRecargo"] = null;
-                        Session["totalConRecargo"] = null;
-                        Session["provCarrito"] = null;
-                        Response.Redirect("home.aspx?transaction=ok");
+                        };
+                        if (AdTransaccion.RegistrarVenta(oVenta))
+                        {
+                            oClienteCarrito = (Cliente)Session["clienteCarrito"];
+                            oVenta.cliente = oClienteCarrito;
+                            Usuario auxUsuario = (Usuario)Session["usuario"];
+                            oVenta.usuario = auxUsuario;
+                            SmtpClient smtp = new SmtpClient();
+
+                            Envio.EnviarMail(smtp, "easystockar@gmail.com", oClienteCarrito.email, "stock123*", HtmlBody.AsuntoClientePorVentaCliente, oVenta, oClienteCarrito, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyClientePorVentaCliente.Replace("@cliente", oClienteCarrito.tipoCliente.idTipoCliente == (int)Tipo.tipoCliente.persona ? oClienteCarrito.nombre : oClienteCarrito.razonSocial), HtmlBody.BodyPorVentaCliente(oVenta)));
+                            Envio.EnviarMail(smtp, "easystockar@gmail.com", auxUsuario.email, "stock123*", HtmlBody.AsuntoUsuarioPorVentaCliente, oVenta, oClienteCarrito, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyUsuarioPorVentaCliente.Replace("@usuario", auxUsuario.nombre), HtmlBody.BodyPorVentaCliente(oVenta)));
+                            Session["carrito"] = null;
+                            Session["clienteCarrito"] = null;
+                            Session["tipoTranActual"] = null;
+                            Session["productos"] = null;
+                            Session["clientes"] = null;
+                            Session["totalSinRecargo"] = null;
+                            Session["totalConRecargo"] = null;
+                            Response.Redirect("home.aspx?transaction=ok");
+                        }
+                        else
+                        {
+                            divMensaje.Visible = true;
+                            hMensaje.InnerText = "Hubo un error al realizar la transacción. Intente nuevamente.";
+                        }
                     }
                     else
                     {
-                        divMensaje.Visible = true;
-                        hMensaje.InnerText = "Hubo un error al realizar la transacción. Intente nuevamente.";
+                        if (cboFormaPago.SelectedValue == "0") cboFormaPago.BorderColor = Color.Red; else cboFormaPago.BorderColor = Color.Gray;
+                        if (cboTipoFactura.SelectedValue == "0") cboTipoFactura.BorderColor = Color.Red; else cboTipoFactura.BorderColor = Color.Gray;
                     }
                 }
-                else 
-                {
-                    if (cboFormaPago.SelectedValue == "0") cboFormaPago.BorderColor = Color.Red; else cboFormaPago.BorderColor = Color.Gray;
-                }
-             
-            }
-         
 
+                //compra a proveedor
+                if (Session["provCarrito"] != null)
+                {
+                    if (cboFormaPago.SelectedValue != "0")
+                    {
+                        Proveedor auxProveedor = (Proveedor)Session["provCarrito"];
+
+                        List<DetallePedido> lstDetalle = new List<DetallePedido>();
+                        foreach (var item in aux.productos)
+                        {
+                            lstDetalle.Add(new DetallePedido
+                            {
+                                cantidad = item.cantidad,
+                                producto = item,
+                                iva = 0,
+                                subTotal = item.calcularSubTotal(),
+                                precio = item.precioVenta
+                            });
+                        }
+
+
+                        CompraProveedor oCompra = new CompraProveedor
+                        {
+                            fecha = DateTime.Now,
+                            descripcion = txtObservaciones.Text,
+                            proveedor = auxProveedor,
+                            descuento = 0,
+                            total = (Decimal)Session["totalConRecargo"]  /*aux.calcularTotalProductos()*/,
+                            formaPago = new FormaPago
+                            {
+                                idFormaPago = Convert.ToInt32(valuesFormaPago[0]),
+                                formaPago = cboFormaPago.SelectedItem.Text
+                            },
+                            tipoTransaccion = new TipoTransaccion
+                            {
+                                idTipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).idTipoTransaccion,
+                                tipoTransaccion = ((TipoTransaccion)Session["tipoTranActual"]).tipoTransaccion
+                            },
+                            pedido = new Pedido
+                            {
+                                fecha = DateTime.Now,
+                                total = aux.calcularTotalProductos(),
+                                descripcion = string.Empty,
+                                proveedor = auxProveedor,
+                                empresa = (Empresa)Session["empresa"],
+                                usuario = (Usuario)Session["usuario"],
+                                detallesPedido = lstDetalle,
+                                //formaPago = new FormaPago
+                                //{
+                                //    idFormaPago = Convert.ToInt32(cboFormaPago.SelectedValue),
+                                //    formaPago = cboFormaPago.SelectedItem.Text
+                                //},
+                                iva = 21
+                            },
+                        };
+
+                        if (AdTransaccion.RegistraCompra(oCompra))
+                        {
+                            Proveedor oProveedorCarrito = (Proveedor)Session["provCarrito"];
+                            Usuario auxUsuario = (Usuario)Session["usuario"];
+                            oCompra.usuario = auxUsuario;
+                            SmtpClient smtp = new SmtpClient();
+
+                            //Envio.EnviarMail(smtp, "easystockar@gmail.com", oProveedorCarrito.email, "stock123*", HtmlBody.AsuntoClientePorCompraProveedor, oCompra, auxProveedor, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyPorCompraProveedor.Replace("@proveedor", auxProveedor.nombre), HtmlBody.BodyPorCompraProveedor(oCompra)));
+                            Envio.EnviarMail(smtp, "easystockar@gmail.com", auxUsuario.email, "stock123*", HtmlBody.AsuntoClientePorCompraProveedor, oCompra, auxProveedor, auxUsuario, string.Format("{0} {1}", HtmlBody.BodyUsuarioPorCompraProveedor.Replace("@usuario", auxUsuario.nombre), HtmlBody.BodyPorCompraProveedor(oCompra)));
+                            Session["carrito"] = null;
+                            Session["clienteCarrito"] = null;
+                            Session["tipoTranActual"] = null;
+                            Session["productos"] = null;
+                            Session["clientes"] = null;
+                            Session["totalSinRecargo"] = null;
+                            Session["totalConRecargo"] = null;
+                            Session["provCarrito"] = null;
+                            Response.Redirect("home.aspx?transaction=ok");
+                        }
+                        else
+                        {
+                            divMensaje.Visible = true;
+                            hMensaje.InnerText = "Hubo un error al realizar la transacción. Intente nuevamente.";
+                        }
+                    }
+                    else
+                    {
+                        if (cboFormaPago.SelectedValue == "0") cboFormaPago.BorderColor = Color.Red; else cboFormaPago.BorderColor = Color.Gray;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            RefrescarGraficosReportesFacturacion();
         }
 
         protected void btnVolverCarrito_Click(object sender, EventArgs e)
@@ -315,6 +323,18 @@ namespace Easy_Stock
         protected void grvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
 
+        }
+
+        private void RefrescarGraficosReportesFacturacion()
+        {
+            Session["totalBarrasPorMes"] = null;
+            Session["auxMeses"] = null;
+
+            Session["totalBarrasPorMesAnio"] = null;
+            Session["auxMesesAnio"] = null;
+
+            Session["totalBarrasPorDia"] = null;
+            Session["fechaDia"] = null;
         }
 
         protected void cboFormaPago_SelectedIndexChanged(object sender, EventArgs e)
