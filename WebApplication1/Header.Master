@@ -83,7 +83,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="proveedores.aspx">Ver todos</a>
-                                <a class="dropdown-item" href="editar_deposito.aspx">Nuevo Proveedor</a>
+                                <a class="dropdown-item" href="editar_proveedor.aspx">Nuevo Proveedor</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="productos.aspx?accion=pedido&tipoTransaccion=2">Realizar pedido</a>
                             </div>

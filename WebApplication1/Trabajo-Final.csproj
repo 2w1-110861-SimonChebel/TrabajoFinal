@@ -204,6 +204,10 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="home.aspx" />
+    <Content Include="Images\1_pedido_prov.jpg" />
+    <Content Include="Images\2_pedido_prov.jpg" />
+    <Content Include="Images\3_pedido_prov.jpg" />
+    <Content Include="Images\4_pedido_prov.jpg" />
     <Content Include="Images\btnFinalizar.png" />
     <Content Include="Images\buscCliVen.png" />
     <Content Include="Images\buscCliVenElegir.png" />
