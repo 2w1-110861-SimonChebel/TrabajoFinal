@@ -141,8 +141,9 @@ namespace Easy_Stock
             Cliente cli = !string.IsNullOrEmpty(txtCliente.Text) ? new Cliente { nombre = txtCliente.Text, apellido = txtCliente.Text, razonSocial = txtCliente.Text } : null;
             Usuario usu = Convert.ToInt32(cboUsuario.SelectedValue) > 0 ? new Usuario { idUsuario = Convert.ToInt32(cboUsuario.SelectedValue) } : null;
             Proveedor pro = Convert.ToInt32(cboProveedor.SelectedValue) > 0 ? new Proveedor { idProveedor = Convert.ToInt32(cboProveedor.SelectedValue) } : null;
-            string fechaInicio = !string.IsNullOrEmpty(dtpFechaInicio.Text) ? dtpFechaInicio.Text : string.Empty;
-            string fechaFin = !string.IsNullOrEmpty(dtpFechaFin.Text) ? dtpFechaFin.Text : string.Empty;
+            string fechaInicio = !string.IsNullOrEmpty(dtpFechaInicio.Text) ? DateTime.Parse(dtpFechaInicio.Text).ToString("yyyy-MM-dd HH:mm:ss") : string.Empty;
+
+            string fechaFin = !string.IsNullOrEmpty(dtpFechaFin.Text) ? DateTime.Parse( dtpFechaFin.Text).AddHours(23).AddMinutes(59).AddSeconds(59).ToString("yyyy-MM-dd HH:mm:ss") : string.Empty;
 
             if (Validar.HayUnCampoSeleccionado(aControles))
             {

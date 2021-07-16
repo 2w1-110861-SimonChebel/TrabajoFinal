@@ -396,41 +396,30 @@ namespace Easy_Stock.AccesoDatos
                     if (idVenta > 0) { sbSql.Append(" idTransaccion = @idTran "); hayFiltroAnterior = true; }
                     if (oCliente != null)
                     {
-                        if (hayFiltroAnterior/*idVenta > 0*/) { sbSql.Append(" AND(c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'"); }
-                        else sbSql.Append(" (c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'");
+                        if (hayFiltroAnterior) { sbSql.Append(string.Format(" AND (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%' OR c.razonSocial LIKE '%{0}%')", oCliente.nombre)); }
+                        else sbSql.Append(string.Format(" (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%' OR c.razonSocial LIKE '%{0}%')", oCliente.nombre));
                         hayFiltroAnterior = true;
                     }
                     if (oUsuario != null)
                     {
 
-                        if (hayFiltroAnterior/*oCliente != null*/) { sbSql.Append(" AND u.idUsuario = @idUsuario"); }
+                        if (hayFiltroAnterior) { sbSql.Append(" AND u.idUsuario = @idUsuario"); }
                         else sbSql.Append(" u.idUsuario=@idUsuario");
                         hayFiltroAnterior = true;
                     }
-                    if (!string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
+                    if (!string.IsNullOrEmpty(fechaInicio) )
                     {
 
-                        if (hayFiltroAnterior/*oUsuario != null*/) { sbSql.Append(" AND fecha BETEWEEN @fechaInicio AND @fechaFin"); }
-                        else sbSql.Append(" fecha BETEWEEN @fechaInicio AND @fechaFin");
+                        if (hayFiltroAnterior) { sbSql.Append(" AND fecha >= @fechaInicio"); }
+                        else sbSql.Append(" fecha >= @fechaInicio");
                         hayFiltroAnterior = true;
                     }
-                    else
+                    if (!string.IsNullOrEmpty(fechaFin))
                     {
-                        if (!string.IsNullOrEmpty(fechaInicio) && string.IsNullOrEmpty(fechaFin))
-                        {
 
-                            if (hayFiltroAnterior/*oUsuario != null*/) { sbSql.Append(" AND fecha >= @fechaInicio"); }
-                            else sbSql.Append(" fecha >= @fechaInicio");
-                            hayFiltroAnterior = true;
-                        }
-                        if (string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
-                        {
-
-                            if (hayFiltroAnterior/*oUsuario != null*/) { sbSql.Append(" AND fecha <= @fechaFin"); }
-                            else sbSql.Append(" fecha <= @fechaFin");
-                            hayFiltroAnterior = true;
-                        }
-
+                        if (hayFiltroAnterior) { sbSql.Append(" AND fecha <= @fechaFin"); }
+                        else sbSql.Append(" fecha <= @fechaFin");
+                        hayFiltroAnterior = true;
                     }
 
                     if (oProveedor != null)
@@ -544,7 +533,7 @@ namespace Easy_Stock.AccesoDatos
             {
                 sbSql = new StringBuilder("SELECT t.idTransaccion,t.idTipoTransaccion,tt.tipoTransaccion, t.fecha,t.descripcion, ");
                 sbSql.Append(" c.idCliente,c.nombre,c.apellido,c.dni,c.cuit,c.direccion, c.razonSocial,");
-                sbSql.Append(" u.idUsuario,u.nombre,u.apellido, f.nroFactura,f.total, dc.idDeuda,dc.monto,dc.montoAfavor ");
+                sbSql.Append(" u.idUsuario,u.nombre,u.apellido, f.nroFactura,f.total, dc.idDeuda,dc.monto,dc.montoAfavor, tc.idTipoCliente");
                 sbSql.Append(" FROM Transacciones t ");
                 sbSql.Append(" JOIN Clientes c on T.idCliente = C.idCliente");
                 sbSql.Append(" JOIN Tipos_Clientes tc ON c.idTipoCliente = tc.idTipoCliente");
@@ -558,15 +547,14 @@ namespace Easy_Stock.AccesoDatos
 
                     if (!esMovimiento && consultaCambioDevolucion) { sbSql.Append(" WHERE t.devuelto=0 "); hayFiltroAnterior = true; }
                     else {
-                        //if (esMovimiento) { sbSql.Append(" WHERE t.devuelto = 0 "); hayFiltroAnterior = true; }
-                       /* else {*/ sbSql.Append(" WHERE "); /*}*/
+                       sbSql.Append(" WHERE "); 
                     }
 
                     if (idVenta > 0) { sbSql.Append(" t.idTransaccion = @idTran "); hayFiltroAnterior = true; }
                     if (oCliente != null)
                     {
-                        if (hayFiltroAnterior && idVenta > 0) { sbSql.Append(" AND(c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'"); }
-                        else sbSql.Append(" (c.nombre LIKE '%@nombreCliente%' OR c.apellido LIKE '%@apellidoCliente%') OR c.razonSocial LIKE '%@razonSocial%'");
+                        if (hayFiltroAnterior && idVenta > 0) { sbSql.Append(string.Format(" AND (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%') OR c.razonSocial LIKE '%{0}%'", oCliente.nombre)); }
+                        else sbSql.Append(string.Format(" (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%') OR c.razonSocial LIKE '%{0}%'", oCliente.nombre));
                         hayFiltroAnterior = true;
                     }
                     if (oUsuario != null)
@@ -575,28 +563,21 @@ namespace Easy_Stock.AccesoDatos
                         else sbSql.Append(" t.idUsuario=@idUsuario");
                         hayFiltroAnterior = true;
                     }
-                    if (!string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
+                    if (!string.IsNullOrEmpty(fechaInicio))
                     {
-                        if (hayFiltroAnterior) { sbSql.Append(" AND t.fecha BETWEEN @fechaInicio AND @fechaFin"); }
-                        else sbSql.Append(" t.fecha BETWEEN @fechaInicio AND @fechaFin");
+
+                        if (hayFiltroAnterior) { sbSql.Append(" AND fecha >= @fechaInicio"); }
+                        else sbSql.Append(" fecha >= @fechaInicio");
                         hayFiltroAnterior = true;
                     }
-                    else
+                    if (!string.IsNullOrEmpty(fechaFin))
                     {
-                        if (!string.IsNullOrEmpty(fechaInicio) && string.IsNullOrEmpty(fechaFin))
-                        {
-                            if (hayFiltroAnterior) { sbSql.Append(" AND t.fecha >= @fechaInicio"); }
-                            else sbSql.Append(" t.fecha >= @fechaInicio");
-                            hayFiltroAnterior = true;
-                        }
-                        if (string.IsNullOrEmpty(fechaInicio) && !string.IsNullOrEmpty(fechaFin))
-                        {
-                            if (hayFiltroAnterior) { sbSql.Append(" AND t.fecha <= @fechaFin"); }
-                            else sbSql.Append(" t.fecha <= @fechaFin");
-                            hayFiltroAnterior = true;
-                        }
 
+                        if (hayFiltroAnterior) { sbSql.Append(" AND fecha <= @fechaFin"); }
+                        else sbSql.Append(" fecha <= @fechaFin");
+                        hayFiltroAnterior = true;
                     }
+                
                     if (idTipoTransaccion > 0)
                     {
                         if (hayFiltroAnterior)
@@ -656,6 +637,10 @@ namespace Easy_Stock.AccesoDatos
                                              idDeudaCliente = dr.IsDBNull(17) ? default(int) : dr.GetInt32(17),
                                              monto = dr.IsDBNull(18) ? default(decimal) : dr.GetDecimal(18),
                                              montoAfavor = dr.IsDBNull(19) ? default(decimal) : dr.GetDecimal(19)
+                                         },
+                                         tipoCliente = new TipoCliente
+                                         {
+                                             idTipoCliente = dr.IsDBNull(20) ? 0 : dr.GetInt32(20)
                                          }
                                      },
 

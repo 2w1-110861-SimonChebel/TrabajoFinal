@@ -82,7 +82,7 @@
                 <asp:TemplateField HeaderText="Cliente" HeaderStyle-CssClass="absolute" ItemStyle-CssClass="col-lg-5 col-xs-10">
                     <ItemTemplate>
                         <div id="divNombreCliente" style="padding-top: 10px;">
-                            <b><%#(int)Eval("cliente.tipoCliente.idTipoCliente")==(int) Tipo.tipoCliente.persona? string.Format("{0} {1}", Eval("cliente.nombre"),Eval("cliente.apellido")) : Eval("cliente.razonSocial") %></b>
+                            <b><%#(int)Eval("cliente.tipoCliente.idTipoCliente")==(int) Tipo.tipoCliente.persona? String.Format("{0} {1}", Eval("cliente.nombre"),Eval("cliente.apellido")) : Eval("cliente.razonSocial") %></b>
                         </div>
                     </ItemTemplate>
                 </asp:TemplateField>
