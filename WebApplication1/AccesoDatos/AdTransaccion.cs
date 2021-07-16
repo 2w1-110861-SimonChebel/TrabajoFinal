@@ -554,9 +554,15 @@ namespace Easy_Stock.AccesoDatos
                     if (oCliente != null)
                     {
                         if (hayFiltroAnterior && idVenta > 0) { sbSql.Append(string.Format(" AND (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%') OR c.razonSocial LIKE '%{0}%'", oCliente.nombre)); }
-                        else sbSql.Append(string.Format(" (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%') OR c.razonSocial LIKE '%{0}%'", oCliente.nombre));
+                        else {
+                            if (hayFiltroAnterior) { 
+                                sbSql.Append(string.Format(" AND (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%') OR c.razonSocial LIKE '%{0}%'", oCliente.nombre));
+                            }   
+                            else sbSql.Append(string.Format(" (c.nombre LIKE '%{0}%' OR c.apellido LIKE '%{0}%') OR c.razonSocial LIKE '%{0}%'", oCliente.nombre));
+                        }
                         hayFiltroAnterior = true;
                     }
+
                     if (oUsuario != null)
                     {
                         if (hayFiltroAnterior) { sbSql.Append(" AND t.idUsuario = @idUsuario"); }
